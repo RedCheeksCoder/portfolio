@@ -10,7 +10,9 @@ This file gives any Claude (Code, chat, or otherwise) working in this repo the f
 
 A single-page HTML portfolio site for **Bryan Odina** — GHL-Certified Admin, Licensed Electronics Engineer, and automation consultant based in the Philippines. The frontend is still one file: `index.html` (HTML + CSS + JS inline, no build step, no framework). (The file previously lived at the repo root as `portoflio.html` — it was moved into this folder and renamed to match this doc on 2026-07-18.)
 
-**As of 2026-07-18, this is no longer a purely static site.** A Vercel serverless API backend (`api/`, `package.json`) was added to power the custom booking widget — see §12 "Booking Backend" for the full architecture. The frontend itself remains build-step-free; only the new `api/` functions have a dependency (`googleapis`).
+**As of 2026-07-18, this is no longer a purely static site.** A Vercel serverless API backend (`api/`, `package.json`) was added to power the custom booking widget — see §12 "Booking Backend" for the full architecture. The frontend itself remains build-step-free; the `api/` functions have zero dependencies too (plain `fetch` to GHL's REST API, no SDKs).
+
+**Git:** this folder is a git repo, pushed to `github.com/RedCheeksCoder/portfolio` (origin, `main` branch) as of 2026-07-18.
 
 **Positioning / core message:** "Stop hiring for work that automation can already do." The entire site exists to convince visitors (both business owners and agencies) that Bryan builds automation systems that let them grow without adding headcount.
 
@@ -172,9 +174,9 @@ All "Book a call" CTAs across the page (`nav`, hero, about, contact) still link 
 
 6. **All Work-section Description/Problem/Work-Done copy, and all 9 invented Process Design case studies, are agent-drafted and unreviewed.** Bryan asked for a draft-then-review pass (see §11) — none of this copy should be treated as final until he's read through it.
 
-7. **Booking backend built but not live** — see §12. Blocked entirely on Bryan completing the Google Cloud service-account setup, the GHL Private Integration setup, and Vercel deployment/env vars. Until then the booking widget is deployed as static HTML with no working backend behind it if pushed as-is.
+7. **Booking backend built but not live** — see §12. Simplified to GHL-only (Google Calendar removed) on 2026-07-18. Blocked on: (a) Bryan completing the GHL Private Integration setup, (b) Vercel deployment/env vars, and (c) verifying GHL's actual free-slots response shape against a live call (§12 flags this as the biggest risk). Until then the booking widget is deployed as static HTML with no working backend behind it if pushed as-is.
 
-8. **Booking config values unconfirmed** — working hours (default Mon–Fri 9–5), timezone (default Asia/Manila), meeting duration (default 30min), buffer (default 10min), minimum notice (default 12h), max advance window (default 30 days), and the exact fields collected (currently mirrors the old contact form: name/email/phone/notes) are all agent defaults in `api/_lib/config.js` — confirm/adjust with Bryan, especially duration (should match whatever the old GHL widget was actually configured for, to avoid a silent behavior regression).
+8. **Booking config values unconfirmed** — timezone (default Asia/Manila), meeting duration (default 30min, must match GHL calendar's own setting), minimum notice (default 12h), max advance window (default 30 days), and the exact fields collected (currently mirrors the old contact form: name/email/phone/notes) are agent defaults in `api/_lib/config.js` — confirm/adjust with Bryan. Working hours/days/buffer are no longer agent config — they're GHL calendar settings Bryan controls directly.
 
 ---
 
@@ -227,78 +229,70 @@ Replaced the old "click a work-card thumbnail → simple single-image lightbox" 
 
 ---
 
-## 12. Booking Backend (added 2026-07-18)
+## 12. Booking Backend (added 2026-07-18, simplified to GHL-only same day)
 
 Replaces the GHL iframe (see §7) with a custom widget + Vercel serverless API. **Not live yet** — code is complete and tested, but needs Bryan to do the credential setup below before deploying.
+
+**Architecture note:** the first build of this (same day) used both Google Calendar and GHL — Google as the availability source of truth, GHL as the reminder-automation trigger. Bryan asked why both were needed; the honest answer was "in case your real schedule has things GHL doesn't know about." He confirmed **GHL's calendar is his full, comprehensive schedule** — nothing exists outside it — so Google Calendar was removed entirely the same day. GHL's own `GET /calendars/:calendarId/free-slots` API (confirmed to exist via GHL's official docs, used internally by GHL's own booking widgets) now handles availability directly, and GHL is the only external system this backend talks to. This cut the credential setup from two systems to one, removed the `googleapis` dependency entirely (site now has zero backend dependencies too — pure `fetch`), and simplified `api/book.js` from a two-system dual-write with partial-failure tolerance down to a single write.
 
 ### File structure
 ```
 Portfolio/
-  package.json, vercel.json, .env.example, .gitignore   # new, project root
+  package.json, vercel.json, .env.example, .gitignore   # project root
   api/
     availability.js       # GET /api/availability?date=YYYY-MM-DD
     book.js                # POST /api/book
     _lib/
-      config.js              # BOOKING_CONFIG — working hours/timezone/duration/buffer, single source of truth
-      slots.js                # pure slot-generation + timezone math, no I/O — unit-tested directly with `node`
-      googleCalendar.js        # service-account auth, freebusy query, event insert
-      ghl.js                    # GHL Private Integration REST calls (contact upsert, appointment create)
+      config.js              # BOOKING_CONFIG — timezone/duration/notice-window guardrails (NOT working-hours/buffer — see below)
+      slots.js                # timezone math only, no I/O — unit-tested directly with `node`
+      ghl.js                    # GHL Private Integration REST calls (free-slots, contact upsert, appointment create)
 ```
-`_lib/` is underscore-prefixed so Vercel's zero-config routing doesn't expose those helpers as routes — only `api/availability.js` and `api/book.js` are callable endpoints.
+`_lib/` is underscore-prefixed so Vercel's zero-config routing doesn't expose those helpers as routes — only `api/availability.js` and `api/book.js` are callable endpoints. `api/_lib/googleCalendar.js` existed briefly earlier the same day and was deleted once the GHL-only decision was made — if you see references to it anywhere stale, they're leftover from before this simplification.
 
-### Config (`api/_lib/config.js`) — defaults, confirm with Bryan before going live
+### Config (`api/_lib/config.js`)
 ```js
 {
   timezone: 'Asia/Manila',
-  workingDays: [1,2,3,4,5],       // Mon-Fri
-  workingHours: { start:'09:00', end:'17:00' },
-  slotDurationMinutes: 30,
-  bufferMinutes: 10,
-  minNoticeHours: 12,
+  slotDurationMinutes: 30,   // must match the GHL calendar's own configured duration
+  minNoticeHours: 12,         // extra guardrail on top of whatever GHL returns
   maxAdvanceDays: 30,
 }
 ```
-A client-side mirror of `workingDays`/`maxAdvanceDays` exists in `index.html`'s booking JS (`CLIENT_CONFIG`, for greying out unavailable calendar days before the user picks one) — it's UI-only, the server is the real source of truth, but **if Bryan changes `config.js`, update the `CLIENT_CONFIG` mirror in `index.html` to match** or the calendar will show days as clickable that the API then rejects.
+**Working hours, days, and buffer time are no longer configured here** — they live in GHL's own calendar settings (Settings → Calendars → [calendar] → Availability), since GHL's free-slots API already returns slots respecting those settings. If Bryan wants to change his available hours, he changes them in GHL directly — no code deploy needed for that anymore, which is a genuine improvement from the two-system version. A client-side mirror of `maxAdvanceDays` still exists in `index.html`'s booking JS (`CLIENT_CONFIG`, for greying out far-future calendar days before the user picks one) — UI-only, keep in sync manually if `maxAdvanceDays` changes.
 
 ### API behavior
-- `GET /api/availability?date=YYYY-MM-DD` → queries Google Calendar's Freebusy API for that day, generates candidate slots from `workingHours`/`slotDurationMinutes`, drops any overlapping a busy block (expanded by `bufferMinutes`) or inside `minNoticeHours` of now. Returns `{date, timezone, slots:[{start,end}]}` with slots as ISO strings carrying the correct `+08:00`-style offset (computed via `Intl.DateTimeFormat`, no date library dependency).
-- `POST /api/book` (body: `start,end,name,email,phone,notes`) → **re-checks availability for just that slot immediately before writing** (race-condition guard — narrows but doesn't fully eliminate the window two simultaneous bookers could both pass; accepted as tolerable for solo-consultant booking volume, same class of limitation GHL's own widget has). Creates the Google Calendar event (`sendUpdates:'none'` — a bare service account can't send native Calendar invite emails without Workspace domain-wide delegation; GHL's reminder-email automation is the actual visitor-facing notification channel). Then upserts a GHL contact and creates a GHL appointment so Bryan's existing reminder automations fire. **If the GHL half fails after the Google Calendar write already succeeded, the visitor still sees success** (`ghlSynced:false` in the response) since the calendar hold is real either way — the failure is only logged server-side (Vercel function logs) for Bryan to catch manually. This was a deliberate design choice (documented in the original plan), not an oversight.
+- `GET /api/availability?date=YYYY-MM-DD` → calls GHL's `GET /calendars/:calendarId/free-slots` for that day, filters the returned start times against `minNoticeHours`, computes each slot's `end` as `start + slotDurationMinutes`. Returns `{date, timezone, slots:[{start,end}]}` with slots as ISO strings carrying the correct `+08:00`-style offset (computed via `Intl.DateTimeFormat`, no date library dependency).
+- `POST /api/book` (body: `start,end,name,email,phone,notes`) → **re-fetches GHL's free-slots for that day immediately before writing** and confirms the requested start time is still present (race-condition guard — narrows but doesn't fully eliminate the window two simultaneous bookers could both pass; accepted as tolerable for solo-consultant booking volume, same class of limitation GHL's own widget already has). Upserts a GHL contact, then creates the GHL appointment. Since there's only one system now, **any failure is a hard failure** (500 to the visitor) — the dual-write partial-failure tolerance from the earlier two-system design no longer applies/exists.
+
+### ⚠️ Needs verification against a live GHL API call
+GHL's API docs site renders parameter tables and example payloads client-side (JS), which couldn't be fully extracted via automated fetch during this session. Confirmed to exist: `GET /calendars/:calendarId/free-slots` (returns "an availability map keyed by date"), `POST /calendars/events/appointments`. **Not confirmed:** the exact query param names/format for the free-slots date range (`getFreeSlots()` in `ghl.js` currently sends `startDate`/`endDate` as epoch-millisecond strings — a common GHL v2 convention, but unverified for this specific endpoint) and the exact shape of each date's slot array in the response (currently parsed defensively — handles both a raw array of ISO start-time strings and an array of `{startTime}`/`{start}` objects, whichever GHL actually returns). **Before considering this live:** run one real `GET /api/availability?date=...` request against a day with known GHL calendar availability during `vercel dev` testing, log the raw GHL response, and confirm `getFreeSlots()` in `api/_lib/ghl.js` is parsing it correctly — adjust the parsing there if the real shape differs from what's handled now.
 
 ### Frontend widget
-`#bookingWidget` in the `#book` section — three steps (date/slot picker → contact form → confirmation) toggled via `.is-hidden`, reusing the site's existing `.field`/`.btn-primary` styles verbatim and a new `.day-cell`/`.slot-btn` pill pattern styled off the existing `.filter-btn` look. JS lives in the trailing `<script>` block, IIFE-wrapped, after the work-filter code. Slot times display in the visitor's local timezone via the browser's own `toLocaleString`/`toLocaleTimeString` (no library) — the API always computes in `BOOKING_CONFIG.timezone` internally and returns offset-carrying ISO strings.
+`#bookingWidget` in the `#book` section — three steps (date/slot picker → contact form → confirmation) toggled via `.is-hidden`, reusing the site's existing `.field`/`.btn-primary` styles verbatim and a new `.day-cell`/`.slot-btn` pill pattern styled off the existing `.filter-btn` look. JS lives in the trailing `<script>` block, IIFE-wrapped, after the work-filter code. Slot times display in the visitor's local timezone via the browser's own `toLocaleString`/`toLocaleTimeString` (no library) — the API always computes in `BOOKING_CONFIG.timezone` internally and returns offset-carrying ISO strings. **Unchanged by the GHL-only simplification** — the `/api/availability` and `/api/book` request/response shapes stayed identical, so no frontend edits were needed when Google Calendar was removed.
 
 ### Testing done so far (2026-07-18, before any real credentials existed)
-- `api/_lib/slots.js`'s pure functions unit-tested directly with `node` (no deps) — weekday detection, full-day slot count, offset-string formatting, busy-block + buffer exclusion, min-notice exclusion, and booking-window bounds all verified correct.
-- All new `api/*.js` files syntax-checked (`node --check`).
-- Frontend widget flow (calendar render → date select → slot select → form → submit → confirmation, and the 409 `slot_taken` conflict path routing back to the date step with an error) verified end-to-end with Playwright against a **local HTTP server serving `index.html`** with `/api/availability` and `/api/book` mocked (fetch from a `file://` origin doesn't reliably hit route interception, hence the local server). Existing site regressions (work filters, case-study modals) re-verified working alongside the new widget.
-- **Not yet tested:** anything against real Google Calendar or real GHL APIs — impossible without the credentials in the next section, which only Bryan can create.
+- `api/_lib/slots.js`'s remaining pure functions (timezone offset formatting, booking-window bounds, minimum-notice check) unit-tested directly with `node` — 6/6 passed. (The earlier slot-generation/buffer-exclusion tests from the two-system version no longer apply — that logic moved to GHL and was deleted from this codebase.)
+- All `api/*.js` files syntax-checked (`node --check`) after both the initial build and the GHL-only rewrite.
+- Frontend widget flow (calendar render → date select → slot select → form → submit → confirmation, and the 409 `slot_taken` conflict path) verified end-to-end with Playwright against a **local HTTP server serving `index.html`** with `/api/availability` and `/api/book` mocked (fetch from a `file://` origin doesn't reliably hit route interception, hence the local server) — re-run after the GHL-only rewrite, still passes, confirming the frontend needed zero changes. Existing site regressions (work filters, case-study modals) re-verified working alongside the widget both times.
+- **Not yet tested:** anything against the real GHL API — impossible without the credentials below, which only Bryan can create. This includes the response-shape verification flagged above.
 
 ### Credential setup — Bryan must do this himself (agent has no access to his accounts)
 
-**Google Cloud service account:**
-1. console.cloud.google.com → create/reuse a project → enable **Google Calendar API**.
-2. Create a **Service Account** (no special IAM role needed).
-3. Service Account → Keys → Add Key → JSON. Download it — treat like a password, never commit it, never paste it into `index.html`.
-4. Note `client_email` and `private_key` from that JSON file.
-5. In Google Calendar (as Bryan) → Settings → his calendar → **Share with specific people** → add the service account's `client_email` with **"Make changes to events"** (write access).
-6. Note the Calendar ID (Settings → Integrate calendar).
-
 **GHL Private Integration:**
 1. In the GHL sub-account currently running the booking widget → Settings → **Private Integrations** (not the legacy API Key page).
-2. Create one, scopes: contacts read/write + calendar/appointments write.
+2. Create one, scopes: contacts read/write + calendar/appointments write + calendar/free-slots read (exact scope names to confirm in GHL's UI when creating it).
 3. Copy the token immediately (GHL shows it once).
 4. Note the Location ID, and the target Calendar ID (confirm the actual ID from that calendar's own settings page — don't assume it equals the `y7JL04RcQUy2EyhUm1FQ` URL slug from the old iframe).
 
 **Vercel deployment:**
-1. Simplest: git init this folder, push to a new GitHub repo, connect via Vercel's "Import Git Repository" flow (auto-deploy on push for future edits).
+1. This repo is already pushed to `github.com/RedCheeksCoder/portfolio` (as of 2026-07-18) — connect it via Vercel's "Import Git Repository" flow for auto-deploy on push.
 2. No-git alternative: `npm i -g vercel`, run `vercel` from inside `Portfolio/`.
-3. Add all six vars from `.env.example` under Vercel Project Settings → Environment Variables once the project exists — real secrets live only there, never in the repo.
+3. Add the four vars from `.env.example` (`GHL_PRIVATE_INTEGRATION_TOKEN`, `GHL_LOCATION_ID`, `GHL_CALENDAR_ID`, `BOOKING_TIMEZONE`) under Vercel Project Settings → Environment Variables once the project exists — real secrets live only there, never in the repo.
 
 ### Known limitations (documented, not silent gaps)
 1. **Soft race-guard, not a hard lock** — see API behavior above. Acceptable for expected volume; revisit if booking traffic ever gets high enough for double-bookings to become a real problem.
-2. **No native Google Calendar invite email** to the visitor (bare service account can't send them) — GHL's reminder automation is the sole visitor-facing notification. Confirm this matches what the old GHL iframe already did (likely yes, since GHL's own widget was presumably already the notification source).
-3. **GHL sync failure is non-fatal** to the visitor-facing response — see API behavior above. Bryan should periodically check Vercel function logs early on until this proves reliable.
-4. Config values (working hours, timezone, duration, buffer, notice window, advance window, fields collected) are the agent's defaults, not yet confirmed by Bryan — see §8.
+2. **GHL free-slots response shape unverified** — see the "Needs verification" callout above. This is the single biggest risk to this feature actually working on first deploy.
+3. Config values (timezone, duration, notice window, advance window, fields collected) are the agent's defaults, not yet confirmed by Bryan — see §8. Working hours/buffer are now GHL calendar settings, not agent defaults — Bryan should just set those directly in GHL to whatever he wants.
 
 ---
 

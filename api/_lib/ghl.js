@@ -1,7 +1,16 @@
-// GHL (GoHighLevel) REST API v2 — plain fetch, no SDK.
-// NOTE: verify these exact endpoint paths/scopes against GHL's current API docs
-// before going live — their API has moved around between versions. This targets
-// the v2 API at services.leadconnectorhq.com with a Private Integration token.
+// GHL (GoHighLevel) REST API v2 — plain fetch, no SDK. GHL is now the ONLY
+// external system this backend talks to (Google Calendar was removed 2026-07-18
+// — see CLAUDE.md §12 for why). GHL's calendar is the single source of truth
+// for both availability and bookings.
+//
+// NOTE: verify these exact endpoint paths/params/response shapes against GHL's
+// live API reference before going live. GHL's docs site renders parameter
+// tables and example payloads client-side (JS), which this environment
+// couldn't fully extract via automated fetch — confirmed endpoints exist
+// (GET /calendars/:calendarId/free-slots, POST /calendars/events/appointments)
+// but exact query param names and the free-slots response shape should be
+// double-checked against a live request during `vercel dev` testing, ideally
+// by inspecting one real response before trusting the parsing below blindly.
 const GHL_BASE = 'https://services.leadconnectorhq.com';
 const GHL_API_VERSION = '2021-07-28';
 
@@ -17,6 +26,43 @@ function ghlHeaders() {
     Version: GHL_API_VERSION,
     'Content-Type': 'application/json',
   };
+}
+
+// Fetches GHL's own computed free slots for a calendar over [startDate, endDate)
+// (Date instants). Returns a flat array of real UTC Date `start` instants.
+//
+// GHL's documented response shape is "an availability map keyed by date
+// (YYYY-MM-DD)" — the exact per-date value shape (array of ISO start-time
+// strings vs. array of {startTime} objects) wasn't confirmed from docs, so
+// this parses defensively across the shapes GHL is known to have used.
+export async function getFreeSlots(startDate, endDate, timezone) {
+  const calendarId = requireEnv('GHL_CALENDAR_ID');
+  const params = new URLSearchParams({
+    startDate: String(startDate.getTime()), // epoch ms — GHL v2 commonly uses epoch ms for date-range params; VERIFY
+    endDate: String(endDate.getTime()),
+    timezone,
+  });
+  const res = await fetch(`${GHL_BASE}/calendars/${calendarId}/free-slots?${params}`, {
+    method: 'GET',
+    headers: ghlHeaders(),
+  });
+  if (!res.ok) {
+    throw new Error(`GHL getFreeSlots failed: ${res.status} ${await res.text()}`);
+  }
+  const data = await res.json();
+
+  const starts = [];
+  for (const dateKey of Object.keys(data)) {
+    if (dateKey === 'traceId') continue; // GHL includes a traceId field alongside date keys in some versions
+    const dayValue = data[dateKey];
+    const rawSlots = Array.isArray(dayValue) ? dayValue : dayValue?.slots;
+    if (!Array.isArray(rawSlots)) continue;
+    for (const slot of rawSlots) {
+      const iso = typeof slot === 'string' ? slot : (slot.startTime || slot.start);
+      if (iso) starts.push(new Date(iso));
+    }
+  }
+  return starts;
 }
 
 // Creates or updates a contact by email, returns the contact id.
@@ -56,22 +102,4 @@ export async function createAppointment({ contactId, start, end, title }) {
     throw new Error(`GHL createAppointment failed: ${res.status} ${await res.text()}`);
   }
   return res.json();
-}
-
-// Full dual-write: upsert contact then create the appointment. Returns
-// { ok: true, appointment } or { ok: false, error } — never throws, so callers
-// (api/book.js) can treat GHL failure as non-fatal per the plan's design.
-export async function syncBookingToGhl({ name, email, phone, start, end, notes }) {
-  try {
-    const contactId = await upsertContact({ name, email, phone });
-    const appointment = await createAppointment({
-      contactId,
-      start,
-      end,
-      title: `Discovery Call — ${name}${notes ? ` (${notes.slice(0, 80)})` : ''}`,
-    });
-    return { ok: true, appointment };
-  } catch (err) {
-    return { ok: false, error: err.message };
-  }
 }

@@ -1,6 +1,6 @@
 import { BOOKING_CONFIG } from './_lib/config.js';
-import { generateSlots, isDateWithinBookingWindow, toOffsetISOString, zonedTimeToUtc } from './_lib/slots.js';
-import { getBusyBlocks } from './_lib/googleCalendar.js';
+import { isDateWithinBookingWindow, meetsMinNotice, toOffsetISOString, zonedTimeToUtc } from './_lib/slots.js';
+import { getFreeSlots } from './_lib/ghl.js';
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -22,12 +22,17 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Fetch busy blocks for the full day window so generateSlots can filter locally.
     const dayStart = zonedTimeToUtc(date, '00:00', BOOKING_CONFIG.timezone);
     const dayEnd = zonedTimeToUtc(date, '23:59', BOOKING_CONFIG.timezone);
-    const busyBlocks = await getBusyBlocks(dayStart, dayEnd);
+    const starts = await getFreeSlots(dayStart, dayEnd, BOOKING_CONFIG.timezone);
 
-    const slots = generateSlots(date, BOOKING_CONFIG, busyBlocks);
+    const now = new Date();
+    const slotMs = BOOKING_CONFIG.slotDurationMinutes * 60000;
+    const slots = starts
+      .filter((start) => meetsMinNotice(start, BOOKING_CONFIG, now))
+      .map((start) => ({ start, end: new Date(start.getTime() + slotMs) }))
+      .sort((a, b) => a.start - b.start);
+
     res.status(200).json({
       date,
       timezone: BOOKING_CONFIG.timezone,

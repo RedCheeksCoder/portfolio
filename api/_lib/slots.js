@@ -1,4 +1,7 @@
 // Pure logic, no I/O — safe to unit-test directly with `node`.
+// Slot generation itself now lives in GHL (its own calendar's working
+// hours/duration/buffer settings) — what's left here is just timezone math for
+// formatting/validating what GHL returns, and the booking-window guardrail.
 
 // Offset (in minutes, local - UTC) of `timeZone` at the instant `date`.
 // Uses Intl's real tz database so this is correct across DST if it's ever needed,
@@ -41,56 +44,14 @@ export function toOffsetISOString(date, timeZone) {
   return `${y}-${mo}-${d}T${h}:${mi}:${s}${formatOffsetString(offsetMinutes)}`;
 }
 
-// Day-of-week (0=Sun..6=Sat) for a "YYYY-MM-DD" date string, evaluated in `timeZone`.
-export function weekdayInZone(dateStr, timeZone) {
-  const noonUtc = zonedTimeToUtc(dateStr, '12:00', timeZone);
-  const dtf = new Intl.DateTimeFormat('en-US', { timeZone, weekday: 'short' });
-  const map = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
-  return map[dtf.format(noonUtc)];
-}
-
-function overlaps(aStart, aEnd, bStart, bEnd) {
-  return aStart < bEnd && bStart < aEnd;
-}
-
-/**
- * Generates candidate slots for a given date, minus any that overlap busy blocks
- * (expanded by config.bufferMinutes on each side) or fall inside the minimum-notice window.
- *
- * @param {string} dateStr - "YYYY-MM-DD"
- * @param {object} config - BOOKING_CONFIG
- * @param {{start: Date, end: Date}[]} busyBlocks - busy periods as real UTC Date instants
- * @param {Date} now - current instant (injectable for testing)
- * @returns {{start: Date, end: Date}[]}
- */
-export function generateSlots(dateStr, config, busyBlocks, now = new Date()) {
-  const weekday = weekdayInZone(dateStr, config.timezone);
-  if (!config.workingDays.includes(weekday)) return [];
-
-  const dayStart = zonedTimeToUtc(dateStr, config.workingHours.start, config.timezone);
-  const dayEnd = zonedTimeToUtc(dateStr, config.workingHours.end, config.timezone);
-  const slotMs = config.slotDurationMinutes * 60000;
-  const bufferMs = config.bufferMinutes * 60000;
-  const minNoticeMs = config.minNoticeHours * 3600000;
-  const earliestAllowed = new Date(now.getTime() + minNoticeMs);
-
-  const slots = [];
-  for (let start = dayStart; start.getTime() + slotMs <= dayEnd.getTime(); start = new Date(start.getTime() + slotMs)) {
-    const end = new Date(start.getTime() + slotMs);
-    if (start < earliestAllowed) continue;
-    const blocked = busyBlocks.some((b) =>
-      overlaps(start, end, new Date(b.start.getTime() - bufferMs), new Date(b.end.getTime() + bufferMs))
-    );
-    if (blocked) continue;
-    slots.push({ start, end });
-  }
-  return slots;
-}
-
 export function isDateWithinBookingWindow(dateStr, config, now = new Date()) {
   const dayStart = zonedTimeToUtc(dateStr, '00:00', config.timezone);
+  const todayStart = zonedTimeToUtc(now.toISOString().slice(0, 10), '00:00', config.timezone);
   const maxDate = new Date(now.getTime() + config.maxAdvanceDays * 86400000);
-  return dayStart.getTime() >= zonedTimeToUtc(
-    new Date(now).toISOString().slice(0, 10), '00:00', config.timezone
-  ).getTime() && dayStart <= maxDate;
+  return dayStart.getTime() >= todayStart.getTime() && dayStart <= maxDate;
+}
+
+// True if `start` (a real Date instant) is far enough in the future per minNoticeHours.
+export function meetsMinNotice(start, config, now = new Date()) {
+  return start.getTime() >= now.getTime() + config.minNoticeHours * 3600000;
 }
