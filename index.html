@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bryan Odina — Automation Systems for Growing Businesses</title>
+<meta name="description" content="Bryan Odina architects automation systems — CRM workflows, AI integration, and funnels — so businesses grow without adding headcount.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#151513;
+    --bg-alt:#0B0B0B;
+    --surface:#1D1D1A;
+    --surface-2:#242421;
+    --border:#33332d;
+    --text:#F4F1E8;
+    --text-muted:#a8a598;
+    --accent:#A54F16;          /* primary orange */
+    --accent-2:#CC7E31;        /* secondary orange */
+    --accent-soft:#CC7E3122;
+    --accent-hover:#CC7E31;
+    --radius:10px;
+    --font-display:'Sansation',sans-serif;
+    --font-body:'Quicksand',sans-serif;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    overflow-x:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-weight:500;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  section{position:relative;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:var(--font-display);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+    font-weight:700;
+  }
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--accent);}
+  h1,h2,h3{font-family:var(--font-display);margin:0;font-weight:700;letter-spacing:.01em;}
+  .muted{color:var(--text-muted);}
+
+  /* Nav */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:#151513d9;
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{
+    max-width:var(--maxw);margin:0 auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{font-family:var(--font-display);font-weight:700;font-size:18px;}
+  .logo span{color:var(--accent);}
+  .nav-links{display:none;gap:28px;font-size:14.5px;font-weight:600;}
+  @media(min-width:880px){.nav-links{display:flex;}}
+  .nav-links a{color:var(--text-muted);transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:8px;
+    font-family:var(--font-body);font-size:14.5px;font-weight:700;
+    border:1px solid transparent;
+    cursor:pointer;transition:transform .15s, background .2s, border-color .2s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--accent);color:#F4F1E8;}
+  .btn-primary:hover{background:var(--accent-hover);}
+  .btn-ghost{border-color:var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--accent);}
+  .nav-cta{display:none;}
+  @media(min-width:880px){.nav-cta{display:inline-flex;}}
+
+  /* Hero */
+  .hero{padding:96px 0 72px;overflow:hidden;}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:56px;align-items:center;}
+  @media(min-width:920px){.hero-grid{grid-template-columns:1.08fr .92fr;}}
+  .hero h1{font-size:clamp(34px,5vw,52px);line-height:1.12;}
+  .hero h1 em{font-style:normal;color:var(--accent-2);}
+  .hero p.lede{font-size:17px;color:var(--text-muted);max-width:540px;margin:24px 0 32px;}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;}
+  .creds{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px;}
+  .cred-tag{
+    font-family:var(--font-display);font-size:11px;letter-spacing:.08em;
+    color:var(--text-muted);text-transform:uppercase;
+    border:1px solid var(--border);padding:7px 12px;border-radius:6px;
+  }
+
+  .hero-visual{position:relative;}
+  .hero-photo{
+    width:min(340px,80%);margin:0 auto;border-radius:16px;
+    border:1px solid var(--border);
+    box-shadow:0 24px 60px -24px #000c;
+    position:relative;z-index:2;
+  }
+  .hero-visual::before{
+    content:"";position:absolute;inset:8% -4% -6% 12%;
+    border:1px solid var(--accent);border-radius:20px;opacity:.35;z-index:1;
+  }
+  .hero-stats{
+    display:flex;justify-content:center;gap:28px;margin-top:28px;position:relative;z-index:2;
+  }
+  .hero-stat{text-align:center;}
+  .hero-stat b{font-family:var(--font-display);font-size:22px;color:var(--accent-2);display:block;}
+  .hero-stat span{font-size:12.5px;color:var(--text-muted);}
+
+  /* Sections */
+  .section{padding:84px 0;border-top:1px solid var(--border);}
+  .section.alt{background:var(--bg-alt);}
+  .section-head{max-width:660px;margin-bottom:48px;}
+  .section-head h2{font-size:clamp(26px,3.4vw,36px);}
+  .section-head p{color:var(--text-muted);margin-top:14px;font-size:15.5px;}
+
+  /* About */
+  .about-grid{display:grid;grid-template-columns:1fr;gap:44px;align-items:center;}
+  @media(min-width:880px){.about-grid{grid-template-columns:1fr 1.25fr;}}
+  .about-photo{border-radius:16px;border:1px solid var(--border);}
+  .about-body p{color:var(--text-muted);font-size:15.5px;margin:0 0 16px;}
+  .about-body strong{color:var(--text);font-weight:700;}
+
+  /* Services */
+  .services-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:640px){.services-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:980px){.services-grid{grid-template-columns:repeat(3,1fr);}}
+  .service-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px;transition:border-color .2s, transform .2s;
+  }
+  .service-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .service-icon{
+    width:38px;height:38px;border-radius:8px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--accent-2);
+    margin-bottom:16px;font-size:17px;
+  }
+  .service-card h3{font-size:16px;margin-bottom:8px;}
+  .service-card p{font-size:14px;color:var(--text-muted);margin:0;}
+
+  /* Keyword marquee banner */
+  .marquee-band{
+    width:100%;
+    overflow:hidden;
+    background:linear-gradient(90deg, #A54F1680, #CC7E3180);
+    padding:18px 0;
+    margin:34px 0 10px;
+    border-top:1px solid #CC7E3155;
+    border-bottom:1px solid #CC7E3155;
+  }
+  .marquee-track{
+    display:flex;
+    width:max-content;
+    animation:marquee-ltr 120s linear infinite;
+  }
+  .marquee-band:hover .marquee-track{animation-play-state:paused;}
+  .marquee-group{
+    display:flex;align-items:center;gap:0;
+    padding-right:0;
+  }
+  .marquee-group span{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#ffffff;
+    white-space:nowrap;
+    padding:0 14px;
+  }
+  .marquee-group span::after{
+    content:"·";
+    color:#ffffffaa;
+    padding-left:28px;
+  }
+  @keyframes marquee-ltr{
+    from{transform:translateX(-50%);}
+    to{transform:translateX(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{animation:none;transform:none;}
+  }
+
+  /* Badges */
+  .badges-row{display:flex;flex-wrap:wrap;gap:18px;}
+  .badge-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;
+    width:160px;transition:border-color .2s, transform .2s;
+  }
+  .badge-card:hover{border-color:var(--accent-2);transform:translateY(-3px);}
+  .badge-card img{width:96px;height:96px;object-fit:contain;}
+  .badge-card span{
+    font-family:var(--font-display);font-size:11.5px;letter-spacing:.05em;
+    text-transform:uppercase;color:var(--text-muted);text-align:center;
+  }
+
+  /* Booking widget */
+  .booking-widget{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    padding:28px;max-width:640px;
+  }
+  .booking-step.is-hidden{display:none;}
+  .booking-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+  .booking-nav h3{font-size:16px;}
+  .booking-nav-btn{
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:15px;
+  }
+  .booking-nav-btn:hover{border-color:var(--accent);}
+  .booking-calendar{
+    display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px;
+  }
+  .booking-weekday{
+    text-align:center;font-family:var(--font-display);font-size:10.5px;color:var(--text-muted);
+    text-transform:uppercase;letter-spacing:.05em;padding-bottom:4px;
+  }
+  .day-cell{
+    aspect-ratio:1;border-radius:8px;border:1px solid var(--border);background:transparent;
+    color:var(--text);font-family:var(--font-body);font-size:13px;cursor:pointer;transition:all .15s;
+  }
+  .day-cell:disabled{opacity:.3;cursor:not-allowed;}
+  .day-cell:not(:disabled):hover{border-color:var(--accent);}
+  .day-cell.active{background:var(--accent);border-color:var(--accent);font-weight:700;}
+  .day-cell.empty{border:none;cursor:default;}
+  .booking-slots{display:flex;flex-wrap:wrap;gap:10px;}
+  .slot-btn{
+    font-family:var(--font-display);font-size:12.5px;letter-spacing:.03em;
+    padding:10px 16px;border-radius:20px;border:1px solid var(--border);
+    background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s;
+  }
+  .slot-btn:hover{color:var(--text);border-color:var(--accent);}
+  .booking-back{
+    background:none;border:none;color:var(--text-muted);font-family:var(--font-body);
+    font-size:13px;cursor:pointer;margin-bottom:18px;padding:0;
+  }
+  .booking-back:hover{color:var(--accent-2);}
+  .booking-error{color:#e0664f;font-size:13px;margin-top:12px;}
+  .booking-selected-time{
+    font-family:var(--font-display);color:var(--accent-2);font-size:13px;margin-bottom:18px;
+  }
+
+  /* Work */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px;}
+  .filter-btn{
+    font-family:var(--font-display);font-size:12px;letter-spacing:.05em;
+    padding:10px 18px;border-radius:20px;border:1px solid var(--border);
+    background:transparent;color:var(--text-muted);cursor:pointer;transition:all .2s;
+  }
+  .filter-btn:hover{color:var(--text);border-color:var(--accent);}
+  .filter-btn.active{background:var(--accent);color:#F4F1E8;border-color:var(--accent);font-weight:700;}
+
+  .work-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+  @media(min-width:720px){.work-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1040px){.work-grid{grid-template-columns:repeat(3,1fr);}}
+  .work-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;transition:border-color .2s, transform .2s;display:flex;flex-direction:column;
+  }
+  .work-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .work-card.hidden{display:none;}
+  .work-thumb{aspect-ratio:16/10;object-fit:cover;object-position:top;width:100%;cursor:zoom-in;background:var(--surface-2);}
+  .work-body{padding:20px;display:flex;flex-direction:column;flex:1;}
+  .work-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:8px;}
+  .work-top h3{font-size:16px;}
+  .work-industry{ /* uses accent-2 */
+    font-family:var(--font-display);font-size:10.5px;letter-spacing:.06em;
+    color:var(--accent-2);white-space:nowrap;text-transform:uppercase;padding-top:3px;
+  }
+  .work-desc{font-size:13.5px;color:var(--text-muted);margin:0 0 14px;}
+  .work-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
+  .work-tag{
+    font-size:11.5px;color:var(--text-muted);border:1px solid var(--border);
+    padding:4px 9px;border-radius:5px;
+  }
+  .work-link{font-size:13px;font-weight:700;color:var(--accent-2);margin-top:14px;display:inline-block;}
+  .work-link:hover{color:var(--accent-hover);}
+
+  /* Flowcharts */
+  .flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media(min-width:640px){.flow-grid{grid-template-columns:repeat(3,1fr);}}
+  @media(min-width:980px){.flow-grid{grid-template-columns:repeat(5,1fr);}}
+  .flow-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;cursor:zoom-in;transition:border-color .2s, transform .2s;
+  }
+  .flow-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .flow-card img{aspect-ratio:4/3;object-fit:cover;object-position:top;width:100%;}
+  .flow-card span{
+    display:block;padding:10px 12px;font-family:var(--font-display);font-size:11.5px;
+    letter-spacing:.03em;color:var(--text-muted);text-align:center;
+  }
+
+  /* Videos */
+  .video-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+  @media(min-width:640px){.video-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1000px){.video-grid{grid-template-columns:repeat(4,1fr);}}
+  .video-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .video-card video{width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;}
+  .video-card p{padding:12px 16px;margin:0;font-size:13.5px;color:var(--text-muted);}
+
+  /* Testimonials */
+  .test-grid{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:760px){.test-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:1040px){.test-grid{grid-template-columns:repeat(3,1fr);}}
+  .test-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:24px;display:flex;flex-direction:column;
+  }
+  .test-stars{color:var(--accent-2);font-size:13px;letter-spacing:2px;margin-bottom:12px;}
+  .test-card p{font-size:14px;color:var(--text-muted);margin:0 0 18px;flex:1;}
+  .test-person{display:flex;align-items:center;gap:12px;}
+  .test-avatar{
+    width:42px;height:42px;border-radius:50%;object-fit:cover;
+    border:2px solid var(--accent);
+  }
+  .test-name{font-size:14px;font-weight:700;font-family:var(--font-display);}
+  .test-role{font-size:12.5px;color:var(--text-muted);}
+
+  /* Process */
+  .process-grid{display:grid;grid-template-columns:1fr;gap:24px;}
+  @media(min-width:760px){.process-grid{grid-template-columns:repeat(3,1fr);}}
+  .process-step{
+    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px;
+  }
+  .process-num{
+    font-family:var(--font-display);color:var(--accent-2);font-size:13px;
+    letter-spacing:.1em;margin-bottom:12px;display:block;
+  }
+  .process-step h3{font-size:16.5px;margin-bottom:8px;}
+  .process-step p{font-size:14px;color:var(--text-muted);margin:0;}
+
+  /* Contact */
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+  @media(min-width:900px){.contact-grid{grid-template-columns:.9fr 1.1fr;}}
+  .contact-copy p{color:var(--text-muted);font-size:15px;}
+  .form-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;
+  }
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;font-family:var(--font-display);font-size:11px;color:var(--text-muted);
+    margin-bottom:7px;text-transform:uppercase;letter-spacing:.08em;
+  }
+  .field input, .field textarea{
+    width:100%;background:var(--bg-alt);border:1px solid var(--border);border-radius:7px;
+    padding:12px;color:var(--text);font-family:var(--font-body);font-size:14.5px;
+  }
+  .field input:focus, .field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .field textarea{resize:vertical;min-height:90px;}
+
+  /* Footer */
+  footer{border-top:1px solid var(--border);padding:40px 0;background:var(--bg-alt);}
+  .foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;}
+  .foot-brand{font-family:var(--font-display);font-weight:700;}
+  .foot-cred{font-size:12.5px;color:var(--text-muted);margin-top:4px;}
+  .foot-socials{display:flex;gap:18px;}
+  .foot-socials a{color:var(--text-muted);font-size:13.5px;font-weight:600;transition:color .2s;}
+  .foot-socials a:hover{color:var(--accent);}
+
+  /* Work case-study trigger button */
+  .work-case-btn{
+    background:none;border:none;padding:0;margin-top:14px;cursor:pointer;
+    font:inherit;text-align:left;display:block;
+  }
+  .work-thumb{cursor:zoom-in;}
+
+  /* Case-study modal */
+  .case-modal{
+    position:fixed;inset:0;background:#000d;z-index:98;
+    display:none;align-items:flex-start;justify-content:center;
+    padding:5vh 20px;overflow-y:auto;
+  }
+  .case-modal.open{display:flex;}
+  .case-panel{
+    background:var(--bg-alt);border:1px solid var(--border);border-radius:16px;
+    max-width:920px;width:100%;padding:32px;position:relative;margin-bottom:5vh;
+  }
+  .case-close{
+    position:absolute;top:18px;right:18px;background:var(--surface);
+    border:1px solid var(--border);color:var(--text);border-radius:8px;
+    width:38px;height:38px;font-size:17px;cursor:pointer;z-index:2;
+  }
+  .case-head{padding-right:50px;margin-bottom:20px;}
+  .case-head .work-industry{font-size:12px;}
+  .case-head h3{font-size:24px;margin-top:6px;}
+  .case-section{margin-bottom:20px;}
+  .case-section h4{
+    font-family:var(--font-display);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent-2);margin-bottom:8px;
+  }
+  .case-section p{font-size:14.5px;color:var(--text-muted);margin:0;}
+  .case-images{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:22px;
+  }
+  .case-thumb-wrap{
+    position:relative;border-radius:8px;overflow:hidden;border:1px solid var(--border);cursor:zoom-in;
+    background:var(--surface-2);
+  }
+  .case-thumb-wrap img{aspect-ratio:4/3;object-fit:cover;object-position:top;width:100%;}
+  .case-thumb-wrap.blurred img{filter:blur(10px);transform:scale(1.06);}
+  .case-thumb-wrap.blurred::after{
+    content:"Blurred for privacy";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:8px;font-family:var(--font-display);font-size:10px;font-weight:700;
+    color:var(--text);background:#00000066;
+  }
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed;inset:0;background:#000d;z-index:100;
+    display:none;align-items:center;justify-content:center;padding:24px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(1100px,94vw);max-height:88vh;border-radius:10px;box-shadow:0 30px 80px #000;}
+  .lightbox-close{
+    position:absolute;top:20px;right:24px;background:var(--surface);
+    border:1px solid var(--border);color:var(--text);border-radius:8px;
+    width:40px;height:40px;font-size:18px;cursor:pointer;
+  }
+  .lightbox-cap{
+    position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+    background:var(--surface);border:1px solid var(--border);border-radius:8px;
+    padding:8px 16px;font-size:13px;color:var(--text-muted);max-width:90vw;
+  }
+
+  /* Reveal */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">BRYAN <span>ODINA</span></div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#book">Book a Call</a>
+      <a href="#work">Work</a>
+      <a href="#flowcharts">Process Maps</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#book" class="btn btn-primary nav-cta">Book a call</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">What I Can Do For Your Business</span>
+      <h1>Stop Hiring for Work That <em>Automation</em> Can Already Do</h1>
+      <p class="lede">I architect and build automation systems, from CRM workflows to AI-powered processes, that handle the repetitive, time-consuming work, so you can grow without adding to payroll.</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn btn-primary">Book a quick call →</a>
+        <a href="#work" class="btn btn-ghost">See the work</a>
+      </div>
+      <div class="creds">
+        <span class="cred-tag">Licensed Electronics Engineer</span>
+        <span class="cred-tag">GHL Certified Admin</span>
+        <span class="cred-tag">Six Sigma Yellow Belt</span>
+        <span class="cred-tag">N8N Certified</span>
+      </div>
+    </div>
+    <div class="hero-visual reveal">
+      <img class="hero-photo" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5949c01097b8119595d9df.png" alt="Bryan Odina — automation consultant">
+      <div class="hero-stats">
+        <div class="hero-stat"><b>15+</b><span>Client systems built</span></div>
+        <div class="hero-stat"><b>24/7</b><span>Systems running</span></div>
+        <div class="hero-stat"><b>8.7K</b><span>Community members</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-band" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-group">
+      <span>n8n</span><span>Make</span><span>GoHighLevel</span><span>Zapier</span><span>API</span><span>Database</span><span>Webhook</span><span>AI Agent</span><span>LLM</span><span>Claude</span><span>ChatGPT</span><span>OpenAI</span><span>Automation</span><span>Workflow</span><span>CRM</span><span>Integration</span><span>No-Code</span><span>Python</span><span>JavaScript</span><span>JSON</span><span>REST API</span><span>OAuth</span><span>Supabase</span><span>Airtable</span><span>Google Sheets</span><span>Slack</span><span>Telegram</span><span>Twilio</span><span>SMS Automation</span><span>Email Automation</span><span>Chatbot</span><span>Voice AI</span><span>RAG</span><span>Prompt Engineering</span><span>Vector Database</span><span>Machine Learning</span><span>NLP</span><span>Web Scraping</span><span>Playwright</span><span>Stripe</span><span>Xendit</span><span>Funnels</span><span>Lead Generation</span><span>Pipeline Automation</span><span>A2P 10DLC</span><span>AI Receptionist</span><span>Agentic Workflows</span><span>MCP</span><span>Cron Jobs</span><span>Data Sync</span>
+    </div>
+    <div class="marquee-group">
+      <span>n8n</span><span>Make</span><span>GoHighLevel</span><span>Zapier</span><span>API</span><span>Database</span><span>Webhook</span><span>AI Agent</span><span>LLM</span><span>Claude</span><span>ChatGPT</span><span>OpenAI</span><span>Automation</span><span>Workflow</span><span>CRM</span><span>Integration</span><span>No-Code</span><span>Python</span><span>JavaScript</span><span>JSON</span><span>REST API</span><span>OAuth</span><span>Supabase</span><span>Airtable</span><span>Google Sheets</span><span>Slack</span><span>Telegram</span><span>Twilio</span><span>SMS Automation</span><span>Email Automation</span><span>Chatbot</span><span>Voice AI</span><span>RAG</span><span>Prompt Engineering</span><span>Vector Database</span><span>Machine Learning</span><span>NLP</span><span>Web Scraping</span><span>Playwright</span><span>Stripe</span><span>Xendit</span><span>Funnels</span><span>Lead Generation</span><span>Pipeline Automation</span><span>A2P 10DLC</span><span>AI Receptionist</span><span>Agentic Workflows</span><span>MCP</span><span>Cron Jobs</span><span>Data Sync</span>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <img class="about-photo" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5948aae5e255d974b8e541.jpg" alt="Bryan Odina">
+    </div>
+    <div class="about-body reveal">
+      <span class="eyebrow">About</span>
+      <h2 style="font-size:28px;margin-bottom:18px;">Engineer first. Automation builder by trade.</h2>
+      <p>I'm a <strong>Licensed Electronics Engineer</strong> and <strong>Certified GoHighLevel Admin</strong> specializing in CRM, funnel and website development, and AI-powered automation. Before automation, I spent 5+ years as an engineering professor — I still think in systems, not tasks.</p>
+      <p>Today I work as <strong>CTO at The 414 Project</strong>, a digital agency, serve as the <strong>GHL expert at Wisdom Church of Manila</strong>, and run <strong>Level Up Academy</strong>, a free community helping Filipino VAs and freelancers upskill in GHL, n8n, and AI tools.</p>
+      <p>My focus is simple: build the systems that do the repetitive work, so the humans on your team can do the parts that actually need them.</p>
+      <a href="#book" class="btn btn-ghost" style="margin-top:8px;">Book a call with me</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="certifications" style="padding:56px 0;">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-bottom:32px;">
+      <span class="eyebrow">Certifications</span>
+      <h2 style="font-size:clamp(22px,3vw,30px);">Certified, not self-proclaimed</h2>
+    </div>
+    <div class="badges-row">
+      <a class="badge-card reveal" href="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a595a391097b811959c1dc8.png" target="_blank" rel="noopener">
+        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a595a391097b811959c1dc8.png" alt="GoHighLevel Certified Admin badge" loading="lazy">
+        <span>GHL Certified Admin</span>
+      </a>
+      <a class="badge-card reveal" href="https://badges.n8n.io/4b4bd738-7bff-4d97-b395-b5b92d115d5b" target="_blank" rel="noopener">
+        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59688d1097b81195a133b7.png" alt="n8n Quick Start badge" loading="lazy">
+        <span>n8n Quick Start</span>
+      </a>
+      <a class="badge-card reveal" href="https://badges.n8n.io/997640e6-dab6-437f-ba73-6c45340555c5#acc.soNl8Oig" target="_blank" rel="noopener">
+        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59688da3791820f854ebd9.png" alt="n8n 101 badge" loading="lazy">
+        <span>N8N101</span>
+      </a>
+      <a class="badge-card reveal" href="https://badges.n8n.io/b1e5bae8-b195-46b6-a3d8-49a50b766d6b" target="_blank" rel="noopener">
+        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59688da3791820f854ebd4.png" alt="n8n 102 badge" loading="lazy">
+        <span>N8N102</span>
+      </a>
+      <a class="badge-card reveal" href="https://badges.n8n.io/5b55f813-088b-47fa-b2b0-5d6278ab5fbe#acc.ZibeY4Bt" target="_blank" rel="noopener">
+        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59688d9c9b37b5fd59b1bf.png" alt="n8n 103 badge" loading="lazy">
+        <span>N8N103</span>
+      </a>
+    </div>
+    <p class="muted" style="font-size:13px;margin-top:18px;">View my full n8n badge wallet <a href="https://badges.n8n.io/profile/eu-bryanodina485156/wallet" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:700;">here ↗</a></p>
+  </div>
+</section>
+
+<section class="section alt" id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Services</span>
+      <h2>What I build for clients</h2>
+      <p>Every service below exists for one reason — to remove a manual step from your operation.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal"><div class="service-icon">◧</div><h3>Website Design &amp; Development</h3><p>Fast, adaptable sites that give busy operators a clear, functional online presence.</p></div>
+      <div class="service-card reveal"><div class="service-icon">⚙</div><h3>Workflow Automation</h3><p>Process mapping to implementation — consistent, reliable execution without manual friction.</p></div>
+      <div class="service-card reveal"><div class="service-icon">✦</div><h3>AI Integration</h3><p>Conversational AI, AI receptionists, and AI-powered internal tools for always-on operations.</p></div>
+      <div class="service-card reveal"><div class="service-icon">₱</div><h3>Payment Integration</h3><p>End-to-end payment setup so your systems collect revenue without disruption.</p></div>
+      <div class="service-card reveal"><div class="service-icon">✉</div><h3>Email/SMS Marketing</h3><p>Lifecycle messaging systems (A2P 10DLC) for a direct, high-conversion line to your audience.</p></div>
+      <div class="service-card reveal"><div class="service-icon">→</div><h3>Customer Pipeline</h3><p>Lead capture to close — a transparent, high-velocity flow of prospects.</p></div>
+      <div class="service-card reveal"><div class="service-icon">▤</div><h3>Course Creation</h3><p>Structured, scalable ways to deliver knowledge without operational drag.</p></div>
+      <div class="service-card reveal"><div class="service-icon">◎</div><h3>Community Build</h3><p>Self-sustaining digital ecosystems that grow without constant manual moderation.</p></div>
+      <div class="service-card reveal"><div class="service-icon">⇄</div><h3>Third-Party Integration</h3><p>Connecting the tools in your stack into one seamless, reliable system.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Previous Work</span>
+      <h2>A curated selection of client systems</h2>
+      <p>Filter by what you're looking for. Click any thumbnail to expand it.</p>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="web">Web &amp; Funnels</button>
+      <button class="filter-btn" data-filter="automation">Automation</button>
+      <button class="filter-btn" data-filter="ai">AI</button>
+      <button class="filter-btn" data-filter="apps">Web Apps</button>
+      <button class="filter-btn" data-filter="payments">Payments</button>
+      <button class="filter-btn" data-filter="courses">Courses &amp; Community</button>
+      <button class="filter-btn" data-filter="compliance">A2P/10DLC Compliance</button>
+    </div>
+
+    <div class="work-grid" id="workGrid">
+
+      <div class="work-card reveal" data-category="ai apps automation" data-case="vanguard">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5a7d07baf5f6da40225faf.png" alt="Vanguard Credits website" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Vanguard Credits</h3><span class="work-industry">Credit Repair</span></div>
+          <p class="work-desc">AI-powered dispute automation platform — parses credit reports, applies a 17-rule engine, generates FCRA dispute letters, and tracks rounds in a pipeline. Reports processed in minutes, not hours.</p>
+          <div class="work-tags"><span class="work-tag">AI analysis</span><span class="work-tag">PDF generation</span><span class="work-tag">Pipeline board</span><span class="work-tag">Automated follow-ups</span></div>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="apps courses" data-case="woop">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660c9c9b37b5fd595e93.png" alt="Woop platform" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Woop</h3><span class="work-industry">Creator Platform</span></div>
+          <p class="work-desc">Creator rewards platform where video creators join campaigns, upload content, and earn per view — with earnings tracking, leaderboards, and built-in training courses.</p>
+          <div class="work-tags"><span class="work-tag">Creator dashboard</span><span class="work-tag">Campaign system</span><span class="work-tag">Earnings tracking</span><span class="work-tag">Training library</span></div>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="apps" data-case="nextlevel">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966081097b81195a0b62c.png" alt="NextLevel dashboard" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>NextLevel</h3><span class="work-industry">Productivity SaaS</span></div>
+          <p class="work-desc">All-in-one productivity dashboard for freelancers — task board, income &amp; expense tracking, client pipeline, habit tracker, time zones, and Pomodoro in a single app.</p>
+          <div class="work-tags"><span class="work-tag">Task board</span><span class="work-tag">Client pipeline</span><span class="work-tag">Habit tracking</span><span class="work-tag">Multi-currency</span></div>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web automation compliance" data-case="squirrel">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966171a0f048050e06fd1.png" alt="Squirrel Insurance" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1097b81195a0b41c.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>Squirrel Insurance</h3><span class="work-industry">Insurance</span></div>
+          <p class="work-desc">Full website with automated form registration, client onboarding, and instant team notifications.</p>
+          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">Onboarding</span><span class="work-tag">Team notification</span></div>
+          <a class="work-link" href="https://squirrelinsurance.com/home" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web automation compliance" data-case="tbb">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59661a1097b81195a0b7b4.png" alt="The Bill Busters" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1a0f048050e06ca8.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>The Bill Busters</h3><span class="work-industry">Service Company</span></div>
+          <p class="work-desc">Website with appointment booking automation, team notifications, and Google Sheets reporting.</p>
+          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">Booking</span><span class="work-tag">Google Sheets</span></div>
+          <a class="work-link" href="https://thebillbusters.com/" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="ai automation web compliance" data-case="gcr">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660fa961afe59f73aa9b.png" alt="Genesis Credit Restoration" loading="lazy" data-thumbs='{"ai":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eca08bf95bce31ead5.png","automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eea3791820f8548e61.png","compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eca3791820f8548e3e.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>Genesis Credit</h3><span class="work-industry">Credit Repair</span></div>
+          <p class="work-desc">AI chatbot, document upload flows, customer pipeline, and Zapier/webhook integrations behind a conversion-focused site.</p>
+          <div class="work-tags"><span class="work-tag">AI chat bot</span><span class="work-tag">Workflow automation</span><span class="work-tag">Webhooks</span></div>
+          <a class="work-link" href="https://genesiscreditrestoration.com/" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web automation payments courses" data-case="aemr">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5a80b3aef6925d34362897.png" alt="AEMR website" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966049c9b37b5fd59576b.png","payments":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966012f7322e0964a994b.png","courses":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f9baf5f6da40d9bcb2.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>AEMR</h3><span class="work-industry">Medical Education</span></div>
+          <p class="work-desc">Complete course platform for a Spanish medical academy — 17-module course, Stripe payments up to €7,450, email marketing, and a 6,030-opportunity pipeline.</p>
+          <div class="work-tags"><span class="work-tag">Course creation</span><span class="work-tag">Stripe</span><span class="work-tag">Email marketing</span><span class="work-tag">Community</span></div>
+          <a class="work-link" href="https://cursos.eng.aemr.es/home" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web automation" data-case="deanna">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660f9c9b37b5fd595e9d.png" alt="DeAnna Crawford funnel" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5a7f10baf5f6da4024d0c0.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>DeAnna Crawford</h3><span class="work-industry">Coaching</span></div>
+          <p class="work-desc">Masterclass funnel with lead scoring, backed by GHL automation flows and an automated social content calendar.</p>
+          <div class="work-tags"><span class="work-tag">Funnel build</span><span class="work-tag">Lead scoring</span><span class="work-tag">Automation</span><span class="work-tag">Social planner</span></div>
+          <a class="work-link" href="https://link.deannacrawford.com/preview/CpNyTmp4SrOH0d8UkLvx?notrack=true" target="_blank" rel="noopener">View funnel ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="courses automation" data-case="lua">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f9a961afe59f73a94c.png" alt="Level Up Academy" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f31a0f048050e06d31.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>Level Up Academy</h3><span class="work-industry">Gamified Course</span></div>
+          <p class="work-desc">My own gamified GHL training platform — RPG-style onboarding, quests, XP, leveling automations, and an 8.7K-member free community for Filipino VAs.</p>
+          <div class="work-tags"><span class="work-tag">Gamified automation</span><span class="work-tag">Course build</span><span class="work-tag">Community</span></div>
+          <a class="work-link" href="https://www.facebook.com/groups/levelupacademyph" target="_blank" rel="noopener">Visit community ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="ai web" data-case="fundedbiz">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660fa08bf95bce31ecef.png" alt="Funded Biz" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Funded Biz</h3><span class="work-industry">Business Funding</span></div>
+          <p class="work-desc">Personality-driven funding &amp; credit repair funnel with an AI chatbot and case-study content.</p>
+          <div class="work-tags"><span class="work-tag">AI chat bot</span><span class="work-tag">Web design &amp; dev</span></div>
+          <a class="work-link" href="https://funded.bryanautomatesghl.cc/" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web" data-case="federalbarbers">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660f1a0f048050e06f4f.png" alt="Federal Barbers" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Federal Barbers</h3><span class="work-industry">Barbershop</span></div>
+          <p class="work-desc">Sharp, conversion-ready barbershop site with services menu, testimonials, and booking flow.</p>
+          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">Booking</span></div>
+          <a class="work-link" href="https://preview-1784033346866045205.vibepreview.com/" target="_blank" rel="noopener">View preview ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="payments automation" data-case="wisdomchurch">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966032f7322e0964a997f.png" alt="Wisdom Church of Manila donation page" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f69c9b37b5fd5956b5.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>Wisdom Church of Manila</h3><span class="work-industry">Non-Profit</span></div>
+          <p class="work-desc">Xendit-to-GHL donation system for local payment methods, plus store and automation flows built inside GHL.</p>
+          <div class="work-tags"><span class="work-tag">Xendit payments</span><span class="work-tag">Automation</span><span class="work-tag">GHL Store</span></div>
+          <a class="work-link" href="https://wisdomchurchofmanila.org" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web" data-case="charitylift">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660e1097b81195a0b68a.png" alt="Charity Lift website" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Charity Lift</h3><span class="work-industry">Charity</span></div>
+          <p class="work-desc">Donation-focused site promoting top US charities, built with GHL AI Studio.</p>
+          <div class="work-tags"><span class="work-tag">AI Studio build</span><span class="work-tag">Web design &amp; dev</span></div>
+          <a class="work-link" href="https://charitylift.org" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="web apps automation" data-case="meritex">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966162f7322e0964a9b00.png" alt="Meritex Canada website" loading="lazy" data-thumbs='{"apps":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a596606a08bf95bce31ec69.png","automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f4524a3ec4c65a4e71.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>Meritex Canada</h3><span class="work-industry">Corporate</span></div>
+          <p class="work-desc">Corporate web presence built for a Canadian client, an AutoQuote web app for instant quotes, plus an automated client-review request flow.</p>
+          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">AutoQuote app</span><span class="work-tag">Review automation</span></div>
+          <a class="work-link" href="https://meritex.ca" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="payments automation" data-case="celestenicolas">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a596603a08bf95bce31ec42.png" alt="Celeste Nicolas Ministries giving page" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f69c9b37b5fd5956b5.png"}'>
+        <div class="work-body">
+          <div class="work-top"><h3>Celeste Nicolas Ministries</h3><span class="work-industry">Ministry</span></div>
+          <p class="work-desc">Giving/payment page plus GHL automation flows, built on the same system as Wisdom Church of Manila.</p>
+          <div class="work-tags"><span class="work-tag">Payments</span><span class="work-tag">Automation</span></div>
+          <a class="work-link" href="https://celestenicolas.org" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+      <div class="work-card reveal" data-category="automation" data-case="spacecoastleads">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fdbaf5f6da40d9bcf2.png" alt="Space Coast Leads SOP diagram" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Space Coast Leads</h3><span class="work-industry">Lead Generation</span></div>
+          <p class="work-desc">Lead-gen system with document signing, customer pipeline, Apollo.io integration, and 5 demo funnels.</p>
+          <div class="work-tags"><span class="work-tag">Apollo.io</span><span class="work-tag">Document signing</span><span class="work-tag">Pipeline</span></div>
+          <a class="work-link" href="https://spacecoastleads.com/" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="flowcharts">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Process Design</span>
+      <h2>SOP flowcharts across industries</h2>
+      <p>Before any automation gets built, I map the process. A sample of client and demo SOP flowcharts spanning barbershops, HVAC, coaching, credit repair, and lead-gen — click any to expand.</p>
+    </div>
+    <div class="flow-grid">
+      <figure class="flow-card reveal" data-case="pd-barbershop"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fabaf5f6da40d9bcc4.png" alt="Barbershop SOP flowchart" loading="lazy"><span>Southside Cuts</span></figure>
+      <figure class="flow-card reveal" data-case="pd-hvac"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fba3791820f8548f49.png" alt="HVAC SOP flowchart" loading="lazy"><span>Coastal Air HVAC</span></figure>
+      <figure class="flow-card reveal" data-case="pd-landscaping"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fc2f7322e0964a9918.png" alt="Landscaping SOP flowchart" loading="lazy"><span>GreenScape Landscaping</span></figure>
+      <figure class="flow-card reveal" data-case="pd-coaching"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fa9c9b37b5fd5956f5.png" alt="Coaching SOP flowchart" loading="lazy"><span>Momentum Life Coaching</span></figure>
+      <figure class="flow-card reveal" data-case="pd-creditrepair"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fba961afe59f73a963.png" alt="Credit repair SOP flowchart" loading="lazy"><span>Clearpath Credit Solutions</span></figure>
+      <figure class="flow-card reveal" data-case="pd-psychclinic"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fd524a3ec4c65a4f0b.png" alt="Psych clinic SOP flowchart" loading="lazy"><span>Willowbrook Psych Clinic</span></figure>
+      <figure class="flow-card reveal" data-case="pd-prmarketing"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fcbaf5f6da40d9bcde.png" alt="PR and marketing SOP flowchart" loading="lazy"><span>Bright Voice PR &amp; Marketing</span></figure>
+      <figure class="flow-card reveal" data-case="pd-podcast"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fc498fdf281a101a35.png" alt="Podcast outreach SOP flowchart" loading="lazy"><span>Amplify Podcast Network</span></figure>
+      <figure class="flow-card reveal" data-case="pd-contactflow"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fa2f7322e0964a9909.png" alt="Contact flow SOP diagram" loading="lazy"><span>Summit Sales Group</span></figure>
+      <figure class="flow-card reveal" data-case="pd-spacecoastleads"><img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fdbaf5f6da40d9bcf2.png" alt="Space Coast Leads SOP flowchart" loading="lazy"><span>Space Coast Leads</span></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="teaching">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Teaching &amp; Content</span>
+      <h2>I don't just build — I teach it</h2>
+      <p>Short explainers from my content on GHL, n8n, credit repair automation, and self-discipline — the same systems thinking I bring to client work.</p>
+    </div>
+    <div class="video-grid">
+      <div class="video-card reveal"><video controls preload="metadata" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59488e1097b8119594a076.mp4"></video><p>Explaining GoHighLevel</p></div>
+      <div class="video-card reveal"><video controls preload="metadata" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59488e9c9b37b5fd4cd0bc.mp4"></video><p>Explaining n8n</p></div>
+      <div class="video-card reveal"><video controls preload="metadata" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59488e1a0f048050d4cf3d.mp4"></video><p>Explaining Credit Repair</p></div>
+      <div class="video-card reveal"><video controls preload="metadata" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59488e09f6f35e902679cb.mp4"></video><p>On Self-Discipline</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Testimonials</span>
+      <h2>Results speak louder than self-promotion</h2>
+      <p>How the systems held up for the people who use them.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"John Bryan has been an outstanding Go High-Level expert for our company — implementing our system and designing our website, then setting up automations that streamlined our processes."</p>
+        <div class="test-person"><img class="test-avatar" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/697a41c21927c87f87453824.jpg" alt="Tony Dimovski"><div><div class="test-name">Tony Dimovski</div><div class="test-role">CEO, The Bill Busters</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"Bryan has been the architect of our entire digital course structure on Go High Level. What sets him apart is his responsiveness and his ability to adapt quickly to any challenge."</p>
+        <div class="test-person"><img class="test-avatar" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/697a41c21927c83416453818.jpg" alt="Pedro Bernáldez"><div><div class="test-name">Pedro Bernáldez</div><div class="test-role">Director, AEMR</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"John has eliminated the technology challenges that used to hold my business back. The setup and automation he built allowed me to launch a new business in a short time."</p>
+        <div class="test-person"><img class="test-avatar" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/697a41c2e1783c570a21d725.jpg" alt="DeAnna Crawford"><div><div class="test-name">DeAnna Crawford</div><div class="test-role">Coaching Business Owner</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"Bryan's help in setting up our PayNow integration made a massive difference — our site now captures payments smoothly, which will help increase our conversion rate."</p>
+        <div class="test-person"><img class="test-avatar" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/697a41c2f215da26c84b83a6.jpg" alt="Edwin David"><div><div class="test-name">Edwin David</div><div class="test-role">Managing Director, VMB SG</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"Bryan's expertise in GHL brought new ideas that turned into new systems, accelerating transactions — from building workflows to enhancing automations."</p>
+        <div class="test-person"><img class="test-avatar" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/697a41c21d0982247d884450.jpg" alt="Hagop Samouelian"><div><div class="test-name">Hagop Samouelian</div><div class="test-role">Co-founder, Clean Maizone</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars">★★★★★</div>
+        <p>"Was able to work remotely with Bryan for our automation project. He understands GHL very well and helped us turn our ideas into a fully functional system."</p>
+        <div class="test-person"><img class="test-avatar" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/697a41c3a1d79e8ae9b9e146.jpg" alt="Paul Roberts"><div><div class="test-name">Paul Roberts</div><div class="test-role">Founder &amp; CEO, MVP Team</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Process</span>
+      <h2>Let's talk process and performance</h2>
+      <p>This discovery call uncovers how your current processes impact performance and where automation can drive better results.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal"><span class="process-num">STEP 01</span><h3>Review Processes</h3><p>We look at your current workflows, systems, and goals to understand where things stand today.</p></div>
+      <div class="process-step reveal"><span class="process-num">STEP 02</span><h3>Find Gaps</h3><p>We identify where manual work is costing you time, money, or headcount that automation could replace.</p></div>
+      <div class="process-step reveal"><span class="process-num">STEP 03</span><h3>List Down Next Steps</h3><p>We outline practical, prioritized steps to optimize operations and improve outcomes.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="book">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Discovery Call</span>
+      <h2>Book your free discovery call</h2>
+      <p>Pick a time that works for you — we'll review your processes and find where automation can replace manual work.</p>
+    </div>
+    <div class="booking-widget reveal" id="bookingWidget">
+
+      <div class="booking-step" id="bookingStepDate">
+        <div class="booking-nav">
+          <button type="button" class="booking-nav-btn" id="bookingPrevMonth" aria-label="Previous month">←</button>
+          <h3 id="bookingMonthLabel"></h3>
+          <button type="button" class="booking-nav-btn" id="bookingNextMonth" aria-label="Next month">→</button>
+        </div>
+        <div class="booking-calendar" id="bookingCalendar"></div>
+        <div class="booking-slots" id="bookingSlots"><p class="muted" style="font-size:13.5px;">Pick a date above to see open times.</p></div>
+        <p class="booking-error" id="bookingDateError" style="display:none;"></p>
+      </div>
+
+      <div class="booking-step is-hidden" id="bookingStepForm">
+        <button type="button" class="booking-back" id="bookingBackToDate">← Choose a different time</button>
+        <p class="booking-selected-time" id="bookingSelectedTime"></p>
+        <form id="bookingForm">
+          <div class="field"><label for="bkName">Name</label><input id="bkName" type="text" required placeholder="Your full name"></div>
+          <div class="field"><label for="bkEmail">Email</label><input id="bkEmail" type="email" required placeholder="you@company.com"></div>
+          <div class="field"><label for="bkPhone">WhatsApp / Phone</label><input id="bkPhone" type="text" placeholder="+63 ..."></div>
+          <div class="field"><label for="bkNotes">Notes</label><textarea id="bkNotes" placeholder="What are you looking to automate?"></textarea></div>
+          <button type="submit" class="btn btn-primary" id="bookingSubmitBtn" style="width:100%;justify-content:center;">Confirm booking</button>
+          <p class="booking-error" id="bookingFormError" style="display:none;"></p>
+        </form>
+      </div>
+
+      <div class="booking-step is-hidden" id="bookingStepDone">
+        <p>Your call is booked for <strong id="bookingConfirmedTime"></strong>. Check your email for details.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-copy reveal">
+      <span class="eyebrow">Contact</span>
+      <h2 style="font-size:28px;margin-bottom:16px;">Got a question for me?</h2>
+      <p>Shoot me a message, or book a quick call directly — whichever's easier for you.</p>
+      <a href="#book" class="btn btn-primary" style="margin-top:8px;">Book a quick call →</a>
+    </div>
+    <div class="form-card reveal">
+      <form>
+        <div class="field"><label for="fname">First Name</label><input id="fname" type="text" placeholder="Your first name"></div>
+        <div class="field"><label for="whatsapp">WhatsApp</label><input id="whatsapp" type="text" placeholder="+63 ..."></div>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@company.com"></div>
+        <div class="field"><label for="question">Question or Inquiry</label><textarea id="question" placeholder="Tell me a bit about what you're looking to automate"></textarea></div>
+        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>
+      <div class="foot-brand">Bryan <span style="color:var(--accent);">Odina</span></div>
+      <div class="foot-cred">GHL Certified Admin · N8N Certified · Electronics Engineer · Six Sigma Yellow Belter</div>
+    </div>
+    <div class="foot-socials">
+      <a href="https://www.linkedin.com/in/johnbryanodina/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.facebook.com/bryanodina" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@bryan.odina.ghlca" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://wa.me/639276476889" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<div class="case-modal" id="caseModal" role="dialog" aria-modal="true" aria-label="Case study">
+  <div class="case-panel">
+    <button class="case-close" id="caseClose" aria-label="Close case study">✕</button>
+    <div class="case-head">
+      <span class="work-industry" id="caseIndustry"></span>
+      <h3 id="caseName"></h3>
+    </div>
+    <div class="case-section"><h4>Description</h4><p id="caseDescription"></p></div>
+    <div class="case-section"><h4>Problem Needed Solving</h4><p id="caseProblem"></p></div>
+    <div class="case-section"><h4>What Was Done</h4><p id="caseWorkdone"></p></div>
+    <div class="case-images" id="caseImages"></div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close preview">✕</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-cap" id="lightboxCap"></div>
+</div>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+
+  // Lightbox (simple single-image preview — used by Gallery and inside case-study modals)
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCap = document.getElementById('lightboxCap');
+  const lbClose = document.getElementById('lightboxClose');
+  function openLb(src, cap){
+    lbImg.src = src;
+    lbCap.textContent = cap || '';
+    lb.classList.add('open');
+    lbClose.focus();
+  }
+  function closeLb(){ lb.classList.remove('open'); lbImg.src=''; }
+  document.querySelectorAll('[data-full]').forEach(el => {
+    el.addEventListener('click', () => openLb(el.dataset.full, el.dataset.cap));
+  });
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeLb(); closeCase(); } });
+
+  // ---- Case study data ----
+  const CDN = 'https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/';
+  function im(hash, blur){ return { src: CDN + hash + '.png', blur: !!blur }; }
+
+  const WISDOM_AUTOMATION_IMAGES = [
+    im('6a5965f69c9b37b5fd5956b5'), im('6a5965f7baf5f6da40d9bc7a'), im('6a5965f62f7322e0964a98b9'),
+    im('6a5965f52f7322e0964a98af'), im('6a5965f52f7322e0964a98a9')
+  ];
+  const SPACECOAST_SOP_IMAGES = [
+    im('6a5965fdbaf5f6da40d9bcf2'), im('6a5965fe2f7322e0964a9935'), im('6a5965fdbaf5f6da40d9bcec'), im('6a5965fd498fdf281a101a43')
+  ];
+
+  const CASE_STUDIES = {
+    vanguard: { name:'Vanguard Credits', industry:'Credit Repair', sample:false,
+      description:'A Flask-based credit repair platform deployed on Railway that automates the dispute process end-to-end — parsing uploaded credit reports, generating bureau-specific dispute letters, and tracking rounds through a pipeline.',
+      problem:'Manually reading credit reports, deciding what to dispute, and drafting FCRA-compliant letters for each bureau ate hours per client and didn’t scale past a handful of active cases.',
+      workdone:'Built a parser for 4 credit report formats, a 17-rule dispute-classification engine, automated PDF letter generation for all 3 bureaus, a Kanban pipeline board, and scheduled 30/35-day follow-up reminders — all backed by Supabase.',
+      images:[im('6a5a7d07baf5f6da40225faf'), im('6a59660abaf5f6da40d9bda6',true), im('6a59660b9c9b37b5fd595e79',true), im('6a59660cbaf5f6da40d9bdd4',true), im('6a59660ba961afe59f73aa73',true), im('6a59660aa3791820f85490cb',true), im('6a59660aa08bf95bce31eca1',true), im('6a59660aa3791820f85490c1',true), im('6a59660a9c9b37b5fd595b62',true)]
+    },
+    woop: { name:'Woop', industry:'Creator Platform', sample:false,
+      description:'A creator rewards and monetization platform where video creators join brand campaigns, upload content, and get paid per view, with leaderboards and built-in training.',
+      problem:'Brands needed a way to run pay-per-view creator campaigns without manually tracking submissions, views, and payouts across creators.',
+      workdone:'Built the creator dashboard, campaign system, automated earnings tracking tied to view counts, a leaderboard, and an in-app training library for onboarding new creators.',
+      images:[im('6a59660c9c9b37b5fd595e93'), im('6a59660c1097b81195a0b66a'), im('6a59660ca961afe59f73aa79',true), im('6a59660d1097b81195a0b678'), im('6a59660d2f7322e0964a9a38')]
+    },
+    nextlevel: { name:'NextLevel', industry:'Productivity SaaS', sample:false,
+      description:'An all-in-one productivity dashboard for freelancers, combining task management, income/expense tracking, client pipeline, habit tracking, and time-zone tools in a single app.',
+      problem:'Freelancers were juggling 5–6 separate tools for tasks, invoicing, client tracking, and habits — losing time and context switching between them.',
+      workdone:'Built a unified dashboard with a task board, multi-currency income/expense tracker, client pipeline, habit tracker, world clock, and a Pomodoro timer.',
+      images:[im('6a5966081097b81195a0b62c'), im('6a596608a08bf95bce31ec8b'), im('6a5966089c9b37b5fd5957ab'), im('6a5966089c9b37b5fd5957b0'), im('6a596608524a3ec4c65a4fcd',true)]
+    },
+    squirrel: { name:'Squirrel Insurance', industry:'Insurance', sample:false,
+      description:'Full marketing website backed by automated onboarding and A2P-approved SMS notifications.',
+      problem:'Leads filled out a generic contact form and waited for a manual callback, and the team had no automated way to notify staff of new signups.',
+      workdone:'Built the website, automated form-to-CRM onboarding, instant team notification triggers, and secured A2P 10DLC approval for compliant SMS.',
+      images:[im('6a5966171a0f048050e06fd1'), im('6a5965ec1097b81195a0b41c')]
+    },
+    tbb: { name:'The Bill Busters', industry:'Service Company', sample:false,
+      description:'Marketing website with appointment booking automation, team notifications, and A2P-approved SMS messaging.',
+      problem:'Bookings were coming in but the team had no automatic way to get notified or log them for reporting.',
+      workdone:'Built the website, wired booking to trigger team notifications and Google Sheets logging, and secured A2P 10DLC approval so SMS reminders could go out compliantly.',
+      images:[im('6a59661a1097b81195a0b7b4'), im('6a596604a3791820f8549014'), im('6a5965ec1a0f048050e06ca8')]
+    },
+    gcr: { name:'Genesis Credit', industry:'Credit Repair', sample:false,
+      description:'Conversion-focused website with an AI chatbot, a custom AI agent with its own knowledge base, document upload flows, a customer pipeline, and A2P-approved SMS.',
+      problem:'Prospective clients had questions the team couldn’t answer 24/7, and document intake/follow-up was fully manual, slowing down the credit-repair process.',
+      workdone:'Built the site, an AI chat agent trained on a dedicated knowledge base, document upload automation, a full customer pipeline, Zapier/webhook integrations, and A2P 10DLC compliance for messaging.',
+      images:[im('6a59660fa961afe59f73aa9b'), im('6a5965eca08bf95bce31ead5'), im('6a5965ec498fdf281a101925'), im('6a5965ec2f7322e0964a97c5'), im('6a5965eea3791820f8548e61'), im('6a5965f3498fdf281a10199f'), im('6a5965f2a961afe59f73a8b6'), im('6a5965f2498fdf281a101979'), im('6a5965f1498fdf281a101973'), im('6a5965f1a3791820f8548e9c'), im('6a5965f11097b81195a0b465'), im('6a5965f09c9b37b5fd595621'), im('6a5965f0a3791820f8548e78'), im('6a5965ef2f7322e0964a97ef'), im('6a5965efbaf5f6da40d9bc04'), im('6a5965efa961afe59f73a862'), im('6a5965ee1a0f048050e06cc9'), im('6a5965eca3791820f8548e3e')]
+    },
+    aemr: { name:'AEMR', industry:'Medical Education', sample:false,
+      description:'Complete course platform for a Spanish medical academy — a 17-module course, Stripe payments up to €7,450, email marketing, and a 6,030-opportunity sales pipeline.',
+      problem:'The academy needed to sell and deliver a high-ticket medical course online and track thousands of leads through a sales process without a patchwork of disconnected tools.',
+      workdone:'Built the 17-module course, Stripe payment flows for packages up to €7,450, email campaigns (31.68% open rate on 3,011 sends), and a pipeline tracking 6,030 opportunities through the funnel.',
+      images:[im('6a5a80b3aef6925d34362897'), im('6a5965f9baf5f6da40d9bcb2'), im('6a5966049c9b37b5fd59576b'), im('6a5965ffbaf5f6da40d9bd0e'), im('6a5966012f7322e0964a994b'), im('6a596601a961afe59f73a9d3'), im('6a596602a961afe59f73a9dd'), im('6a596602baf5f6da40d9bd28'), im('6a596602a961afe59f73a9e3'), im('6a5965eea961afe59f73a85c')]
+    },
+    deanna: { name:'DeAnna Crawford', industry:'Coaching', sample:false,
+      description:'Masterclass funnel with lead scoring, an automated social content calendar, and GHL automation flows behind the scenes.',
+      problem:'The funnel needed to convert cold traffic into masterclass leads and separate hot prospects from browsers, and the social content side was still being posted manually with no consistent calendar.',
+      workdone:'Built the funnel and lead scoring, set up an automated social content calendar, and built the GHL automation flows connecting the two.',
+      images:[im('6a59660f9c9b37b5fd595e9d'), im('6a5966041097b81195a0b5e1'), im('6a5a7f10baf5f6da4024d0c0'), im('6a5a7f101a0f04805026c12d'), im('6a5a7f101097b81195e9c637')]
+    },
+    lua: { name:'Level Up Academy', industry:'Gamified Course', sample:false,
+      description:'Bryan’s own gamified GHL training platform — RPG-style onboarding, quests, XP, and leveling automations, plus an 8.7K-member free Facebook community.',
+      problem:'Free Filipino VA/freelancer training content existed everywhere but had poor completion rates — nothing kept learners engaged past lesson one.',
+      workdone:'Built a gamified course (character selection, quests, XP, leveling automations), a social content calendar, multi-calendar booking, 360 managed sub-accounts, and grew the free community to 8.7K members.',
+      images:[im('6a5965f9a961afe59f73a94c'), im('6a5965f81a0f048050e06da0'), im('6a5965f89c9b37b5fd5956cd'), im('6a5965f81a0f048050e06d9b'), im('6a5965ff1a0f048050e06e1f'), im('6a5965f31a0f048050e06d31'), im('6a5965f3a3791820f8548eca'), im('6a5965f4a3791820f8548ed1'), im('6a596604498fdf281a101ac8'), im('6a5965f7a961afe59f73a928'), im('6a5965f71097b81195a0b503')]
+    },
+    fundedbiz: { name:'Funded Biz', industry:'Business Funding', sample:false,
+      description:'Personality-driven funding and credit-repair funnel with an AI chatbot and case-study content.',
+      problem:'Business owners needed education and screening on funding options before talking to a human — cold leads without context slowed the sales team down.',
+      workdone:'Built the site, an AI chatbot to pre-qualify and answer funding questions, and case-study content to build trust before the sales call.',
+      images:[im('6a59660fa08bf95bce31ecef')]
+    },
+    federalbarbers: { name:'Federal Barbers', industry:'Barbershop', sample:false,
+      description:'Sharp, conversion-ready barbershop website with a services menu, testimonials, and a booking flow.',
+      problem:'The shop had no online presence to show services or let customers book — everything ran on walk-ins and phone calls.',
+      workdone:'Designed and built the site with a services menu, testimonials, and an integrated booking flow.',
+      images:[im('6a59660f1a0f048050e06f4f')]
+    },
+    wisdomchurch: { name:'Wisdom Church of Manila', industry:'Non-Profit', sample:false,
+      description:'Church website, an online store, and a Xendit-to-GHL donation system for local Philippine payment methods, backed by GHL automation flows.',
+      problem:'The church needed to accept local payment methods (not just cards) for donations and store purchases, with no automated way to route or acknowledge them.',
+      workdone:'Built the website and store, integrated Xendit to GHL for local payment methods, and built automation flows to route and acknowledge payments and donations.',
+      images:[im('6a5966032f7322e0964a997f'), im('6a59661aa3791820f8549256'), im('6a59661a2f7322e0964a9b72'), im('6a59661ba3791820f854927c'), im('6a59661ca3791820f85492a6')].concat(WISDOM_AUTOMATION_IMAGES)
+    },
+    charitylift: { name:'Charity Lift', industry:'Charity', sample:false,
+      description:'Donation-focused website promoting top US charities, built with GHL AI Studio.',
+      problem:'The organization needed a fast, credible donation site without a lengthy custom-dev build.',
+      workdone:'Built the site end-to-end using GHL AI Studio, with a donation-first layout and charity showcase.',
+      images:[im('6a59660e1097b81195a0b68a')]
+    },
+    meritex: { name:'Meritex Canada', industry:'Corporate', sample:false,
+      description:'Corporate website for a Canadian client, an AutoQuote web app for instant quotes, plus an automated client-review request flow.',
+      problem:'The company had no way for prospects to get an instant quote online, and no consistent way to request and collect client reviews after project completion.',
+      workdone:'Built the corporate site, the AutoQuote web app, and an automation that requests, tags, and routes client reviews after work is completed.',
+      images:[im('6a5966162f7322e0964a9b00'), im('6a596606a08bf95bce31ec69'), im('6a596606a3791820f8549053'), im('6a5966061a0f048050e06eab'), im('6a596606524a3ec4c65a4fb3'), im('6a5966071097b81195a0b617'), im('6a5965f4524a3ec4c65a4e71'), im('6a5965f5a3791820f8548ede'), im('6a5965f5baf5f6da40d9bc6c')]
+    },
+    celestenicolas: { name:'Celeste Nicolas Ministries', industry:'Ministry', sample:false,
+      description:'Ministry website with a giving/payment page, running on the same GHL automation system built for Wisdom Church of Manila.',
+      problem:'The ministry needed a clean way to present content and accept giving/donations without building a separate automation system from scratch.',
+      workdone:'Built the website and giving page, and extended the Wisdom Church of Manila automation system to cover Celeste Nicolas Ministries.',
+      images:[im('6a596603a08bf95bce31ec42')].concat(WISDOM_AUTOMATION_IMAGES)
+    },
+    spacecoastleads: { name:'Space Coast Leads', industry:'Lead Generation', sample:false,
+      description:'Lead-generation system with document signing, a customer pipeline, Apollo.io integration, and 5 demo funnels.',
+      problem:'The team needed a repeatable way to capture, qualify, and move leads through a pipeline while sourcing new prospects at scale.',
+      workdone:'Built document signing, a customer pipeline, Apollo.io integration for lead sourcing, 5 demo funnels, and the SOP flowchart mapping the full process end-to-end.',
+      images: SPACECOAST_SOP_IMAGES
+    },
+    'pd-barbershop': { name:'Southside Cuts Barbershop', industry:'Barbershop', sample:true,
+      description:'Illustrative SOP flowchart mapping a barbershop’s client journey from first contact to repeat booking.',
+      problem:'Barbershops typically lose walk-in leads to no-shows and have no consistent way to turn a first-time client into a repeat booking.',
+      workdone:'Mapped a process covering intake, booking confirmation, no-show follow-up, and automated rebooking reminders — the kind of SOP I build before automating a barbershop’s client flow.',
+      images:[im('6a5965fabaf5f6da40d9bcc4')]
+    },
+    'pd-hvac': { name:'Coastal Air HVAC Services', industry:'HVAC', sample:true,
+      description:'Illustrative SOP flowchart for an HVAC company’s service-call-to-invoice process.',
+      problem:'HVAC companies often lose track of jobs between the initial service call, technician dispatch, and final invoicing — costing them delayed payments.',
+      workdone:'Mapped the process from service request through dispatch, job completion, and automated invoicing/follow-up.',
+      images:[im('6a5965fba3791820f8548f49')]
+    },
+    'pd-landscaping': { name:'GreenScape Landscaping Co.', industry:'Landscaping', sample:true,
+      description:'Illustrative SOP flowchart for a landscaping company’s quote-to-recurring-contract process.',
+      problem:'Landscaping businesses struggle to convert one-off quote requests into recurring maintenance contracts without a consistent follow-up process.',
+      workdone:'Mapped the flow from quote request through site visit, proposal, and automated conversion to a recurring contract.',
+      images:[im('6a5965fc2f7322e0964a9918')]
+    },
+    'pd-coaching': { name:'Momentum Life Coaching', industry:'Coaching', sample:true,
+      description:'Illustrative SOP flowchart for a coaching business’s discovery-call-to-client-onboarding process.',
+      problem:'Coaches often lose momentum between a great discovery call and the client actually starting — no structured onboarding means drop-off.',
+      workdone:'Mapped the flow from discovery call through proposal, payment, and a structured onboarding sequence.',
+      images:[im('6a5965fa9c9b37b5fd5956f5')]
+    },
+    'pd-creditrepair': { name:'Clearpath Credit Solutions', industry:'Credit Repair', sample:true,
+      description:'Illustrative SOP flowchart for a credit repair business’s intake-to-dispute-round process.',
+      problem:'Credit repair businesses need a consistent way to move a new client from intake through document collection into their first dispute round.',
+      workdone:'Mapped the flow from lead intake through document collection, credit report analysis, and the first dispute round.',
+      images:[im('6a5965fba961afe59f73a963')]
+    },
+    'pd-psychclinic': { name:'Willowbrook Psychological Clinic', industry:'Psych Clinic', sample:true,
+      description:'Illustrative SOP flowchart for a psychology clinic’s referral-to-first-session process.',
+      problem:'Clinics often lose referred patients between the initial referral and their first booked session due to scheduling friction.',
+      workdone:'Mapped the flow from referral intake through insurance verification, scheduling, and first-session reminders.',
+      images:[im('6a5965fd524a3ec4c65a4f0b')]
+    },
+    'pd-prmarketing': { name:'Bright Voice PR & Marketing', industry:'PR & Marketing', sample:true,
+      description:'Illustrative SOP flowchart for a PR agency’s pitch-to-placement process.',
+      problem:'PR agencies need a repeatable way to track a story pitch from outreach through media placement across many simultaneous campaigns.',
+      workdone:'Mapped the flow from journalist outreach through pitch tracking, follow-up cadence, and placement reporting.',
+      images:[im('6a5965fcbaf5f6da40d9bcde')]
+    },
+    'pd-podcast': { name:'Amplify Podcast Network', industry:'Podcast Outreach', sample:true,
+      description:'Illustrative SOP flowchart for booking podcast guests at scale.',
+      problem:'Podcast teams lose track of guest outreach across dozens of simultaneous conversations, leading to missed bookings.',
+      workdone:'Mapped the flow from guest outreach through scheduling, pre-interview prep, and post-episode follow-up.',
+      images:[im('6a5965fc498fdf281a101a35')]
+    },
+    'pd-contactflow': { name:'Summit Sales Group', industry:'Contact Flow', sample:true,
+      description:'Illustrative SOP flowchart for routing inbound contacts across multiple channels to the right team member.',
+      problem:'Multi-channel businesses (phone, email, chat, SMS) often lose leads that land in the wrong inbox with no owner.',
+      workdone:'Mapped a unified contact-routing flow that tags source, assigns ownership, and triggers first-response SLAs across every channel.',
+      images:[im('6a5965fa2f7322e0964a9909')]
+    },
+    'pd-spacecoastleads': { name:'Space Coast Leads', industry:'Lead Generation', sample:false,
+      description:'The SOP flowchart mapping Space Coast Leads’ full lead-generation process end-to-end.',
+      problem:'The team needed a documented, repeatable process for capturing and qualifying leads before any automation could be built on top of it.',
+      workdone:'Mapped the complete flow — from lead capture through document signing, pipeline stages, and Apollo.io sourcing — as the blueprint for the automation built on top.',
+      images: SPACECOAST_SOP_IMAGES
+    }
+  };
+
+  // ---- Case study modal ----
+  const caseModal = document.getElementById('caseModal');
+  const caseClose = document.getElementById('caseClose');
+  const caseName = document.getElementById('caseName');
+  const caseIndustry = document.getElementById('caseIndustry');
+  const caseDescription = document.getElementById('caseDescription');
+  const caseProblem = document.getElementById('caseProblem');
+  const caseWorkdone = document.getElementById('caseWorkdone');
+  const caseImages = document.getElementById('caseImages');
+
+  function openCase(slug){
+    const c = CASE_STUDIES[slug];
+    if (!c) return;
+    caseName.textContent = c.name;
+    caseIndustry.textContent = c.industry;
+    caseDescription.textContent = c.description;
+    caseProblem.textContent = c.problem;
+    caseWorkdone.textContent = c.workdone;
+    caseImages.innerHTML = '';
+    c.images.forEach(img => {
+      const wrap = document.createElement('div');
+      wrap.className = 'case-thumb-wrap' + (img.blur ? ' blurred' : '');
+      const el = document.createElement('img');
+      el.src = img.src;
+      el.loading = 'lazy';
+      el.alt = c.name;
+      wrap.appendChild(el);
+      wrap.addEventListener('click', () => openLb(img.src, c.name + (img.blur ? ' (blurred for privacy)' : '')));
+      caseImages.appendChild(wrap);
+    });
+    caseModal.classList.add('open');
+    caseClose.focus();
+  }
+  function closeCase(){ caseModal.classList.remove('open'); }
+  caseClose.addEventListener('click', closeCase);
+  caseModal.addEventListener('click', (e) => { if (e.target === caseModal) closeCase(); });
+
+  document.getElementById('workGrid').addEventListener('click', (e) => {
+    const trigger = e.target.closest('.work-thumb, .work-case-btn');
+    if (!trigger) return;
+    const card = e.target.closest('.work-card');
+    if (card && card.dataset.case) openCase(card.dataset.case);
+  });
+  document.querySelectorAll('.flow-card[data-case]').forEach(el => {
+    el.addEventListener('click', () => openCase(el.dataset.case));
+  });
+
+  // Work filter + per-category thumbnail swap
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const workCards = document.querySelectorAll('.work-card');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      workCards.forEach(card => {
+        const cats = card.dataset.category.split(' ');
+        card.classList.toggle('hidden', filter !== 'all' && !cats.includes(filter));
+        const thumb = card.querySelector('.work-thumb');
+        if (thumb && thumb.dataset.thumbs) {
+          if (!thumb.dataset.defaultSrc) thumb.dataset.defaultSrc = thumb.src;
+          const alt = JSON.parse(thumb.dataset.thumbs);
+          thumb.src = (filter !== 'all' && alt[filter]) ? alt[filter] : thumb.dataset.defaultSrc;
+        }
+      });
+    });
+  });
+
+  // Booking widget
+  (function() {
+    // Mirrors api/_lib/config.js — for UI disabling only (greying out weekends/past
+    // dates before the user even picks one). The server is the real source of truth;
+    // keep this in sync manually if BOOKING_CONFIG changes.
+    const CLIENT_CONFIG = { workingDays: [1, 2, 3, 4, 5], maxAdvanceDays: 30 };
+
+    const bookingCalendar = document.getElementById('bookingCalendar');
+    if (!bookingCalendar) return; // booking section not present on this page
+
+    const bookingMonthLabel = document.getElementById('bookingMonthLabel');
+    const bookingSlots = document.getElementById('bookingSlots');
+    const bookingDateError = document.getElementById('bookingDateError');
+    const bookingStepDate = document.getElementById('bookingStepDate');
+    const bookingStepForm = document.getElementById('bookingStepForm');
+    const bookingStepDone = document.getElementById('bookingStepDone');
+    const bookingSelectedTime = document.getElementById('bookingSelectedTime');
+    const bookingBackToDate = document.getElementById('bookingBackToDate');
+    const bookingForm = document.getElementById('bookingForm');
+    const bookingFormError = document.getElementById('bookingFormError');
+    const bookingConfirmedTime = document.getElementById('bookingConfirmedTime');
+    const bookingSubmitBtn = document.getElementById('bookingSubmitBtn');
+
+    let viewMonth = new Date();
+    viewMonth.setDate(1);
+    let selectedDateStr = null;
+    let selectedSlot = null;
+
+    function toDateStr(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
+
+    function renderCalendar() {
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const maxDate = new Date(today.getTime() + CLIENT_CONFIG.maxAdvanceDays * 86400000);
+      bookingMonthLabel.textContent = viewMonth.toLocaleString(undefined, { month: 'long', year: 'numeric' });
+      bookingCalendar.innerHTML = '';
+      ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'booking-weekday'; el.textContent = d;
+        bookingCalendar.appendChild(el);
+      });
+      const startOffset = new Date(viewMonth).getDay();
+      for (let i = 0; i < startOffset; i++) {
+        const empty = document.createElement('div'); empty.className = 'day-cell empty';
+        bookingCalendar.appendChild(empty);
+      }
+      const daysInMonth = new Date(viewMonth.getFullYear(), viewMonth.getMonth() + 1, 0).getDate();
+      for (let day = 1; day <= daysInMonth; day++) {
+        const cellDate = new Date(viewMonth.getFullYear(), viewMonth.getMonth(), day);
+        const dateStr = toDateStr(cellDate);
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'day-cell'; btn.textContent = String(day);
+        const isPast = cellDate < today;
+        const isTooFar = cellDate > maxDate;
+        const isOffDay = !CLIENT_CONFIG.workingDays.includes(cellDate.getDay());
+        if (isPast || isTooFar || isOffDay) {
+          btn.disabled = true;
+        } else {
+          btn.addEventListener('click', () => selectDate(dateStr, btn));
+        }
+        if (dateStr === selectedDateStr) btn.classList.add('active');
+        bookingCalendar.appendChild(btn);
+      }
+    }
+
+    function selectDate(dateStr, btnEl) {
+      selectedDateStr = dateStr;
+      bookingCalendar.querySelectorAll('.day-cell').forEach(c => c.classList.remove('active'));
+      btnEl.classList.add('active');
+      loadSlots(dateStr);
+    }
+
+    async function loadSlots(dateStr) {
+      bookingDateError.style.display = 'none';
+      bookingSlots.innerHTML = '<p class="muted" style="font-size:13.5px;">Loading times…</p>';
+      try {
+        const res = await fetch('/api/availability?date=' + encodeURIComponent(dateStr));
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message || 'Could not load availability.');
+        renderSlots(data.slots || []);
+      } catch (err) {
+        bookingSlots.innerHTML = '';
+        bookingDateError.textContent = err.message || 'Could not load availability. Please try again.';
+        bookingDateError.style.display = 'block';
+      }
+    }
+
+    function renderSlots(slots) {
+      if (!slots.length) {
+        bookingSlots.innerHTML = '<p class="muted" style="font-size:13.5px;">No open times this day — try another date.</p>';
+        return;
+      }
+      bookingSlots.innerHTML = '';
+      slots.forEach(slot => {
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'slot-btn';
+        btn.textContent = new Date(slot.start).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+        btn.addEventListener('click', () => {
+          selectedSlot = slot;
+          bookingSelectedTime.textContent = new Date(slot.start).toLocaleString(undefined, { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+          bookingStepDate.classList.add('is-hidden');
+          bookingStepForm.classList.remove('is-hidden');
+          bookingFormError.style.display = 'none';
+        });
+        bookingSlots.appendChild(btn);
+      });
+    }
+
+    document.getElementById('bookingPrevMonth').addEventListener('click', () => { viewMonth.setMonth(viewMonth.getMonth() - 1); renderCalendar(); });
+    document.getElementById('bookingNextMonth').addEventListener('click', () => { viewMonth.setMonth(viewMonth.getMonth() + 1); renderCalendar(); });
+    bookingBackToDate.addEventListener('click', () => {
+      bookingStepForm.classList.add('is-hidden');
+      bookingStepDate.classList.remove('is-hidden');
+    });
+
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!selectedSlot) return;
+      bookingSubmitBtn.disabled = true; bookingSubmitBtn.textContent = 'Booking…';
+      bookingFormError.style.display = 'none';
+      try {
+        const res = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            start: selectedSlot.start,
+            end: selectedSlot.end,
+            name: document.getElementById('bkName').value,
+            email: document.getElementById('bkEmail').value,
+            phone: document.getElementById('bkPhone').value,
+            notes: document.getElementById('bkNotes').value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          if (data.error === 'slot_taken') {
+            bookingFormError.textContent = data.message || 'That time was just booked — pick another slot.';
+            bookingFormError.style.display = 'block';
+            bookingStepForm.classList.add('is-hidden');
+            bookingStepDate.classList.remove('is-hidden');
+            if (selectedDateStr) loadSlots(selectedDateStr);
+          } else {
+            bookingFormError.textContent = data.message || 'Something went wrong. Please try again.';
+            bookingFormError.style.display = 'block';
+          }
+          return;
+        }
+        bookingConfirmedTime.textContent = new Date(data.start).toLocaleString(undefined, { weekday: 'long', month: 'long', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+        bookingStepForm.classList.add('is-hidden');
+        bookingStepDone.classList.remove('is-hidden');
+      } catch (err) {
+        bookingFormError.textContent = 'Network error — please try again.';
+        bookingFormError.style.display = 'block';
+      } finally {
+        bookingSubmitBtn.disabled = false; bookingSubmitBtn.textContent = 'Confirm booking';
+      }
+    });
+
+    renderCalendar();
+  })();
+</script>
+
+</body>
+</html>

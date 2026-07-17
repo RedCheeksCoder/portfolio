@@ -1,0 +1,73 @@
+Vanguard Credit — Application Overview
+Vanguard Credit is a Flask-based credit repair platform deployed on Railway that automates the credit dispute process for clients. It helps manage credit repair workflows by parsing credit reports, applying dispute rules, generating FCRA-compliant dispute letters, and automating follow-up communications.
+
+Core Purpose
+The app takes credit reports (HTML from IdentityIQ, SmartCredit, CreditHero, MyFreeScoreNow) and:
+
+Parses account data and flags negative items
+Applies 17 dispute rules to classify what should be disputed
+Generates dispute letters for each bureau (TransUnion, Equifax, Experian)
+Assembles PDFs with client documents
+Sends packages via email and tracks outcomes across dispute rounds
+Main User Workflows
+1. Upload & Analyze (/upload)
+User uploads an HTML credit report
+Parser extracts accounts, balances, payment history, inquiries
+Dispute rules run automatically — flags accounts for removal/correction
+System auto-creates or updates client profile with name, DOB, address, scores
+2. Client Management (/clients)
+View all clients with their credit scores (TU/EX/EQ)
+Click client to see profile: contact info, documents, dispute round history
+Edit client details or delete permanently
+Track when each dispute round was sent and when next follow-up is due
+3. Pipeline Board (/pipeline)
+5-column Kanban view: analyzed → reviewed → sent → round_due → overdue
+Drag-drop job cards to track progress
+Dynamically computed based on send date (30+ days = round due, 35+ days = overdue)
+4. Automated Follow-ups
+30-day reminder: APScheduler checks daily, emails client to follow up with bureaus
+35-day action email: If 5+ items aren't resolved, escalates to "needs action"
+Manual notify: Operator can send reminders on-demand via client profile
+Key Components
+Component	Role
+parser.py	Extracts accounts, balances, inquiries, payment history from 4 credit report formats
+rules_engine.py	17 rules classify each account (negative, chargeoff, collection, open with lates, etc.) → generates dispute items
+letter_generator.py	Builds FCRA dispute letters (bureau-specific PDFs) + goodwill letters (creditor PDFs)
+pdf_assembler.py	Merges dispute letter + ID/address docs into final deliverable PDFs
+clients_db.py	Supabase PostgreSQL: stores clients, dispute rounds, job records
+emailer.py	SendGrid: sends dispute packages, reminders, round notifications
+scheduler.py	APScheduler: fires 30/35-day follow-up checks nightly
+app.py	Flask routes, upload handler, PDF assembly trigger, scheduler startup
+Data Flow
+
+Upload HTML
+    ↓
+Parse (extract accounts, inquiries, scores)
+    ↓
+Auto-create/update client profile
+    ↓
+Apply dispute rules (classify each account)
+    ↓
+Generate dispute + goodwill letters
+    ↓
+Assemble PDFs (letter + docs)
+    ↓
+Send via email (+ log in Supabase)
+    ↓
+30-day reminder email (if not resolved)
+    ↓
+35-day action email (escalate)
+Storage
+Supabase PostgreSQL: Clients, dispute rounds, job metadata
+Supabase Storage: Uploaded HTML reports, generated dispute/goodwill PDFs
+SQLite fallback: Used if Supabase is unavailable (for local testing)
+Current Features (from sidebar)
+✅ Upload credit reports with auto-parser detection
+✅ Client profiles + credit scores
+✅ Pipeline Kanban board
+✅ Automated dispute letter generation
+✅ Dispute rules reference guide
+✅ 30/35-day reminder scheduling
+✅ Manual email sending
+✅ Edit/delete clients
+✅ Supabase + SQLite persistence
