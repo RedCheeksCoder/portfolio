@@ -129,7 +129,7 @@ A global **lightbox** (`#lightbox`) handles click-to-expand single-image preview
 
 ## 6. Certifications / Badges Section
 
-Displays 5 badge cards, each linking out to a verification URL:
+Displays 6 badge cards, each linking out to a verification URL:
 
 | Badge | Image (CDN) | Verify link |
 |---|---|---|
@@ -138,6 +138,9 @@ Displays 5 badge cards, each linking out to a verification URL:
 | N8N101 | `.../media/6a59688da3791820f854ebd9.png` | `badges.n8n.io/997640e6-dab6-437f-ba73-6c45340555c5#acc.soNl8Oig` |
 | N8N102 | `.../media/6a59688da3791820f854ebd4.png` | `badges.n8n.io/b1e5bae8-b195-46b6-a3d8-49a50b766d6b` |
 | N8N103 | `.../media/6a59688d9c9b37b5fd59b1bf.png` | `badges.n8n.io/5b55f813-088b-47fa-b2b0-5d6278ab5fbe#acc.ZibeY4Bt` |
+| Six Sigma Yellow Belt | `.../media/6a5ab2bd7fb178795975d5ce.png` (badge shield icon) | `.../media/6a5aaf94bc82ab9d9ef51635.png` (the actual certificate image, opens in a new tab — same "link straight to an image" pattern as the GHL badge) |
+
+**Badge hover effect (added 2026-07-18):** `.badge-card:hover` now lifts 5px (`translateY(-5px)`, up from 3px) and pulses a glowing orange box-shadow via `@keyframes badge-glow` (1.6s infinite while hovered), disabled under `prefers-reduced-motion`.
 
 All CDN images are hosted at `https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/...` (Bryan's own GHL media storage — safe to hotlink directly, no download/rehost needed).
 

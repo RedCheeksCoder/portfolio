@@ -92,10 +92,41 @@
   .nav-cta{display:none;}
   @media(min-width:880px){.nav-cta{display:inline-flex;}}
 
+  /* Mobile nav toggle + menu */
+  .nav-toggle{
+    display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;
+    width:36px;height:36px;background:none;border:none;cursor:pointer;padding:0;flex-shrink:0;
+  }
+  @media(min-width:880px){.nav-toggle{display:none;}}
+  .nav-toggle span{
+    width:24px;height:2px;background:var(--text);border-radius:2px;
+    transition:transform .25s ease, opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){transform:translateY(8px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg);}
+
+  .mobile-menu{
+    position:absolute;top:100%;left:0;right:0;
+    background:var(--bg-alt);border-bottom:1px solid var(--border);
+    display:flex;flex-direction:column;padding:6px 24px 20px;gap:2px;
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .25s ease, transform .25s ease, visibility .25s;
+  }
+  .mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0);}
+  .mobile-menu a{
+    color:var(--text-muted);font-size:15px;font-weight:600;padding:13px 2px;
+    border-bottom:1px solid var(--border);transition:color .2s;
+  }
+  .mobile-menu a:hover{color:var(--text);}
+  .mobile-menu .btn{margin-top:14px;justify-content:center;border-bottom:none;padding:12px 22px;}
+  @media(min-width:880px){.mobile-menu{display:none;}}
+
   /* Hero */
   .hero{padding:96px 0 72px;overflow:hidden;}
   .hero-grid{display:grid;grid-template-columns:1fr;gap:56px;align-items:center;}
   @media(min-width:920px){.hero-grid{grid-template-columns:.92fr 1.08fr;}}
+  @media(max-width:639px){.hero-visual{display:none;}}
   .hero h1{font-size:clamp(34px,5vw,52px);line-height:1.12;}
   .hero h1 em{font-style:normal;color:var(--accent-2);}
   .hero p.lede{font-size:17px;color:var(--text-muted);max-width:540px;margin:24px 0 32px;}
@@ -251,7 +282,18 @@
     padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;
     width:160px;transition:border-color .2s, transform .2s;
   }
-  .badge-card:hover{border-color:var(--accent-2);transform:translateY(-3px);}
+  .badge-card:hover{
+    border-color:var(--accent-2);
+    transform:translateY(-5px);
+    animation:badge-glow 1.6s ease-in-out infinite;
+  }
+  @keyframes badge-glow{
+    0%,100%{box-shadow:0 0 0 0 rgba(204,126,49,0);}
+    50%{box-shadow:0 0 20px 2px rgba(204,126,49,.55);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .badge-card:hover{animation:none;}
+  }
   .badge-card img{width:96px;height:96px;object-fit:contain;}
   .badge-card span{
     font-family:var(--font-display);font-size:11.5px;letter-spacing:.05em;
@@ -340,9 +382,9 @@
   .work-link:hover{color:var(--accent-hover);}
 
   /* Flowcharts */
-  .flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
   @media(min-width:640px){.flow-grid{grid-template-columns:repeat(3,1fr);}}
-  @media(min-width:980px){.flow-grid{grid-template-columns:repeat(5,1fr);}}
+  @media(min-width:980px){.flow-grid{grid-template-columns:repeat(4,1fr);}}
   .flow-card{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
     overflow:hidden;cursor:zoom-in;transition:border-color .2s, transform .2s;
@@ -515,7 +557,20 @@
       <a href="#contact">Contact</a>
     </nav>
     <a href="#book" class="btn btn-primary nav-cta">Book a call</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#book">Book a Call</a>
+    <a href="#work">Work</a>
+    <a href="#flowcharts">Process Maps</a>
+    <a href="#testimonials">Testimonials</a>
+    <a href="#contact">Contact</a>
+    <a href="#book" class="btn btn-primary">Book a call</a>
+  </nav>
 </header>
 
 <section class="hero">
@@ -713,6 +768,10 @@
       <a class="badge-card reveal" href="https://badges.n8n.io/5b55f813-088b-47fa-b2b0-5d6278ab5fbe#acc.ZibeY4Bt" target="_blank" rel="noopener">
         <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59688d9c9b37b5fd59b1bf.png" alt="n8n 103 badge" loading="lazy">
         <span>N8N103</span>
+      </a>
+      <a class="badge-card reveal" href="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5aaf94bc82ab9d9ef51635.png" target="_blank" rel="noopener">
+        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5ab2bd7fb178795975d5ce.png" alt="Six Sigma Yellow Belt certification badge" loading="lazy">
+        <span>Six Sigma Yellow Belt</span>
       </a>
     </div>
     <p class="muted" style="font-size:13px;margin-top:18px;">View my full n8n badge wallet <a href="https://badges.n8n.io/profile/eu-bryanodina485156/wallet" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:700;">here ↗</a></p>
@@ -1034,8 +1093,8 @@
 </section>
 
 <section class="section" id="book">
-  <div class="wrap">
-    <div class="section-head reveal">
+  <div class="wrap contact-grid">
+    <div class="section-head reveal" style="margin-bottom:0;">
       <span class="eyebrow">Discovery Call</span>
       <h2>Book your free discovery call</h2>
       <p>Pick a time that works for you — we'll review your processes and find where automation can replace manual work.</p>
@@ -1130,6 +1189,22 @@
 </div>
 
 <script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  function closeMobileMenu(){
+    mobileMenu.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+  navToggle.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileMenu(); });
+
   // Scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
