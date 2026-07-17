@@ -95,7 +95,7 @@
   /* Hero */
   .hero{padding:96px 0 72px;overflow:hidden;}
   .hero-grid{display:grid;grid-template-columns:1fr;gap:56px;align-items:center;}
-  @media(min-width:920px){.hero-grid{grid-template-columns:1.08fr .92fr;}}
+  @media(min-width:920px){.hero-grid{grid-template-columns:.92fr 1.08fr;}}
   .hero h1{font-size:clamp(34px,5vw,52px);line-height:1.12;}
   .hero h1 em{font-style:normal;color:var(--accent-2);}
   .hero p.lede{font-size:17px;color:var(--text-muted);max-width:540px;margin:24px 0 32px;}
@@ -108,22 +108,67 @@
   }
 
   .hero-visual{position:relative;}
-  .hero-photo{
-    width:min(340px,80%);margin:0 auto;border-radius:16px;
-    border:1px solid var(--border);
-    box-shadow:0 24px 60px -24px #000c;
-    position:relative;z-index:2;
-  }
-  .hero-visual::before{
-    content:"";position:absolute;inset:8% -4% -6% 12%;
-    border:1px solid var(--accent);border-radius:20px;opacity:.35;z-index:1;
-  }
   .hero-stats{
     display:flex;justify-content:center;gap:28px;margin-top:28px;position:relative;z-index:2;
   }
   .hero-stat{text-align:center;}
   .hero-stat b{font-family:var(--font-display);font-size:22px;color:var(--accent-2);display:block;}
   .hero-stat span{font-size:12.5px;color:var(--text-muted);}
+
+  /* Hero flow diagram — animated "signal" traveling a support-ticket automation flow */
+  .hero-flow{width:100%;}
+  .hf-svg{width:100%;height:auto;display:block;overflow:visible;}
+  .hf-node-label{font-family:var(--font-body);font-weight:600;fill:var(--text);text-anchor:middle;dominant-baseline:middle;font-size:17px;}
+  .hf-edge-label{font-family:var(--font-body);font-weight:600;font-size:16px;fill:var(--accent-2);text-anchor:middle;}
+  .hf-shape{fill:var(--surface);stroke:var(--accent);stroke-width:2.5;}
+  .hf-shape.hf-terminal{fill:var(--accent);stroke:var(--accent-2);}
+  .hf-terminal .hf-node-label{fill:var(--bg-alt);font-weight:700;}
+  .hf-wire{fill:none;stroke:rgba(204,126,49,.28);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;}
+  .hf-wire-idle{fill:none;stroke:var(--accent-2);stroke-opacity:.35;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round;}
+  .hf-wire-pulse{
+    fill:none;stroke:#FFD9A8;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+    stroke-dasharray:9 191;filter:url(#hf-glow);
+    animation:hf-travel 13s linear infinite;
+  }
+  .hf-spark{
+    fill:#FFD9A8;filter:url(#hf-glow);
+    offset-path:path("M150,280 L440,280 L440,235 L440,90 L540,90 L700,90 L725,90 L725,280 L800,280 L875,280 L895,280 L980,280 L980,310 L980,440 L980,470 L900,470 L875,470 L725,470 L340,470 L180,470 L150,470");
+    animation:hf-ride 13s linear infinite;
+  }
+  @keyframes hf-travel{ from{stroke-dashoffset:0;} to{stroke-dashoffset:-200;} }
+  @keyframes hf-ride{ 0%{offset-distance:0%;opacity:0;} 2%{opacity:1;} 97%{opacity:1;} 100%{offset-distance:100%;opacity:0;} }
+
+  .hf-n-start,.hf-n-created,.hf-n-hours,.hf-n-alertsup,.hf-n-assigned,
+  .hf-n-reviewed,.hf-n-resolves,.hf-n-resolved,.hf-n-closed,.hf-n-end{
+    animation-duration:13s;animation-timing-function:ease-in-out;animation-iteration-count:infinite;stroke:var(--accent);
+  }
+  .hf-n-start{animation-name:hf-g-start;}
+  .hf-n-created{animation-name:hf-g-created;}
+  .hf-n-hours{animation-name:hf-g-hours;}
+  .hf-n-alertsup{animation-name:hf-g-alertsup;}
+  .hf-n-assigned{animation-name:hf-g-assigned;}
+  .hf-n-reviewed{animation-name:hf-g-reviewed;}
+  .hf-n-resolves{animation-name:hf-g-resolves;}
+  .hf-n-resolved{animation-name:hf-g-resolved;}
+  .hf-n-closed{animation-name:hf-g-closed;}
+  .hf-n-end{animation-name:hf-g-end;}
+
+  @keyframes hf-g-start   { 0%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 6%{stroke:var(--accent);filter:none;} 98%{stroke:var(--accent);filter:none;} 100%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} }
+  @keyframes hf-g-created { 0%,1%{stroke:var(--accent);filter:none;} 4.8%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 9%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-hours   { 11%{stroke:var(--accent);filter:none;} 14.6%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 19%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-alertsup{ 25%{stroke:var(--accent);filter:none;} 28.7%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 33%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-assigned{ 41%{stroke:var(--accent);filter:none;} 44.8%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 49%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-reviewed{ 49.5%{stroke:var(--accent);filter:none;} 52.6%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 57%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-resolves{ 57.5%{stroke:var(--accent);filter:none;} 60.9%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 65%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-resolved{ 65.5%{stroke:var(--accent);filter:none;} 68.7%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 73%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-closed  { 88%{stroke:var(--accent);filter:none;} 92.2%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} 96%{stroke:var(--accent);filter:none;} }
+  @keyframes hf-g-end     { 96.5%{stroke:var(--accent);filter:none;} 100%{stroke:#FFD9A8;filter:url(#hf-glow-soft);} }
+
+  @media (prefers-reduced-motion: reduce){
+    .hf-wire-pulse,.hf-spark{animation:none;opacity:0;}
+    .hf-n-start,.hf-n-created,.hf-n-hours,.hf-n-alertsup,.hf-n-assigned,
+    .hf-n-reviewed,.hf-n-resolves,.hf-n-resolved,.hf-n-closed,.hf-n-end{animation:none;stroke:var(--accent);}
+  }
 
   /* Sections */
   .section{padding:84px 0;border-top:1px solid var(--border);}
@@ -491,7 +536,121 @@
       </div>
     </div>
     <div class="hero-visual reveal">
-      <img class="hero-photo" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5949c01097b8119595d9df.png" alt="Bryan Odina — automation consultant">
+      <div class="hero-flow" role="img" aria-label="Animated diagram of an automated support-ticket workflow: a signal travels from ticket submission through business-hours routing, assignment checks, priority review, resolution, and closure.">
+        <svg class="hf-svg" viewBox="0 0 1160 560" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <filter id="hf-glow" x="-150%" y="-150%" width="400%" height="400%">
+              <feGaussianBlur stdDeviation="5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="hf-glow-soft" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <g>
+            <path class="hf-wire" d="M150,280 L335,280"/>
+            <path class="hf-wire" d="M365,280 L440,280 L440,235"/>
+            <path class="hf-wire" d="M440,235 L440,90 L540,90"/>
+            <path class="hf-wire" d="M700,90 L725,90 L725,280"/>
+            <path class="hf-wire" d="M725,280 L875,280"/>
+            <path class="hf-wire" d="M895,280 L980,280 L980,310"/>
+            <path class="hf-wire" d="M980,310 L980,440"/>
+            <path class="hf-wire" d="M980,470 L900,470"/>
+            <path class="hf-wire" d="M875,470 L725,470"/>
+            <path class="hf-wire" d="M725,470 L340,470"/>
+            <path class="hf-wire" d="M180,470 L150,470"/>
+
+            <path class="hf-wire-idle" d="M440,325 L440,470 L540,470"/>
+            <path class="hf-wire-idle" d="M700,470 L725,470 L725,325"/>
+            <path class="hf-wire-idle" d="M790,235 L790,118"/>
+            <path class="hf-wire-idle" d="M810,118 L810,235"/>
+            <path class="hf-wire-idle" d="M800,425 L800,395 L1060,395 L1060,470 L1040,470"/>
+          </g>
+
+          <path class="hf-wire-pulse" pathLength="200"
+            d="M150,280 L440,280 L440,235 L440,90 L540,90 L700,90 L725,90 L725,280 L800,280 L875,280 L895,280 L980,280 L980,310 L980,440 L980,470 L900,470 L875,470 L725,470 L340,470 L180,470 L150,470"/>
+          <circle class="hf-spark" r="7"/>
+
+          <text class="hf-edge-label" x="470" y="160">Yes</text>
+          <text class="hf-edge-label" x="470" y="405">No</text>
+          <text class="hf-edge-label" x="835" y="255">No</text>
+          <text class="hf-edge-label" x="905" y="270">Yes</text>
+          <text class="hf-edge-label" x="960" y="415">No</text>
+          <text class="hf-edge-label" x="800" y="500">Yes</text>
+
+          <g class="hf-n-start">
+            <rect class="hf-shape hf-terminal" x="10" y="252" width="140" height="56" rx="28"/>
+            <text class="hf-node-label" x="80" y="274">Ticket/Email</text>
+            <text class="hf-node-label" x="80" y="292">Submitted</text>
+          </g>
+
+          <g class="hf-n-created">
+            <rect class="hf-shape" x="185" y="250" width="150" height="60" rx="8"/>
+            <text class="hf-node-label" x="260" y="272">Support Case</text>
+            <text class="hf-node-label" x="260" y="290">Created &amp; Assigned</text>
+          </g>
+
+          <g class="hf-n-hours">
+            <polygon class="hf-shape" points="440,235 515,280 440,325 365,280"/>
+            <text class="hf-node-label" x="440" y="272">STD Business</text>
+            <text class="hf-node-label" x="440" y="290">Hours?</text>
+          </g>
+
+          <g class="hf-n-alertsup">
+            <rect class="hf-shape" x="540" y="60" width="160" height="60" rx="8"/>
+            <text class="hf-node-label" x="620" y="82">Alert Support</text>
+            <text class="hf-node-label" x="620" y="100">Team to Respond</text>
+          </g>
+
+          <g>
+            <rect class="hf-shape" x="540" y="440" width="160" height="60" rx="8"/>
+            <text class="hf-node-label" x="620" y="462">Alert On-Call</text>
+            <text class="hf-node-label" x="620" y="480">Technician</text>
+          </g>
+
+          <g>
+            <rect class="hf-shape" x="730" y="62" width="140" height="56" rx="8"/>
+            <text class="hf-node-label" x="800" y="90">Reminder Sent</text>
+          </g>
+
+          <g class="hf-n-assigned">
+            <polygon class="hf-shape" points="800,235 875,280 800,325 725,280"/>
+            <text class="hf-node-label" x="800" y="272">Ticket</text>
+            <text class="hf-node-label" x="800" y="290">Assigned?</text>
+          </g>
+
+          <g class="hf-n-reviewed">
+            <rect class="hf-shape" x="895" y="250" width="170" height="60" rx="8"/>
+            <text class="hf-node-label" x="980" y="272">Reviewed by</text>
+            <text class="hf-node-label" x="980" y="290">Priority</text>
+          </g>
+
+          <g class="hf-n-resolves">
+            <rect class="hf-shape" x="900" y="440" width="160" height="60" rx="8"/>
+            <text class="hf-node-label" x="980" y="462">Support Team</text>
+            <text class="hf-node-label" x="980" y="480">Resolves Issue</text>
+          </g>
+
+          <g class="hf-n-resolved">
+            <polygon class="hf-shape" points="800,425 875,470 800,515 725,470"/>
+            <text class="hf-node-label" x="800" y="462">Issue</text>
+            <text class="hf-node-label" x="800" y="480">Resolved?</text>
+          </g>
+
+          <g class="hf-n-closed">
+            <rect class="hf-shape" x="180" y="440" width="160" height="60" rx="8"/>
+            <text class="hf-node-label" x="260" y="462">Ticket Closed</text>
+            <text class="hf-node-label" x="260" y="480">Follow-up Email</text>
+          </g>
+
+          <g class="hf-n-end">
+            <rect class="hf-shape hf-terminal" x="10" y="442" width="140" height="56" rx="28"/>
+            <text class="hf-node-label" x="80" y="470">End</text>
+          </g>
+        </svg>
+      </div>
       <div class="hero-stats">
         <div class="hero-stat"><b>15+</b><span>Client systems built</span></div>
         <div class="hero-stat"><b>24/7</b><span>Systems running</span></div>

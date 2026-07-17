@@ -12,7 +12,9 @@ A single-page HTML portfolio site for **Bryan Odina** — GHL-Certified Admin, L
 
 **As of 2026-07-18, this is no longer a purely static site.** A Vercel serverless API backend (`api/`, `package.json`) was added to power the custom booking widget — see §12 "Booking Backend" for the full architecture. The frontend itself remains build-step-free; the `api/` functions have zero dependencies too (plain `fetch` to GHL's REST API, no SDKs).
 
-**Git:** this folder is a git repo, pushed to `github.com/RedCheeksCoder/portfolio` (origin, `main` branch) as of 2026-07-18.
+**Git:** this folder is a git repo, pushed to `github.com/RedCheeksCoder/portfolio` (origin, `main` branch) as of 2026-07-18. **Repo is public** (changed same day — required to work around a Vercel Hobby-plan restriction, see §12 Deployment/Ops notes).
+
+**Live deployment:** Vercel project `portfolio-ud47` (scope `redcheekscoders-projects`), reachable at `portfolio-ud47.vercel.app` and its aliases. See §12 for the booking-backend architecture and important deploy gotchas — plain `vercel --prod` is not sufficient, read that section before redeploying.
 
 **Positioning / core message:** "Stop hiring for work that automation can already do." The entire site exists to convince visitors (both business owners and agencies) that Bryan builds automation systems that let them grow without adding headcount.
 
@@ -66,7 +68,7 @@ These were chosen deliberately after presenting multiple headline/subheadline op
 CSS variables are defined in `:root` at the top of the `<style>` block — always edit tokens there, not hardcoded hex values scattered in rules.
 
 ### Signature visual element
-A small animated SVG node-flow diagram in the hero (Trigger → Automate → Notify, with a dot traveling the path) — represents automation visually instead of a generic photo/icon. Respects `prefers-reduced-motion`.
+**Implemented 2026-07-18** (previously documented here as planned-but-not-built). The hero's profile photo was replaced with an animated inline SVG flowchart — a copper-toned support-ticket automation workflow (submit → business-hours routing → alert support/on-call → assignment check → priority review → resolve → resolved check → close) — instead of the originally-envisioned simpler Trigger → Automate → Notify concept. A bright pulse + glowing spark travel the diagram's main path on a 13s CSS-only loop (`stroke-dashoffset` + `offset-path`, no JS); nodes brighten in sync as the pulse reaches them. Respects `prefers-reduced-motion` (pulse/spark/node-glow animations disabled, static diagram shown instead). See `LOGS.md` 2026-07-18 "Hero visual replaced..." for full implementation detail. A standalone demo/reference copy lives at `Portfolio/Diagrams/hero-flow-animation.html`.
 
 ### Marquee banner (below hero)
 - Full-width, **straight/no tilt** (explicitly requested — do not re-add rotation).
@@ -79,7 +81,7 @@ A small animated SVG node-flow diagram in the hero (Trigger → Automate → Not
 ## 4. Site Structure (current section order)
 
 1. **Header/Nav** — sticky, blurred backdrop, links to all sections + "Book a call" CTA
-2. **Hero** — headline, subheadline, CTA buttons, credential tags, node-flow diagram, profile photo, stat counters
+2. **Hero** — headline, subheadline, CTA buttons, credential tags, animated node-flow diagram (replaced the profile photo, see §3), stat counters
 3. **Marquee banner** — 50-keyword scrolling strip (see §3)
 4. **About** — photo + bio, ties back to automation-first positioning
 5. **Certifications** — badge grid (GHL + 4 n8n badges), see §6
@@ -174,7 +176,7 @@ All "Book a call" CTAs across the page (`nav`, hero, about, contact) still link 
 
 6. **All Work-section Description/Problem/Work-Done copy, and all 9 invented Process Design case studies, are agent-drafted and unreviewed.** Bryan asked for a draft-then-review pass (see §11) — none of this copy should be treated as final until he's read through it.
 
-7. **Booking backend built but not live** — see §12. Simplified to GHL-only (Google Calendar removed) on 2026-07-18. Blocked on: (a) Bryan completing the GHL Private Integration setup, (b) Vercel deployment/env vars, and (c) verifying GHL's actual free-slots response shape against a live call (§12 flags this as the biggest risk). Until then the booking widget is deployed as static HTML with no working backend behind it if pushed as-is.
+7. ~~Booking backend built but not live~~ — **resolved 2026-07-18.** Live, deployed, and fully verified end-to-end against the real GHL API on `portfolio-ud47.vercel.app`. See §12.
 
 8. **Booking config values unconfirmed** — timezone (default Asia/Manila), meeting duration (default 30min, must match GHL calendar's own setting), minimum notice (default 12h), max advance window (default 30 days), and the exact fields collected (currently mirrors the old contact form: name/email/phone/notes) are agent defaults in `api/_lib/config.js` — confirm/adjust with Bryan. Working hours/days/buffer are no longer agent config — they're GHL calendar settings Bryan controls directly.
 
@@ -229,9 +231,9 @@ Replaced the old "click a work-card thumbnail → simple single-image lightbox" 
 
 ---
 
-## 12. Booking Backend (added 2026-07-18, simplified to GHL-only same day)
+## 12. Booking Backend (added 2026-07-18, simplified to GHL-only same day, deployed live same day)
 
-Replaces the GHL iframe (see §7) with a custom widget + Vercel serverless API. **Not live yet** — code is complete and tested, but needs Bryan to do the credential setup below before deploying.
+Replaces the GHL iframe (see §7) with a custom widget + Vercel serverless API. **Live and fully working in production** (`portfolio-ud47.vercel.app` and its aliases — see Deployment/Ops notes below). GHL auth, the API call, response parsing, and real availability data are all confirmed working end-to-end against the real GHL API and real calendar. No known bugs remain in this feature as of 2026-07-18.
 
 **Architecture note:** the first build of this (same day) used both Google Calendar and GHL — Google as the availability source of truth, GHL as the reminder-automation trigger. Bryan asked why both were needed; the honest answer was "in case your real schedule has things GHL doesn't know about." He confirmed **GHL's calendar is his full, comprehensive schedule** — nothing exists outside it — so Google Calendar was removed entirely the same day. GHL's own `GET /calendars/:calendarId/free-slots` API (confirmed to exist via GHL's official docs, used internally by GHL's own booking widgets) now handles availability directly, and GHL is the only external system this backend talks to. This cut the credential setup from two systems to one, removed the `googleapis` dependency entirely (site now has zero backend dependencies too — pure `fetch`), and simplified `api/book.js` from a two-system dual-write with partial-failure tolerance down to a single write.
 
@@ -264,8 +266,14 @@ Portfolio/
 - `GET /api/availability?date=YYYY-MM-DD` → calls GHL's `GET /calendars/:calendarId/free-slots` for that day, filters the returned start times against `minNoticeHours`, computes each slot's `end` as `start + slotDurationMinutes`. Returns `{date, timezone, slots:[{start,end}]}` with slots as ISO strings carrying the correct `+08:00`-style offset (computed via `Intl.DateTimeFormat`, no date library dependency).
 - `POST /api/book` (body: `start,end,name,email,phone,notes`) → **re-fetches GHL's free-slots for that day immediately before writing** and confirms the requested start time is still present (race-condition guard — narrows but doesn't fully eliminate the window two simultaneous bookers could both pass; accepted as tolerable for solo-consultant booking volume, same class of limitation GHL's own widget already has). Upserts a GHL contact, then creates the GHL appointment. Since there's only one system now, **any failure is a hard failure** (500 to the visitor) — the dual-write partial-failure tolerance from the earlier two-system design no longer applies/exists.
 
-### ⚠️ Needs verification against a live GHL API call
-GHL's API docs site renders parameter tables and example payloads client-side (JS), which couldn't be fully extracted via automated fetch during this session. Confirmed to exist: `GET /calendars/:calendarId/free-slots` (returns "an availability map keyed by date"), `POST /calendars/events/appointments`. **Not confirmed:** the exact query param names/format for the free-slots date range (`getFreeSlots()` in `ghl.js` currently sends `startDate`/`endDate` as epoch-millisecond strings — a common GHL v2 convention, but unverified for this specific endpoint) and the exact shape of each date's slot array in the response (currently parsed defensively — handles both a raw array of ISO start-time strings and an array of `{startTime}`/`{start}` objects, whichever GHL actually returns). **Before considering this live:** run one real `GET /api/availability?date=...` request against a day with known GHL calendar availability during `vercel dev` testing, log the raw GHL response, and confirm `getFreeSlots()` in `api/_lib/ghl.js` is parsing it correctly — adjust the parsing there if the real shape differs from what's handled now.
+### ✅ Fully verified against the live GHL API — working (2026-07-18)
+Confirmed via a temporary debug endpoint (tried several request-parameter variants against the real API, deleted after use): `getFreeSlots()`'s request format is exactly right — `startDate`/`endDate` as **epoch-millisecond numbers** is required (GHL returns `422 "must be a number"` for ISO date strings), and `locationId` must **not** be sent as a query param (`422 "property locationId should not exist"` if included — good thing the current code never added it). The per-date slot shape is confirmed too: `{"YYYY-MM-DD":{"slots":["<ISO start time>", ...]}}` — an array of plain ISO start-time strings under a `slots` key, which `getFreeSlots()`'s defensive parsing already handles correctly via the `dayValue?.slots` branch.
+
+**Important correction:** `y7JL04RcQUy2EyhUm1FQ` **is** the correct real Calendar ID — Bryan confirmed this directly from the GHL calendar's own settings page (screenshot: "GHL Implementation - Discovery Call, ID: y7JL04RcQUy2EyhUm1FQ"). GHL apparently uses the same ID for both the internal Calendar ID and the public booking-widget URL slug — the earlier assumption that these were different values (based on general GHL knowledge, not a confirmed fact for this account) was **wrong**, and the corresponding warning that was in this doc and in the credential-setup checklist has been removed.
+
+**The actual reason single-day tests kept returning `slots: []`:** the specific date tested (2026-07-20, a Monday) simply has no configured availability on this GHL calendar. Widening the debug endpoint's query to a 2-week range confirmed real slots exist starting 2026-07-22 (Wednesday) — e.g. `21:00–23:30 Asia/Manila`. **Everything works end-to-end** — confirmed live: `GET /api/availability?date=2026-07-22` returns real slots with correct ISO offsets.
+
+**Worth flagging to Bryan:** the real availability window that came back was **9:00 PM–11:30 PM Manila time**, not a typical daytime schedule. Worth a quick sanity check that this matches his actual intended availability in GHL (Settings → Calendars → that calendar → Availability) — if it looks wrong, it's a GHL-side config to fix there, not a bug here.
 
 ### Frontend widget
 `#bookingWidget` in the `#book` section — three steps (date/slot picker → contact form → confirmation) toggled via `.is-hidden`, reusing the site's existing `.field`/`.btn-primary` styles verbatim and a new `.day-cell`/`.slot-btn` pill pattern styled off the existing `.filter-btn` look. JS lives in the trailing `<script>` block, IIFE-wrapped, after the work-filter code. Slot times display in the visitor's local timezone via the browser's own `toLocaleString`/`toLocaleTimeString` (no library) — the API always computes in `BOOKING_CONFIG.timezone` internally and returns offset-carrying ISO strings. **Unchanged by the GHL-only simplification** — the `/api/availability` and `/api/book` request/response shapes stayed identical, so no frontend edits were needed when Google Calendar was removed.
@@ -274,7 +282,18 @@ GHL's API docs site renders parameter tables and example payloads client-side (J
 - `api/_lib/slots.js`'s remaining pure functions (timezone offset formatting, booking-window bounds, minimum-notice check) unit-tested directly with `node` — 6/6 passed. (The earlier slot-generation/buffer-exclusion tests from the two-system version no longer apply — that logic moved to GHL and was deleted from this codebase.)
 - All `api/*.js` files syntax-checked (`node --check`) after both the initial build and the GHL-only rewrite.
 - Frontend widget flow (calendar render → date select → slot select → form → submit → confirmation, and the 409 `slot_taken` conflict path) verified end-to-end with Playwright against a **local HTTP server serving `index.html`** with `/api/availability` and `/api/book` mocked (fetch from a `file://` origin doesn't reliably hit route interception, hence the local server) — re-run after the GHL-only rewrite, still passes, confirming the frontend needed zero changes. Existing site regressions (work filters, case-study modals) re-verified working alongside the widget both times.
-- **Not yet tested:** anything against the real GHL API — impossible without the credentials below, which only Bryan can create. This includes the response-shape verification flagged above.
+- **Fully tested against the real GHL API and confirmed working** (2026-07-18, once Bryan added credentials) — see the "Fully verified" callout above. Auth, the endpoint call, response parsing, and real availability data all confirmed live.
+
+### Deployment / Ops notes (learned the hard way, 2026-07-18 — read before redeploying)
+
+Getting this actually live surfaced several **Vercel account/project configuration issues, none of them application bugs**:
+
+1. **The GitHub repo (`RedCheeksCoder/portfolio`) is now public**, not private. Vercel's Hobby plan refuses to build a commit unless the git author is a recognized collaborator on a *private* repo — Bryan's local git identity didn't match the Vercel account, and every git-triggered deploy failed with "Deployment Blocked: commit author did not have contributing access." Making the repo public (via GitHub API, `PATCH /repos/.../portfolio {"private":false}`) removed this restriction entirely, for free. No secrets are in the repo (`.env` stays gitignored), so this was judged an acceptable tradeoff over paying for Pro or reconciling git/Vercel account identities. **If Bryan wants it private again, the Hobby-plan collaboration restriction will return** — either upgrade to Pro, or make sure whichever git identity authors commits matches the Vercel account exactly.
+2. **Always deploy with `vercel --prod --force`**, not plain `vercel --prod`. A plain deploy silently restored a stale build cache from before the GHL-only rewrite (build completed in ~1s, but was still running the deleted `googleCalendar.js` code) — `--force` skips the cache and guarantees a real rebuild. Do this until there's a specific reason to trust the cache again.
+3. **`vercel --prod` does not update the project's named aliases automatically.** The short public URL (`portfolio-ud47.vercel.app`) and the team-scoped domain stay pinned to whatever deployment was last explicitly assigned via `vercel alias set <deployment-url> <alias>` — a fresh successful deploy does NOT retarget them on its own. After every deploy: get the newest deployment URL from `vercel ls portfolio-ud47 --scope redcheekscoders-projects` (first row), then run `vercel alias set <that-url> portfolio-ud47.vercel.app --scope redcheekscoders-projects` (and repeat for `portfolio-ud47-redcheekscoders-projects.vercel.app` / `portfolio-ud47-git-main-redcheekscoders-projects.vercel.app` if testing those too). Forgetting this step means testing an old deployment and getting confusing stale-error results.
+4. **SSO/Deployment Protection was blocking the live site.** Vercel's `ssoProtection` was set to gate all non-custom-domain URLs — every production `*.vercel.app` alias Bryan was actually visiting redirected `fetch()` calls to an HTML SSO login page instead of returning JSON, which is what caused the `"Unexpected token '<', <!DOCTYPE"` crash the first time he clicked a date. Fixed with `vercel project protection disable portfolio-ud47 --sso --scope redcheekscoders-projects`. **If this ever needs re-enabling** (e.g. Bryan wants the site password-gated during further dev), remember it will break the booking widget again unless a custom domain is attached (custom domains are exempt from this gate) or the fetch calls are updated to send a protection-bypass token.
+5. **Two Vercel projects existed for the same repo** (`portfolio` and `portfolio-ud47`) from an apparent double-import. `portfolio` never successfully deployed and had no env vars — deleted. `portfolio-ud47` is the one with real env vars and is the one actually in use; all instructions above assume this project name.
+6. **Do not stack multiple deploys.** Running a second `vercel --prod` while an earlier one is still building/stuck appears to trigger a Vercel Pro-upgrade prompt (looked like a concurrency-limit gate manifesting as a billing nudge rather than a clean error). If a deploy seems stuck, cancel/remove it (`vercel remove <deployment-url> --yes`) before starting another, rather than deploying again on top.
 
 ### Credential setup — Bryan must do this himself (agent has no access to his accounts)
 
@@ -282,17 +301,18 @@ GHL's API docs site renders parameter tables and example payloads client-side (J
 1. In the GHL sub-account currently running the booking widget → Settings → **Private Integrations** (not the legacy API Key page).
 2. Create one, scopes: contacts read/write + calendar/appointments write + calendar/free-slots read (exact scope names to confirm in GHL's UI when creating it).
 3. Copy the token immediately (GHL shows it once).
-4. Note the Location ID, and the target Calendar ID (confirm the actual ID from that calendar's own settings page — don't assume it equals the `y7JL04RcQUy2EyhUm1FQ` URL slug from the old iframe).
+4. Note the Location ID and the Calendar ID from that calendar's own settings page. **Confirmed 2026-07-18: for this account, the Calendar ID and the public booking-widget URL slug are the same value** (`y7JL04RcQUy2EyhUm1FQ`) — don't assume this is universally true for every GHL account, but for this project it checked out, so there was never actually a credential bug here.
 
-**Vercel deployment:**
-1. This repo is already pushed to `github.com/RedCheeksCoder/portfolio` (as of 2026-07-18) — connect it via Vercel's "Import Git Repository" flow for auto-deploy on push.
-2. No-git alternative: `npm i -g vercel`, run `vercel` from inside `Portfolio/`.
-3. Add the four vars from `.env.example` (`GHL_PRIVATE_INTEGRATION_TOKEN`, `GHL_LOCATION_ID`, `GHL_CALENDAR_ID`, `BOOKING_TIMEZONE`) under Vercel Project Settings → Environment Variables once the project exists — real secrets live only there, never in the repo.
+**Vercel deployment — done and confirmed working, project is `portfolio-ud47` under scope `redcheekscoders-projects`:**
+1. Repo pushed to `github.com/RedCheeksCoder/portfolio` (now public, see Deployment/Ops notes) and a Vercel project exists (`portfolio-ud47`) with all four env vars set and confirmed correct.
+2. Git-triggered auto-deploy is unreliable right now (see Deployment/Ops notes #2/#3) — until that's revisited, deploy manually: `cd Portfolio && vercel --prod --yes --force --scope redcheekscoders-projects`, then re-point the aliases (see Deployment/Ops notes #3).
+3. Env vars live under Vercel Project Settings → Environment Variables — all four (`GHL_PRIVATE_INTEGRATION_TOKEN`, `GHL_LOCATION_ID`, `GHL_CALENDAR_ID`, `BOOKING_TIMEZONE`) confirmed correct and working as of 2026-07-18.
 
 ### Known limitations (documented, not silent gaps)
 1. **Soft race-guard, not a hard lock** — see API behavior above. Acceptable for expected volume; revisit if booking traffic ever gets high enough for double-bookings to become a real problem.
-2. **GHL free-slots response shape unverified** — see the "Needs verification" callout above. This is the single biggest risk to this feature actually working on first deploy.
-3. Config values (timezone, duration, notice window, advance window, fields collected) are the agent's defaults, not yet confirmed by Bryan — see §8. Working hours/buffer are now GHL calendar settings, not agent defaults — Bryan should just set those directly in GHL to whatever he wants.
+2. Config values (timezone, duration, notice window, advance window, fields collected) are the agent's defaults, not yet confirmed by Bryan — see §8. Working hours/buffer are now GHL calendar settings, not agent defaults — Bryan should just set those directly in GHL to whatever he wants.
+3. **SSO deployment protection is now disabled project-wide** (see Deployment/Ops notes #4) — the site currently has zero access gating on any of its Vercel URLs. Fine for a public portfolio site, but note this if Bryan ever wants a staging/password-protected preview.
+4. **Real availability window is 9:00 PM–11:30 PM Asia/Manila**, not typical daytime hours — confirmed real, not a bug, but worth Bryan double-checking that's actually what he wants configured in GHL's calendar settings.
 
 ---
 

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hero Flow Animation — Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#151513;
+    --bg-alt:#0B0B0B;
+    --text:#F4F1E8;
+    --accent:#A54F16;
+    --accent-2:#CC7E31;
+    --accent-soft:#CC7E3122;
+    --wire-dim: rgba(204,126,49,0.28);
+    --wire-bright:#FFD9A8;
+    --font-display:'Sansation',sans-serif;
+    --font-body:'Quicksand',sans-serif;
+    --loop-duration: 13s;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .stage{
+    width:100%;
+    max-width:1800px;
+    padding:40px 20px;
+  }
+
+  .stage h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.4rem;
+    text-align:center;
+    color:var(--text);
+    margin:0 0 6px;
+    letter-spacing:.02em;
+  }
+
+  .stage p.sub{
+    text-align:center;
+    color:var(--accent-2);
+    font-size:.9rem;
+    margin:0 0 28px;
+    font-weight:500;
+  }
+
+  .flow-wrap{
+    padding:10px;
+  }
+
+  svg.flow{
+    width:100%;
+    height:auto;
+    display:block;
+    overflow:visible;
+  }
+
+  /* ---------- static text ---------- */
+  .node-label{
+    font-family:var(--font-body);
+    font-weight:600;
+    fill:var(--text);
+    text-anchor:middle;
+    dominant-baseline:middle;
+  }
+  .node-label.small{ font-size:15px; }
+  .edge-label{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:14px;
+    fill:var(--accent-2);
+    text-anchor:middle;
+  }
+
+  /* ---------- node shapes (base / idle state) ---------- */
+  .node-shape{
+    fill:#1F1B16;
+    stroke:var(--accent);
+    stroke-width:2;
+    transition:none;
+  }
+  .node-shape.terminal{
+    fill:var(--accent);
+    stroke:var(--accent-2);
+  }
+  .terminal .node-label{ fill:var(--bg-alt); font-weight:700; }
+
+  /* ---------- wires (static copper traces) ---------- */
+  .wire{
+    fill:none;
+    stroke:var(--wire-dim);
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  /* the animated bright pulse riding the main path */
+  .wire-pulse{
+    fill:none;
+    stroke:var(--wire-bright);
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-dasharray: 9 191; /* pathLength=200 -> ~4.5% bright segment */
+    filter:url(#glow);
+    animation: travel var(--loop-duration) linear infinite;
+  }
+
+  @keyframes travel{
+    from{ stroke-dashoffset: 0; }
+    to{ stroke-dashoffset: -200; }
+  }
+
+  /* traveling spark dot on top of the pulse */
+  .spark{
+    fill:var(--wire-bright);
+    filter:url(#glow);
+    offset-path: path("M150,280 L440,280 L440,235 L440,90 L540,90 L700,90 L725,90 L725,280 L800,280 L875,280 L895,280 L980,280 L980,310 L980,440 L980,470 L900,470 L875,470 L725,470 L340,470 L180,470 L150,470");
+    animation: ride var(--loop-duration) linear infinite;
+  }
+  @keyframes ride{
+    0%{ offset-distance:0%; opacity:0; }
+    2%{ opacity:1; }
+    97%{ opacity:1; }
+    100%{ offset-distance:100%; opacity:0; }
+  }
+
+  /* ---------- node glow timing, synced to the same loop ---------- */
+  .glow{
+    animation-name: nodeglow;
+    animation-duration: var(--loop-duration);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+  .glow-shape{
+    animation-name: nodeglowshape;
+    animation-duration: var(--loop-duration);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes nodeglowshape{
+    0%   { stroke:var(--accent); filter:none; }
+    100% { stroke:var(--accent); filter:none; }
+  }
+
+  /* Each node gets its own percentage window via inline custom animation-delay trick:
+     we instead define one shared keyframe set per node using distinct animation names below. */
+
+  .n-start   { animation-name: g-start; }
+  .n-created { animation-name: g-created; }
+  .n-hours   { animation-name: g-hours; }
+  .n-alertsup{ animation-name: g-alertsup; }
+  .n-assigned{ animation-name: g-assigned; }
+  .n-reviewed{ animation-name: g-reviewed; }
+  .n-resolves{ animation-name: g-resolves; }
+  .n-resolved{ animation-name: g-resolved; }
+  .n-closed  { animation-name: g-closed; }
+  .n-end     { animation-name: g-end; }
+
+  .n-start, .n-created, .n-hours, .n-alertsup, .n-assigned,
+  .n-reviewed, .n-resolves, .n-resolved, .n-closed, .n-end{
+    animation-duration: var(--loop-duration);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    stroke:var(--accent);
+  }
+
+  @keyframes g-start   { 0%{stroke:var(--wire-bright);filter:url(#glow-soft);} 6%{stroke:var(--accent);filter:none;} 98%{stroke:var(--accent);filter:none;} 100%{stroke:var(--wire-bright);filter:url(#glow-soft);} }
+  @keyframes g-created { 0%,1%{stroke:var(--accent);filter:none;} 4.8%{stroke:var(--wire-bright);filter:url(#glow-soft);} 9%{stroke:var(--accent);filter:none;} }
+  @keyframes g-hours    { 11%{stroke:var(--accent);filter:none;} 14.6%{stroke:var(--wire-bright);filter:url(#glow-soft);} 19%{stroke:var(--accent);filter:none;} }
+  @keyframes g-alertsup { 25%{stroke:var(--accent);filter:none;} 28.7%{stroke:var(--wire-bright);filter:url(#glow-soft);} 33%{stroke:var(--accent);filter:none;} }
+  @keyframes g-assigned { 41%{stroke:var(--accent);filter:none;} 44.8%{stroke:var(--wire-bright);filter:url(#glow-soft);} 49%{stroke:var(--accent);filter:none;} }
+  @keyframes g-reviewed { 49.5%{stroke:var(--accent);filter:none;} 52.6%{stroke:var(--wire-bright);filter:url(#glow-soft);} 57%{stroke:var(--accent);filter:none;} }
+  @keyframes g-resolves { 57.5%{stroke:var(--accent);filter:none;} 60.9%{stroke:var(--wire-bright);filter:url(#glow-soft);} 65%{stroke:var(--accent);filter:none;} }
+  @keyframes g-resolved { 65.5%{stroke:var(--accent);filter:none;} 68.7%{stroke:var(--wire-bright);filter:url(#glow-soft);} 73%{stroke:var(--accent);filter:none;} }
+  @keyframes g-closed   { 88%{stroke:var(--accent);filter:none;} 92.2%{stroke:var(--wire-bright);filter:url(#glow-soft);} 96%{stroke:var(--accent);filter:none;} }
+  @keyframes g-end      { 96.5%{stroke:var(--accent);filter:none;} 100%{stroke:var(--wire-bright);filter:url(#glow-soft);} }
+
+  /* subtle idle shimmer on the non-main (branch/retry) wires so they don't look dead */
+  .wire-idle{
+    fill:none;
+    stroke:var(--accent-2);
+    stroke-opacity:.35;
+    stroke-width:3;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .legend{
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+  .legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:.8rem;
+    color:var(--text);
+    opacity:.75;
+  }
+  .legend i{
+    width:14px;height:14px;border-radius:3px;display:inline-block;
+  }
+  .legend i.main{ background:var(--wire-bright); box-shadow:0 0 8px var(--wire-bright); }
+  .legend i.branch{ background:var(--accent-2); opacity:.6; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <h1>Support Ticket Automation Flow</h1>
+  <p class="sub">Live signal — copper pulse traveling the resolution path</p>
+
+  <div class="flow-wrap">
+    <svg class="flow" viewBox="0 0 1160 560" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow" x="-150%" y="-150%" width="400%" height="400%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="glow-soft" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+
+      <!-- ============ STATIC WIRES (all connectors, dim copper) ============ -->
+      <g>
+        <!-- main path segments (also dim base, pulse rides on top) -->
+        <path class="wire" d="M150,280 L335,280"/>
+        <path class="wire" d="M365,280 L440,280 L440,235"/>
+        <path class="wire" d="M440,235 L440,90 L540,90"/>
+        <path class="wire" d="M700,90 L725,90 L725,280"/>
+        <path class="wire" d="M725,280 L875,280"/>
+        <path class="wire" d="M895,280 L980,280 L980,310"/>
+        <path class="wire" d="M980,310 L980,440"/>
+        <path class="wire" d="M980,470 L900,470"/>
+        <path class="wire" d="M875,470 L725,470"/>
+        <path class="wire" d="M725,470 L340,470"/>
+        <path class="wire" d="M180,470 L150,470"/>
+
+        <!-- branch / retry wires (idle shimmer, not part of the main pulse) -->
+        <path class="wire-idle" d="M440,325 L440,470 L540,470"/>
+        <path class="wire-idle" d="M700,470 L725,470 L725,325"/>
+        <path class="wire-idle" d="M790,235 L790,118"/>
+        <path class="wire-idle" d="M810,118 L810,235"/>
+        <path class="wire-idle" d="M800,425 L800,395 L1060,395 L1060,470 L1040,470"/>
+      </g>
+
+      <!-- ============ ANIMATED PULSE (single continuous main path) ============ -->
+      <path class="wire-pulse" pathLength="200"
+        d="M150,280 L440,280 L440,235 L440,90 L540,90 L700,90 L725,90 L725,280 L800,280 L875,280 L895,280 L980,280 L980,310 L980,440 L980,470 L900,470 L875,470 L725,470 L340,470 L180,470 L150,470"/>
+      <circle class="spark" r="6"/>
+
+      <!-- ============ EDGE LABELS ============ -->
+      <text class="edge-label" x="470" y="160">Yes</text>
+      <text class="edge-label" x="470" y="405">No</text>
+      <text class="edge-label" x="835" y="255">No</text>
+      <text class="edge-label" x="905" y="270">Yes</text>
+      <text class="edge-label" x="960" y="415">No</text>
+      <text class="edge-label" x="800" y="500">Yes</text>
+
+      <!-- ============ NODES ============ -->
+
+      <!-- Start (pill) -->
+      <g class="glow-shape n-start">
+        <rect class="node-shape terminal" x="10" y="252" width="140" height="56" rx="28"/>
+        <text class="node-label small" x="80" y="274">Ticket/Email</text>
+        <text class="node-label small" x="80" y="292">Submitted</text>
+      </g>
+
+      <!-- Created -->
+      <g class="glow-shape n-created">
+        <rect class="node-shape" x="185" y="250" width="150" height="60" rx="8"/>
+        <text class="node-label small" x="260" y="272">Support Case</text>
+        <text class="node-label small" x="260" y="290">Created &amp; Assigned</text>
+      </g>
+
+      <!-- Hours diamond -->
+      <g class="glow-shape n-hours">
+        <polygon class="node-shape" points="440,235 515,280 440,325 365,280"/>
+        <text class="node-label small" x="440" y="272">STD Business</text>
+        <text class="node-label small" x="440" y="290">Hours?</text>
+      </g>
+
+      <!-- Alerts to Support team -->
+      <g class="glow-shape n-alertsup">
+        <rect class="node-shape" x="540" y="60" width="160" height="60" rx="8"/>
+        <text class="node-label small" x="620" y="82">Alert Support</text>
+        <text class="node-label small" x="620" y="100">Team to Respond</text>
+      </g>
+
+      <!-- Alerts to on-call technician (branch, idle) -->
+      <g class="n-alertsup" style="animation:none;">
+        <rect class="node-shape" x="540" y="440" width="160" height="60" rx="8"/>
+        <text class="node-label small" x="620" y="462">Alert On-Call</text>
+        <text class="node-label small" x="620" y="480">Technician</text>
+      </g>
+
+      <!-- Reminder (branch, idle) -->
+      <g>
+        <rect class="node-shape" x="730" y="62" width="140" height="56" rx="8"/>
+        <text class="node-label small" x="800" y="90">Reminder Sent</text>
+      </g>
+
+      <!-- Assigned diamond -->
+      <g class="glow-shape n-assigned">
+        <polygon class="node-shape" points="800,235 875,280 800,325 725,280"/>
+        <text class="node-label small" x="800" y="272">Ticket</text>
+        <text class="node-label small" x="800" y="290">Assigned?</text>
+      </g>
+
+      <!-- Reviewed -->
+      <g class="glow-shape n-reviewed">
+        <rect class="node-shape" x="895" y="250" width="170" height="60" rx="8"/>
+        <text class="node-label small" x="980" y="272">Reviewed by</text>
+        <text class="node-label small" x="980" y="290">Priority</text>
+      </g>
+
+      <!-- Resolves -->
+      <g class="glow-shape n-resolves">
+        <rect class="node-shape" x="900" y="440" width="160" height="60" rx="8"/>
+        <text class="node-label small" x="980" y="462">Support Team</text>
+        <text class="node-label small" x="980" y="480">Resolves Issue</text>
+      </g>
+
+      <!-- Resolved diamond -->
+      <g class="glow-shape n-resolved">
+        <polygon class="node-shape" points="800,425 875,470 800,515 725,470"/>
+        <text class="node-label small" x="800" y="462">Issue</text>
+        <text class="node-label small" x="800" y="480">Resolved?</text>
+      </g>
+
+      <!-- Closed -->
+      <g class="glow-shape n-closed">
+        <rect class="node-shape" x="180" y="440" width="160" height="60" rx="8"/>
+        <text class="node-label small" x="260" y="462">Ticket Closed</text>
+        <text class="node-label small" x="260" y="480">Follow-up Email</text>
+      </g>
+
+      <!-- End (pill) -->
+      <g class="glow-shape n-end">
+        <rect class="node-shape terminal" x="10" y="442" width="140" height="56" rx="28"/>
+        <text class="node-label small" x="80" y="470">End</text>
+      </g>
+
+    </svg>
+  </div>
+
+  <div class="legend">
+    <span><i class="main"></i>Live signal path</span>
+    <span><i class="branch"></i>Alternate / retry paths</span>
+  </div>
+</div>
+</body>
+</html>
