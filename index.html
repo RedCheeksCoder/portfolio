@@ -223,7 +223,7 @@
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
     padding:26px;transition:border-color .2s, transform .2s;
   }
-  .service-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .service-card:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .service-icon{
     width:38px;height:38px;border-radius:8px;background:var(--accent-soft);
     display:flex;align-items:center;justify-content:center;color:var(--accent-2);
@@ -285,14 +285,15 @@
   .badge-card:hover{
     border-color:var(--accent-2);
     transform:translateY(-5px);
-    animation:badge-glow 1.6s ease-in-out infinite;
+    animation:card-glow 1.6s ease-in-out infinite;
   }
-  @keyframes badge-glow{
+  @keyframes card-glow{
     0%,100%{box-shadow:0 0 0 0 rgba(204,126,49,0);}
     50%{box-shadow:0 0 20px 2px rgba(204,126,49,.55);}
   }
   @media (prefers-reduced-motion: reduce){
-    .badge-card:hover{animation:none;}
+    .badge-card:hover,.service-card:hover,.work-card:hover,.flow-card:hover,
+    .video-card:hover,.test-card:hover,.process-step:hover{animation:none;}
   }
   .badge-card img{width:96px;height:96px;object-fit:contain;}
   .badge-card span{
@@ -362,7 +363,7 @@
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
     overflow:hidden;transition:border-color .2s, transform .2s;display:flex;flex-direction:column;
   }
-  .work-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .work-card:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .work-card.hidden{display:none;}
   .work-thumb{aspect-ratio:16/10;object-fit:cover;object-position:top;width:100%;cursor:zoom-in;background:var(--surface-2);}
   .work-body{padding:20px;display:flex;flex-direction:column;flex:1;}
@@ -389,7 +390,7 @@
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
     overflow:hidden;cursor:zoom-in;transition:border-color .2s, transform .2s;
   }
-  .flow-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .flow-card:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .flow-card img{aspect-ratio:4/3;object-fit:cover;object-position:top;width:100%;}
   .flow-card span{
     display:block;padding:10px 12px;font-family:var(--font-display);font-size:11.5px;
@@ -402,8 +403,9 @@
   @media(min-width:1000px){.video-grid{grid-template-columns:repeat(4,1fr);}}
   .video-card{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    overflow:hidden;
+    overflow:hidden;transition:border-color .2s, transform .2s;
   }
+  .video-card:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .video-card video{width:100%;aspect-ratio:9/16;object-fit:cover;background:#000;}
   .video-card p{padding:12px 16px;margin:0;font-size:13.5px;color:var(--text-muted);}
 
@@ -413,8 +415,9 @@
   @media(min-width:1040px){.test-grid{grid-template-columns:repeat(3,1fr);}}
   .test-card{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    padding:24px;display:flex;flex-direction:column;
+    padding:24px;display:flex;flex-direction:column;transition:border-color .2s, transform .2s;
   }
+  .test-card:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .test-stars{color:var(--accent-2);font-size:13px;letter-spacing:2px;margin-bottom:12px;}
   .test-card p{font-size:14px;color:var(--text-muted);margin:0 0 18px;flex:1;}
   .test-person{display:flex;align-items:center;gap:12px;}
@@ -430,8 +433,9 @@
   @media(min-width:760px){.process-grid{grid-template-columns:repeat(3,1fr);}}
   .process-step{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    padding:26px;
+    padding:26px;transition:border-color .2s, transform .2s;
   }
+  .process-step:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .process-num{
     font-family:var(--font-display);color:var(--accent-2);font-size:13px;
     letter-spacing:.1em;margin-bottom:12px;display:block;
