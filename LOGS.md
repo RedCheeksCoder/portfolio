@@ -331,3 +331,9 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - **Recommended GHL widget settings to match site branding**, given to Bryan for when he configures it: primary/theme color `#A54F16` (or `#CC7E31` if only one accent slot is exposed — better contrast on dark), background `#151513`/`#0B0B0B` if exposed, position bottom-right (nothing else on the page currently occupies a fixed/floating position — confirmed by grepping `index.html` for `position:fixed`, only the case-study modal and lightbox use it, both non-floating overlays), custom icon (not GHL default), a welcome message in Bryan's voice, and "load on interaction" enabled to protect page-load performance.
 - **Next step:** once Bryan pastes the embed script, add it to `index.html` immediately before `</body>` (alongside the existing inline script block), verify no conflicts with the case-modal/lightbox z-index stack (98/100) or the booking widget, then ship via the normal commit → push → `vercel --prod --force` → re-alias flow (see Deploy Rules).
 - **Files touched:** `Portfolio/LOGS.md` (this entry), `Portfolio/CLAUDE.md` (new §13 added — see there for the standing reference).
+
+## 2026-07-19 — Logo click-to-top
+
+- Changed the header logo (`BRYAN ODINA`) from a `<div class="logo">` to `<a class="logo" href="#">` — clicking it now scrolls smoothly to the top of the page (site-wide `html{scroll-behavior:smooth}` already handles the animation, no JS needed). No CSS changes needed since `.logo`'s existing font styles apply the same to an anchor, and the sitewide `a{color:inherit;text-decoration:none;}` reset already matches its look.
+- **Verification:** headless Playwright — scrolled down, clicked the logo, confirmed `window.scrollY` settles at `0`. No console errors.
+- **Files touched:** `Portfolio/index.html` only, `Portfolio/LOGS.md` (this entry). **Not yet committed/pushed/deployed.**
