@@ -363,6 +363,12 @@
   .booking-selected-time{
     font-family:var(--font-display);color:var(--accent-2);font-size:13px;margin-bottom:18px;
   }
+  .booking-notice{
+    background:var(--accent-soft);border:1px solid var(--border);border-left:3px solid var(--accent-2);
+    border-radius:8px;padding:12px 14px;font-size:12.5px;line-height:1.5;color:var(--text-muted);
+    margin-bottom:18px;
+  }
+  .booking-notice strong{color:var(--text);}
 
   /* Work */
   .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:36px;}
@@ -1194,6 +1200,7 @@
       <div class="booking-step is-hidden" id="bookingStepForm">
         <button type="button" class="booking-back" id="bookingBackToDate">← Choose a different time</button>
         <p class="booking-selected-time" id="bookingSelectedTime"></p>
+        <p class="booking-notice">Quick note so we don't waste each other's time: my rate starts at <strong>$12/hr</strong> (<strong>$15/hr</strong> if AI agents are involved). If that's outside your budget, this likely isn't the right fit.</p>
         <form id="bookingForm">
           <div class="field"><label for="bkName">Name</label><input id="bkName" type="text" required placeholder="Your full name"></div>
           <div class="field"><label for="bkEmail">Email</label><input id="bkEmail" type="email" required placeholder="you@company.com"></div>
