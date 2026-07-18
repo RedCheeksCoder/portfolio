@@ -374,8 +374,9 @@
   .filter-btn.active{background:var(--accent);color:#F4F1E8;border-color:var(--accent);font-weight:700;}
 
   .work-grid{display:grid;grid-template-columns:1fr;gap:20px;}
-  @media(min-width:720px){.work-grid{grid-template-columns:1fr 1fr;}}
+  @media(min-width:640px){.work-grid{grid-template-columns:1fr 1fr;}}
   @media(min-width:1040px){.work-grid{grid-template-columns:repeat(3,1fr);}}
+  @media(min-width:1280px){.work-grid{grid-template-columns:repeat(4,1fr);}}
   .work-card{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
     overflow:hidden;transition:border-color .2s, transform .2s;display:flex;flex-direction:column;
@@ -893,6 +894,7 @@
       <button class="filter-btn" data-filter="payments">Payments</button>
       <button class="filter-btn" data-filter="courses">Courses &amp; Community</button>
       <button class="filter-btn" data-filter="compliance">A2P/10DLC Compliance</button>
+      <button class="filter-btn" data-filter="socialmedia">Social Media Automation</button>
     </div>
 
     <div class="work-grid" id="workGrid">
@@ -927,7 +929,7 @@
         </div>
       </div>
 
-      <div class="work-card reveal" data-category="web automation compliance" data-case="squirrel">
+      <div class="work-card reveal" data-category="web automation compliance socialmedia" data-case="squirrel">
         <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966171a0f048050e06fd1.png" alt="Squirrel Insurance" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1097b81195a0b41c.png"}'>
         <div class="work-body">
           <div class="work-top"><h3>Squirrel Insurance</h3><span class="work-industry">Insurance</span></div>
@@ -938,7 +940,7 @@
         </div>
       </div>
 
-      <div class="work-card reveal" data-category="web automation compliance" data-case="tbb">
+      <div class="work-card reveal" data-category="web automation compliance socialmedia" data-case="tbb">
         <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59661a1097b81195a0b7b4.png" alt="The Bill Busters" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1a0f048050e06ca8.png"}'>
         <div class="work-body">
           <div class="work-top"><h3>The Bill Busters</h3><span class="work-industry">Service Company</span></div>
@@ -949,7 +951,7 @@
         </div>
       </div>
 
-      <div class="work-card reveal" data-category="ai automation web compliance" data-case="gcr">
+      <div class="work-card reveal" data-category="ai automation web compliance socialmedia" data-case="gcr">
         <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660fa961afe59f73aa9b.png" alt="Genesis Credit Restoration" loading="lazy" data-thumbs='{"ai":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eca08bf95bce31ead5.png","automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eea3791820f8548e61.png","compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eca3791820f8548e3e.png"}'>
         <div class="work-body">
           <div class="work-top"><h3>Genesis Credit</h3><span class="work-industry">Credit Repair</span></div>
@@ -982,7 +984,7 @@
         </div>
       </div>
 
-      <div class="work-card reveal" data-category="courses automation" data-case="lua">
+      <div class="work-card reveal" data-category="courses automation socialmedia" data-case="lua">
         <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f9a961afe59f73a94c.png" alt="Level Up Academy" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f31a0f048050e06d31.png"}'>
         <div class="work-body">
           <div class="work-top"><h3>Level Up Academy</h3><span class="work-industry">Gamified Course</span></div>

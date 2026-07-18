@@ -102,7 +102,7 @@ A global **lightbox** (`#lightbox`) handles click-to-expand single-image preview
 
 ## 5. Case Studies / Work Section — Content Inventory
 
-**Filter categories:** `web`, `automation`, `ai`, `apps`, `payments`, `courses`, `compliance` (space-separated in `data-category`, cards can belong to multiple). `compliance` added 2026-07-18 (see §6/§11).
+**Filter categories:** `web`, `automation`, `ai`, `apps`, `payments`, `courses`, `compliance`, `socialmedia` (space-separated in `data-category`, cards can belong to multiple). `compliance` added 2026-07-18 (see §6/§11). `socialmedia` ("Social Media Automation") added 2026-07-19, tagged on exactly 4 cards: Squirrel Insurance, The Bill Busters, Genesis Credit, Level Up Academy. None of these four has a `socialmedia`-specific thumbnail override in `data-thumbs` — filtering by this category just shows each card's default thumbnail (the existing JS already falls back gracefully when a filter has no matching thumb override, so this isn't a bug, just an unfilled nice-to-have).
 
 | Project | Industry | Categories | `data-case` slug | Notes |
 |---|---|---|---|---|
