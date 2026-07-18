@@ -335,3 +335,16 @@ This project maintains a `LOGS.md` file in the same directory as this `CLAUDE.md
 Never delete or rewrite past entries in `LOGS.md` — it's a running history, append-only. If `LOGS.md` doesn't exist yet, create it using this same format, seeded with a "Project initialized" entry summarizing the state described in this `CLAUDE.md`.
 
 Keep `CLAUDE.md` itself in sync too: if a change alters something documented above (a new section, a changed color, a new pending item), update the relevant section of this file in the same session — this file should always reflect the current state of the project, not its history (that's what `LOGS.md` is for).
+
+---
+
+## Deploy Rules
+
+**Every time you (the agent) make a code change in this repo, ship it all the way to production in the same session — don't leave it sitting as a local/uncommitted change.** That means, after editing and after writing the `LOGS.md` entry:
+
+1. **Commit and push** — `git add` the changed files (not `-A`), commit with a real message, `git push origin main`.
+2. **Deploy** — `cd Portfolio && vercel --prod --yes --force --scope redcheekscoders-projects`. Always include `--force` (see §12 Deployment/Ops notes #2 — a plain `vercel --prod` can silently serve a stale build cache).
+3. **Re-point every alias, including the custom domain** — `vercel --prod` does **not** move named aliases on its own (§12 Deployment/Ops notes #3). After the deploy succeeds, get the new deployment URL from the command's own output and run `vercel alias set <new-deployment-url> <alias> --scope redcheekscoders-projects` for each of: `bryanodina.com`, `www.bryanodina.com`, `portfolio-ud47.vercel.app`, `portfolio-ud47-redcheekscoders-projects.vercel.app`, `portfolio-ud47-git-main-redcheekscoders-projects.vercel.app`. (Run `vercel alias ls --scope redcheekscoders-projects` first if unsure which aliases currently exist.)
+4. **Verify live** — fetch the custom domain (e.g. `curl -sL https://bryanodina.com`) and grep for something unique to the change just shipped, to confirm the live site actually reflects it rather than an old cached deployment.
+
+Only skip this flow if the user explicitly says to hold off (e.g. "don't deploy yet," "just save it locally"). Otherwise treat "the change is done" as meaning "the change is live," not just "the file is saved."
