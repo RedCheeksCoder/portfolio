@@ -285,3 +285,10 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - **About photo aligned right:** added `margin-left:auto;display:block;` to `.about-photo` — since the previous session already capped it at `max-width:70%`, the smaller image was sitting flush-left in its grid column by default; this pushes it flush-right instead (verified the photo's right edge exactly matches its column's right edge).
 - **Verification:** headless Playwright at 1600px viewport — measured marquee width vs. `window.innerWidth`, flow-card width vs. grid template-column width, and about-photo's right edge vs. its column's right edge; all matched expectations. No console errors.
 - **Files touched:** `Portfolio/index.html` only, `Portfolio/LOGS.md` (this entry). **Not yet committed/pushed/deployed.**
+
+## 2026-07-19 — Hero headline recolor: "Stop Hiring" bold orange, "Automation" white
+
+- Wrapped "Stop Hiring" in `<strong>` and added `.hero h1 strong{color:var(--accent-2);font-weight:800;}` — bold orange, matching the same secondary-orange token already used for headline emphasis.
+- Swapped `.hero h1 em`'s color from `var(--accent-2)` (orange) to `var(--text)` (white) — "Automation" now reads white like the rest of the headline instead of standing out in orange.
+- **Verification:** headless Playwright screenshot of the hero headline against the real `index.html` — confirmed "Stop Hiring" renders bold/orange and "Automation" renders white. No console errors.
+- **Files touched:** `Portfolio/index.html` only, `Portfolio/LOGS.md` (this entry). **Not yet committed/pushed/deployed.**
