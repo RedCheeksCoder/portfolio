@@ -320,6 +320,30 @@ Getting this actually live surfaced several **Vercel account/project configurati
 
 ---
 
+## 13. AI Receptionist (Chat Widget) — planned, blocked on Bryan (added 2026-07-19)
+
+Bryan wants a floating AI receptionist chat widget on the site, using **GHL's real Conversation AI / AI Employee** (a genuine working integration, not a mockup). See `LOGS.md` 2026-07-19 for the full research trail.
+
+**Key constraint (researched, not guessed) — same shape of problem as the pre-rebuild booking calendar (§7):** GHL's Chat Widget can only be restyled through its own dashboard settings (theme color, icon, avatar, position, welcome message) — no custom-CSS override, since it's an injected script/iframe subject to the same cross-origin limits as the old calendar embed. The Conversation AI Public API is for managing agents/actions and auditing past conversations, not a confirmed real-time "send message → get AI reply" endpoint — so a fully custom-built chat UI wired directly to the GHL AI Employee isn't a supported path per GHL's own docs.
+
+**Decision (Bryan's):** embed GHL's real Chat Widget + Conversation AI as-is, themed via GHL's own settings, rather than building a custom UI backed by a different AI or attempting the unconfirmed Conversations-API workaround.
+
+**Status: blocked on Bryan.** He hasn't yet set up/trained the Conversation AI bot in GHL (paid add-on, uses AI credits), and doesn't yet have the widget embed script (Settings → Chat Widget → Get Code). **Nothing has been added to `index.html` yet.**
+
+**Recommended GHL widget settings to match site branding** (give these to Bryan when he configures it, or apply them directly if configuring on his behalf):
+| Setting | Value |
+|---|---|
+| Primary/theme color | `#A54F16` (or `#CC7E31` if only one accent slot exists — better contrast on dark) |
+| Background (if exposed) | `#151513` or `#0B0B0B` |
+| Position | Bottom-right — nothing else on the page currently floats (confirmed via grep for `position:fixed`; only the case-modal/lightbox use it, both non-floating overlays) |
+| Icon | Custom, not GHL default |
+| Welcome message | In Bryan's voice, referencing automation/GHL/booking |
+| Load timing | "Load on interaction" enabled, to protect page-load performance |
+
+**Next step once Bryan has the embed script:** paste it into `index.html` immediately before `</body>` (alongside the existing inline script block), sanity-check it doesn't conflict with the case-modal/lightbox z-index stack (98/100) or the booking widget, then ship through the normal Deploy Rules flow below.
+
+---
+
 ## Logging Rules
 
 This project maintains a `LOGS.md` file in the same directory as this `CLAUDE.md`.
