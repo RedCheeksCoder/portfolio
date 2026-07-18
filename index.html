@@ -211,7 +211,7 @@
   /* About */
   .about-grid{display:grid;grid-template-columns:1fr;gap:44px;align-items:center;}
   @media(min-width:880px){.about-grid{grid-template-columns:1fr 1.25fr;}}
-  .about-photo{border-radius:16px;border:1px solid var(--border);max-width:70%;}
+  .about-photo{border-radius:16px;border:1px solid var(--border);max-width:70%;margin-left:auto;display:block;}
   .about-body p{color:var(--text-muted);font-size:15.5px;margin:0 0 16px;}
   .about-body strong{color:var(--text);font-weight:700;}
 
@@ -399,17 +399,18 @@
   .work-link:hover{color:var(--accent-hover);}
 
   /* Flowcharts */
-  .flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .wrap.flow-wrap{max-width:1700px;}
+  .flow-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:30px;}
   @media(min-width:640px){.flow-grid{grid-template-columns:repeat(3,1fr);}}
   @media(min-width:980px){.flow-grid{grid-template-columns:repeat(5,1fr);}}
   .flow-card{
     background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    overflow:hidden;cursor:zoom-in;transition:border-color .2s, transform .2s;
+    overflow:hidden;cursor:zoom-in;transition:border-color .2s, transform .2s;margin:0;
   }
   .flow-card:hover{border-color:var(--accent);transform:translateY(-3px);animation:card-glow 1.6s ease-in-out infinite;}
   .flow-card img{aspect-ratio:4/3;object-fit:cover;object-position:top;width:100%;}
   .flow-card span{
-    display:block;padding:10px 12px;font-family:var(--font-display);font-size:11.5px;
+    display:block;padding:15px 18px;font-family:var(--font-display);font-size:17px;
     letter-spacing:.03em;color:var(--text-muted);text-align:center;
   }
 
@@ -806,7 +807,8 @@
       <h2>What I build for clients</h2>
       <p>Every service below exists for one reason — to remove a manual step from your operation.</p>
     </div>
-    <div class="services-desktop-marquee">
+  </div>
+  <div class="services-desktop-marquee">
       <div class="services-marquee">
         <div class="services-track">
           <div class="services-set">
@@ -871,7 +873,6 @@
         </div>
       </div>
     </div>
-  </div>
 </section>
 
 <section class="section" id="work">
@@ -1073,7 +1074,7 @@
 </section>
 
 <section class="section alt" id="flowcharts">
-  <div class="wrap">
+  <div class="wrap flow-wrap">
     <div class="section-head reveal">
       <span class="eyebrow">Process Design</span>
       <h2>SOP flowcharts across industries</h2>
