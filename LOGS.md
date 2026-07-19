@@ -368,3 +368,11 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - **PII fix included:** the full-size lightbox previously showed `blur:true` images (Vanguard Credits dispute letters, etc.) UNBLURRED with only a "(blurred for privacy)" caption — despite CLAUDE.md §9 describing them as blurred in the lightbox. The lightbox now applies a real 18px CSS blur per displayed image, and it follows the image as you navigate. (Blur is still CSS-only — the raw CDN URL remains unblurred, same §9 caveat as before.)
 - Verified with Playwright against a local server: 18/18 checks passed (arrows show/hide, wrap-around both directions, keyboard nav, counter, blur applied/removed per image, Escape close, work-filter regression, no JS errors) plus a visual screenshot of the arrows.
 - Files touched: `index.html` (lightbox CSS/HTML/JS + `openCase()` wiring), `CLAUDE.md` (§9, §10), `LOGS.md`.
+
+## 2026-07-19 — Federal Barbers: automation category + 6 workflow screenshots
+- Added `automation` to the Federal Barbers work card's `data-category` and an "Automation" tag pill, so it now appears under the Automation filter.
+- Added Bryan's 6 new GHL workflow screenshots to the `federalbarbers` case study (after the existing website capture): 001 opt-in → tag → pipeline opportunity, 002 appointment confirmation + 24h/1h/5min reminder emails, 003 customer showed, 004 customer no-show (task + pipeline update + admin notification), 005 done service → thank-you + PDF gift email, 006 30-day rebooking reminder.
+- All 6 downloaded and visually PII-checked per CLAUDE.md §9 — clean (GHL workflow builders, only Bryan's own avatar visible), no blur needed.
+- Expanded the modal's description/problem/workdone copy to cover the appointment-lifecycle automations (agent-drafted — needs Bryan's review like the rest, §8 item 6).
+- Appended the 6 links to `Automations.txt` ("Federal Barbers 1–6") per Bryan's request, matching the file's existing format.
+- Files touched: `index.html`, `Automations.txt`, `CLAUDE.md` (§5 table), `LOGS.md`.

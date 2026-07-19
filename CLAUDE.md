@@ -117,7 +117,7 @@ A global **lightbox** (`#lightbox`) handles click-to-expand single-image preview
 | DeAnna Crawford | Coaching | **web, automation** (no longer `payments`/`courses`) | `deanna` | Per Bryan 2026-07-18: dropped payments/courses — modal now includes a social planner screenshot + 3 automation screenshots; copy rewritten around funnel + lead scoring + automation + social calendar. |
 | Level Up Academy | Gamified Course | courses, automation | `lua` | Bryan's own platform, 8.7K-member community |
 | Funded Biz | Business Funding | ai, web | `fundedbiz` | |
-| Federal Barbers | Barbershop | web | `federalbarbers` | |
+| Federal Barbers | Barbershop | web, **automation** | `federalbarbers` | `automation` added 2026-07-19 with 6 GHL workflow screenshots (opt-in→pipeline, confirmation+reminders, showed, no-show, done-service tag + PDF gift, 30-day rebooking) — PII-checked clean. Copy expanded to cover the appointment-lifecycle automations. |
 | Wisdom Church of Manila | Non-Profit | **payments, automation** (no longer `web`) | `wisdomchurch` | Per Bryan 2026-07-18: this client is payments + automation only. |
 | Charity Lift | Charity | web | `charitylift` | GHL AI Studio build |
 | Meritex Canada | Corporate | **web, apps, automation** | `meritex` | **AutoQuote (5 images) moved here from Squirrel on 2026-07-18** — Meritex is the actual owner. Now has an `apps`-filter thumbnail override showing AutoQuote, and copy updated to mention it. |
