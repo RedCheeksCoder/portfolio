@@ -939,6 +939,17 @@
         </div>
       </div>
 
+      <div class="work-card reveal" data-category="apps automation" data-case="sunwise">
+        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5ce6341a0f048050f44689.png" alt="Sunwise solar savings calculator" loading="lazy">
+        <div class="work-body">
+          <div class="work-top"><h3>Sunwise</h3><span class="work-industry">Solar Energy</span></div>
+          <p class="work-desc">Self-service solar savings calculator — homeowners enter their bill and roof details and instantly see system size, savings, and payback, while every submission is lead-scored and routed to sales automatically.</p>
+          <div class="work-tags"><span class="work-tag">Instant estimates</span><span class="work-tag">Lead scoring</span><span class="work-tag">n8n automation</span><span class="work-tag">PDF reports</span></div>
+          <a class="work-link" href="https://preview-1784471587162807465.vibepreview.com/" target="_blank" rel="noopener">Visit site ↗</a>
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>
+
       <div class="work-card reveal" data-category="web automation compliance socialmedia" data-case="squirrel">
         <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966171a0f048050e06fd1.png" alt="Squirrel Insurance" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1097b81195a0b41c.png"}'>
         <div class="work-body">
@@ -1355,6 +1366,12 @@
       problem:'Freelancers were juggling 5–6 separate tools for tasks, invoicing, client tracking, and habits — losing time and context switching between them.',
       workdone:'Built a unified dashboard with a task board, multi-currency income/expense tracker, client pipeline, habit tracker, world clock, and a Pomodoro timer.',
       images:[im('6a5966081097b81195a0b62c'), im('6a596608a08bf95bce31ec8b'), im('6a5966089c9b37b5fd5957ab'), im('6a5966089c9b37b5fd5957b0'), im('6a596608524a3ec4c65a4fcd',true)]
+    },
+    sunwise: { name:'Sunwise', industry:'Solar Energy', sample:false,
+      description:'A self-service solar savings calculator embedded in GHL funnel pages — in under a minute a homeowner enters their bill and roof details and gets recommended system size, estimated monthly and 25-year savings, payback period, and environmental impact (CO₂ offset, equivalent trees planted), with contact capture gating the full personalized report. Every submission lands in an admin dashboard sorted by lead score, so sales calls the hottest leads first.',
+      problem:'Homeowners assume every solar company inflates savings numbers to close the deal, so they hesitate to even take a sales call — while the sales team wastes hours running manual savings calculations for leads who turn out to be unqualified (bill too low, bad roof orientation, renting not owning).',
+      workdone:'Built the mobile-first calculator in AI Studio with progressive disclosure (one question at a time), a formula-based estimation engine using regional sun-hours by ZIP and local utility rates (no external API), and a lead-scored admin dashboard. n8n automation upserts each submission into GHL, tags it hot/warm/cold, fires a Telegram alert to the rep for hot leads, and sends a follow-up SMS/email with the prospect’s own numbers — plus an automatically emailed branded PDF savings report (ReportLab).',
+      images:[im('6a5ce6341a0f048050f44689'), im('6a5ce634baf5f6da40eaf7bc')]
     },
     squirrel: { name:'Squirrel Insurance', industry:'Insurance', sample:false,
       description:'Full marketing website backed by automated onboarding and A2P-approved SMS notifications.',

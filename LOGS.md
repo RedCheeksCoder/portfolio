@@ -354,3 +354,10 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - **Fix:** `vercel alias set <newest-deployment> bryanodina.com` and same for `www.bryanodina.com`. Verified via `curl -sI https://www.bryanodina.com/` (fresh `Content-Length`, favicon.svg now `200`) and confirmed all 6 known aliases (found one more than expected via `vercel alias ls`: `portfolio-ud47-redcheekscoder-...vercel.app`) now point to the same latest deployment hash.
 - **Going forward:** every deploy this session (and any future one) must re-point **all** aliases currently registered — run `vercel alias ls --scope redcheekscoders-projects | grep portfolio-ud47` (or `bryanodina`) to get the full current list rather than relying on a remembered subset, since the set of aliases can grow (e.g. a custom domain gets added) without every session being aware of it.
 - **Files touched:** none in the repo — Vercel alias configuration only. `Portfolio/LOGS.md` (this entry).
+
+## 2026-07-19 — Added Sunwise case study to Work section
+- Added a new work card + `CASE_STUDIES` entry (`sunwise`) — a solar savings calculator web app for the "Web Apps" / "Automation" filters: AI Studio front end, formula-based estimation engine (regional sun-hours by ZIP, no external API), lead-scored admin dashboard, n8n → GHL/Telegram/SMS automation, and an auto-emailed ReportLab PDF savings report.
+- Card includes a "Visit site ↗" link to `https://preview-1784471587162807465.vibepreview.com/` — this is a preview URL and may expire; swap for a permanent domain when Bryan has one.
+- Both provided screenshots (CDN hashes `6a5ce6341a0f048050f44689`, `6a5ce634baf5f6da40eaf7bc`) were downloaded and visually PII-checked per CLAUDE.md §9 — clean, only placeholder form values ("John Doe", "john@example.com"), so no blur applied. Image 1 (full calculator view) is the card thumbnail.
+- Description/problem/workdone copy drafted by the agent from Bryan's project brief — needs Bryan's review like the other Work copy (CLAUDE.md §8 item 6).
+- Files touched: `index.html`, `CLAUDE.md` (§4 card count, §5 table), `LOGS.md`.
