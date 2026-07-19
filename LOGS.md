@@ -376,3 +376,9 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - Expanded the modal's description/problem/workdone copy to cover the appointment-lifecycle automations (agent-drafted — needs Bryan's review like the rest, §8 item 6).
 - Appended the 6 links to `Automations.txt` ("Federal Barbers 1–6") per Bryan's request, matching the file's existing format.
 - Files touched: `index.html`, `Automations.txt`, `CLAUDE.md` (§5 table), `LOGS.md`.
+
+## 2026-07-19 — Work-card tag pills and "Learn more" shrunk (per Bryan)
+- `.work-tag`: font-size 11.5px → 9.2px (80%), padding scaled to match (4px 9px → 3px 7px).
+- `.work-case-btn` ("Learn more →"): was effectively 16px / weight 500 (its `font:inherit` was overriding `.work-link`'s 13px/700) — now explicitly 11.2px (70%) / weight 400. The "Visit site ↗" links (plain `.work-link`) are untouched at 13px/700, per Bryan's request targeting only "Learn more".
+- Verified computed styles in a headless browser before and after, plus a visual card screenshot.
+- Files touched: `index.html`, `LOGS.md`.
