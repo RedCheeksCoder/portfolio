@@ -361,3 +361,10 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - Both provided screenshots (CDN hashes `6a5ce6341a0f048050f44689`, `6a5ce634baf5f6da40eaf7bc`) were downloaded and visually PII-checked per CLAUDE.md §9 — clean, only placeholder form values ("John Doe", "john@example.com"), so no blur applied. Image 1 (full calculator view) is the card thumbnail.
 - Description/problem/workdone copy drafted by the agent from Bryan's project brief — needs Bryan's review like the other Work copy (CLAUDE.md §8 item 6).
 - Files touched: `index.html`, `CLAUDE.md` (§4 card count, §5 table), `LOGS.md`.
+
+## 2026-07-19 — Lightbox prev/next arrows (case-modal image slider)
+- Per Bryan's request: viewing a case study's images full-size no longer requires closing the lightbox between images. Opening any image from a case modal now loads the whole case's image list into the lightbox, with orange circular prev/next arrow buttons on both sides (primary orange `--accent`, hover → `--accent-hover`), wrap-around navigation, ArrowLeft/ArrowRight keyboard support, and a "N / M" counter appended to the caption.
+- Arrows and counter are hidden for single-image cases and the legacy `openLb()` path; smaller arrow buttons on ≤600px viewports.
+- **PII fix included:** the full-size lightbox previously showed `blur:true` images (Vanguard Credits dispute letters, etc.) UNBLURRED with only a "(blurred for privacy)" caption — despite CLAUDE.md §9 describing them as blurred in the lightbox. The lightbox now applies a real 18px CSS blur per displayed image, and it follows the image as you navigate. (Blur is still CSS-only — the raw CDN URL remains unblurred, same §9 caveat as before.)
+- Verified with Playwright against a local server: 18/18 checks passed (arrows show/hide, wrap-around both directions, keyboard nav, counter, blur applied/removed per image, Escape close, work-filter regression, no JS errors) plus a visual screenshot of the arrows.
+- Files touched: `index.html` (lightbox CSS/HTML/JS + `openCase()` wiring), `CLAUDE.md` (§9, §10), `LOGS.md`.
