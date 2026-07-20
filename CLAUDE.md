@@ -81,7 +81,7 @@ CSS variables are defined in `:root` at the top of the `<style>` block — alway
 ## 4. Site Structure (current section order)
 
 1. **Header/Nav** — sticky, blurred backdrop, links to all sections + "Book a call" CTA
-2. **Hero** — headline, subheadline, CTA buttons, credential tags, animated node-flow diagram (replaced the profile photo, see §3), stat counters
+2. **Hero** — headline, subheadline, CTA buttons, credential tags, animated node-flow diagram (replaced the profile photo, see §3), stat counters. **Responsive fix 2026-07-19:** on medium-width (≤1180px) and short (≤760px height) viewports — the 13" laptop band — the headline's `clamp()` max and vertical spacing are reduced so the CTA buttons stay above the fold; previously the headline could grow to 4 lines while the 2-col grid narrowed the text column, pushing the CTA off-screen on short viewports. Desktop (≥1280px wide) and mobile (`clamp()` min) are unchanged.
 3. **Marquee banner** — 50-keyword scrolling strip (see §3)
 4. **About** — photo + bio, ties back to automation-first positioning
 5. **Certifications** — badge grid (GHL + 4 n8n badges), see §6

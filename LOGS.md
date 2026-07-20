@@ -382,3 +382,9 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - `.work-case-btn` ("Learn more →"): was effectively 16px / weight 500 (its `font:inherit` was overriding `.work-link`'s 13px/700) — now explicitly 11.2px (70%) / weight 400. The "Visit site ↗" links (plain `.work-link`) are untouched at 13px/700, per Bryan's request targeting only "Learn more".
 - Verified computed styles in a headless browser before and after, plus a visual card screenshot.
 - Files touched: `index.html`, `LOGS.md`.
+
+## 2026-07-19 — Fixed hero CTA cut off on 13" / short-height screens
+- Bryan reported the "Book a quick call" / "See the work" CTA buttons weren't visible in a 13" screen simulation. Reproduced exactly with a headless browser at ~1037x610: the headline's `clamp(34px,5vw,52px)` sized off full viewport width and grew to 4 lines (232px tall) while the 2-column grid (`min-width:920px`) narrowed the text column, pushing the CTA to top=623px in a 610px-tall viewport — fully below the fold.
+- Fix (CSS only, `index.html`, added right after `.hero-stat span`): two new media queries — `max-width:1180px` caps the headline to `clamp(34px,4.1vw,44px)` and trims hero padding/margins for the 2-col squeeze band (920–1180px); `max-height:760px` independently compresses vertical spacing for short viewports regardless of width. No markup changes; desktop `min-width:920px` grid and mobile `clamp()` floor untouched.
+- Verified headless across 7 viewports (1037x610 user case, 1024x768, 1280x800, 1440x900, 1500x950 desktop, 390x844 mobile, 768x1024 tablet) — CTA now renders above the fold at every size, desktop unchanged (H1 stays 52px/3 lines, CTA bottom=616 same as before), mobile unchanged (H1 34px). Also visually confirmed via screenshots at 1037x610 and 390x844 — balanced, not cramped.
+- Files touched: `index.html`, `CLAUDE.md` (§4), `LOGS.md`.
