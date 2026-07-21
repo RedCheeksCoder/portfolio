@@ -413,3 +413,10 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - Card and modal copy (description/problem/workdone/tags) is agent-drafted from the badge pages, same as all other case studies — unreviewed by Bryan until confirmed (see `CLAUDE.md` §8.6).
 - Files touched: `index.html`, `CLAUDE.md` (§4, §5), `LOGS.md`.
 - Still needed from Bryan: confirm the drafted copy reads right, confirm image 6's email should stay unblurred, and (per repo Deploy Rules) this session still needs to commit/push/deploy — not yet done as of this entry.
+
+## 2026-07-19 — Electric border pulse: aligned to the actual border, slowed 40%
+- Bryan felt the border glow (moved 4px outside the card in the previous fix) read as a disconnected floating outline rather than the border itself lighting up, and wanted the travel speed reduced.
+- Repositioned `.card-bolt rect`: `x/y:-0.5px`, `width/height:calc(100% + 1px)`, `rx:10px` (matching the card's own `--radius` exactly) — the stroke is now centered directly on the card's real 1px border, so the glow visually traces/coincides with the border rather than floating in a separate ring around it. (`overflow:hidden` stays removed from `.work-card`/`.flow-card`/`.video-card` from the prior fix, so nothing clips.)
+- Slowed `bolt-travel` animation duration 2.6s → 3.64s (2.6 × 1.4, i.e. 40% slower) across all 7 card types; stroke-width unchanged at 3.5.
+- Re-verified with Playwright: same 18/18 checks still pass, plus a direct `animationDuration` read confirming `3.64s`. Visually confirmed via cropped screenshot + corner close-up showing the glow now hugging the border line itself instead of floating outside it.
+- Files touched: `index.html`, `CLAUDE.md` (§6), `LOGS.md`.

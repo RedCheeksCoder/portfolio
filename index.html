@@ -329,7 +329,7 @@
     overflow:visible;opacity:0;transition:opacity .25s ease;
   }
   .card-bolt rect{
-    x:-4px;y:-4px;width:calc(100% + 8px);height:calc(100% + 8px);rx:14px;
+    x:-0.5px;y:-0.5px;width:calc(100% + 1px);height:calc(100% + 1px);rx:10px;
     fill:none;stroke:#FFD9A8;stroke-width:3.5;stroke-linecap:round;
     stroke-dasharray:14 186;
     filter:drop-shadow(0 0 3px #FFD9A8) drop-shadow(0 0 7px rgba(255,217,168,.55));
@@ -339,7 +339,7 @@
   .process-step:hover .card-bolt{opacity:1;}
   .service-card:hover .card-bolt rect,.badge-card:hover .card-bolt rect,.work-card:hover .card-bolt rect,
   .flow-card:hover .card-bolt rect,.video-card:hover .card-bolt rect,.test-card:hover .card-bolt rect,
-  .process-step:hover .card-bolt rect{animation:bolt-travel 2.6s linear infinite;}
+  .process-step:hover .card-bolt rect{animation:bolt-travel 3.64s linear infinite;}
   @keyframes bolt-travel{from{stroke-dashoffset:0;}to{stroke-dashoffset:-200;}}
   @media (prefers-reduced-motion: reduce){
     .card-bolt{display:none;}
