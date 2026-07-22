@@ -420,3 +420,10 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - Slowed `bolt-travel` animation duration 2.6s → 3.64s (2.6 × 1.4, i.e. 40% slower) across all 7 card types; stroke-width unchanged at 3.5.
 - Re-verified with Playwright: same 18/18 checks still pass, plus a direct `animationDuration` read confirming `3.64s`. Visually confirmed via cropped screenshot + corner close-up showing the glow now hugging the border line itself instead of floating outside it.
 - Files touched: `index.html`, `CLAUDE.md` (§6), `LOGS.md`.
+
+## 2026-07-22 — Added 6 workflow screenshots to Level Up Academy case study
+- Appended 6 new `im(...)` entries to the `lua` case study's `images` array (11 → 17), documenting LUA's gamified-quest automation system: LUA 01 Chosen Character (gender-branch onboarding), LUA 02.01/02.02 Quest reward item delivery (random item lookup + email), LUA 03 Leveling Up, LUA 05 Daily Check-in, LUA 06 Reset Check-in Streak.
+- All 6 downloaded and visually PII-checked per CLAUDE.md §9 before adding — clean GHL workflow-builder views, only Bryan's own avatar visible, no third-party data — no blur applied.
+- No markup/CSS/copy changes needed; the existing modal grid + lightbox gallery/prev-next arrows (added 2026-07-19) already handle any image count.
+- Verified with Playwright: modal now renders 17 thumbnails, gallery nav (arrows + counter) correctly reaches the new images at their true positions (12/17, 13/17), no JS errors.
+- Files touched: `index.html`, `CLAUDE.md` (§5), `LOGS.md`.
