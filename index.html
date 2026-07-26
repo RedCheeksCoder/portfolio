@@ -948,216 +948,12 @@
       <p>Filter by what you're looking for. Click any thumbnail to expand it.</p>
     </div>
 
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="web">Web &amp; Funnels</button>
-      <button class="filter-btn" data-filter="automation">Automation</button>
-      <button class="filter-btn" data-filter="ai">AI</button>
-      <button class="filter-btn" data-filter="apps">Web Apps</button>
-      <button class="filter-btn" data-filter="payments">Payments</button>
-      <button class="filter-btn" data-filter="courses">Courses &amp; Community</button>
-      <button class="filter-btn" data-filter="compliance">A2P/10DLC Compliance</button>
-      <button class="filter-btn" data-filter="socialmedia">Social Media Automation</button>
-      <button class="filter-btn" data-filter="n8n">N8N</button>
-    </div>
+    <!-- Filter buttons and work cards are rendered by renderWork() from WORK_CATEGORIES/WORK_PROJECTS
+         (see the top of the trailing inline script, near the end of the body). To add a project,
+         append one object to WORK_PROJECTS — no HTML editing needed. -->
+    <div class="filters" id="workFilters"></div>
 
-    <div class="work-grid" id="workGrid">
-
-      <div class="work-card reveal" data-category="ai apps automation" data-case="vanguard">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5a7d07baf5f6da40225faf.png" alt="Vanguard Credits website" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Vanguard Credits</h3><span class="work-industry">Credit Repair</span></div>
-          <p class="work-desc">AI-powered dispute automation platform — parses credit reports, applies a 17-rule engine, generates FCRA dispute letters, and tracks rounds in a pipeline. Reports processed in minutes, not hours.</p>
-          <div class="work-tags"><span class="work-tag">AI analysis</span><span class="work-tag">PDF generation</span><span class="work-tag">Pipeline board</span><span class="work-tag">Automated follow-ups</span></div>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="apps courses" data-case="woop">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660c9c9b37b5fd595e93.png" alt="Woop platform" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Woop</h3><span class="work-industry">Creator Platform</span></div>
-          <p class="work-desc">Creator rewards platform where video creators join campaigns, upload content, and earn per view — with earnings tracking, leaderboards, and built-in training courses.</p>
-          <div class="work-tags"><span class="work-tag">Creator dashboard</span><span class="work-tag">Campaign system</span><span class="work-tag">Earnings tracking</span><span class="work-tag">Training library</span></div>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="apps" data-case="nextlevel">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966081097b81195a0b62c.png" alt="NextLevel dashboard" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>NextLevel</h3><span class="work-industry">Productivity SaaS</span></div>
-          <p class="work-desc">All-in-one productivity dashboard for freelancers — task board, income &amp; expense tracking, client pipeline, habit tracker, time zones, and Pomodoro in a single app.</p>
-          <div class="work-tags"><span class="work-tag">Task board</span><span class="work-tag">Client pipeline</span><span class="work-tag">Habit tracking</span><span class="work-tag">Multi-currency</span></div>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="apps automation" data-case="sunwise">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5ce6341a0f048050f44689.png" alt="Sunwise solar savings calculator" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Sunwise</h3><span class="work-industry">Solar Energy</span></div>
-          <p class="work-desc">Self-service solar savings calculator — homeowners enter their bill and roof details and instantly see system size, savings, and payback, while every submission is lead-scored and routed to sales automatically.</p>
-          <div class="work-tags"><span class="work-tag">Instant estimates</span><span class="work-tag">Lead scoring</span><span class="work-tag">n8n automation</span><span class="work-tag">PDF reports</span></div>
-          <a class="work-link" href="https://preview-1784471587162807465.vibepreview.com/" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web automation compliance socialmedia" data-case="squirrel">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966171a0f048050e06fd1.png" alt="Squirrel Insurance" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1097b81195a0b41c.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>Squirrel Insurance</h3><span class="work-industry">Insurance</span></div>
-          <p class="work-desc">Full website with automated form registration, client onboarding, and instant team notifications.</p>
-          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">Onboarding</span><span class="work-tag">Team notification</span></div>
-          <a class="work-link" href="https://squirrelinsurance.com/home" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web automation compliance socialmedia" data-case="tbb">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59661a1097b81195a0b7b4.png" alt="The Bill Busters" loading="lazy" data-thumbs='{"compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965ec1a0f048050e06ca8.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>The Bill Busters</h3><span class="work-industry">Service Company</span></div>
-          <p class="work-desc">Website with appointment booking automation, team notifications, and Google Sheets reporting.</p>
-          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">Booking</span><span class="work-tag">Google Sheets</span></div>
-          <a class="work-link" href="https://thebillbusters.com/" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="ai automation web compliance socialmedia" data-case="gcr">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660fa961afe59f73aa9b.png" alt="Genesis Credit Restoration" loading="lazy" data-thumbs='{"ai":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eca08bf95bce31ead5.png","automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eea3791820f8548e61.png","compliance":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965eca3791820f8548e3e.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>Genesis Credit</h3><span class="work-industry">Credit Repair</span></div>
-          <p class="work-desc">AI chatbot, document upload flows, customer pipeline, and Zapier/webhook integrations behind a conversion-focused site.</p>
-          <div class="work-tags"><span class="work-tag">AI chat bot</span><span class="work-tag">Workflow automation</span><span class="work-tag">Webhooks</span></div>
-          <a class="work-link" href="https://genesiscreditrestoration.com/" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web automation payments courses" data-case="aemr">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5a80b3aef6925d34362897.png" alt="AEMR website" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966049c9b37b5fd59576b.png","payments":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966012f7322e0964a994b.png","courses":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f9baf5f6da40d9bcb2.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>AEMR</h3><span class="work-industry">Medical Education</span></div>
-          <p class="work-desc">Complete course platform for a Spanish medical academy — 17-module course, Stripe payments up to €7,450, email marketing, and a 6,030-opportunity pipeline.</p>
-          <div class="work-tags"><span class="work-tag">Course creation</span><span class="work-tag">Stripe</span><span class="work-tag">Email marketing</span><span class="work-tag">Community</span></div>
-          <a class="work-link" href="https://cursos.eng.aemr.es/home" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web automation" data-case="deanna">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660f9c9b37b5fd595e9d.png" alt="DeAnna Crawford funnel" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5a7f10baf5f6da4024d0c0.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>DeAnna Crawford</h3><span class="work-industry">Coaching</span></div>
-          <p class="work-desc">Masterclass funnel with lead scoring, backed by GHL automation flows and an automated social content calendar.</p>
-          <div class="work-tags"><span class="work-tag">Funnel build</span><span class="work-tag">Lead scoring</span><span class="work-tag">Automation</span><span class="work-tag">Social planner</span></div>
-          <a class="work-link" href="https://link.deannacrawford.com/preview/CpNyTmp4SrOH0d8UkLvx?notrack=true" target="_blank" rel="noopener">View funnel ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="courses automation socialmedia" data-case="lua">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f9a961afe59f73a94c.png" alt="Level Up Academy" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f31a0f048050e06d31.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>Level Up Academy</h3><span class="work-industry">Gamified Course</span></div>
-          <p class="work-desc">My own gamified GHL training platform — RPG-style onboarding, quests, XP, leveling automations, and an 8.7K-member free community for Filipino VAs.</p>
-          <div class="work-tags"><span class="work-tag">Gamified automation</span><span class="work-tag">Course build</span><span class="work-tag">Community</span></div>
-          <a class="work-link" href="https://www.facebook.com/groups/levelupacademyph" target="_blank" rel="noopener">Visit community ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="ai web" data-case="fundedbiz">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660fa08bf95bce31ecef.png" alt="Funded Biz" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Funded Biz</h3><span class="work-industry">Business Funding</span></div>
-          <p class="work-desc">Personality-driven funding &amp; credit repair funnel with an AI chatbot and case-study content.</p>
-          <div class="work-tags"><span class="work-tag">AI chat bot</span><span class="work-tag">Web design &amp; dev</span></div>
-          <a class="work-link" href="https://funded.bryanautomatesghl.cc/" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web automation" data-case="federalbarbers">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660f1a0f048050e06f4f.png" alt="Federal Barbers" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Federal Barbers</h3><span class="work-industry">Barbershop</span></div>
-          <p class="work-desc">Sharp, conversion-ready barbershop site with services menu, testimonials, and booking flow.</p>
-          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">Booking</span><span class="work-tag">Automation</span></div>
-          <a class="work-link" href="https://preview-1784033346866045205.vibepreview.com/" target="_blank" rel="noopener">View preview ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="payments automation" data-case="wisdomchurch">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966032f7322e0964a997f.png" alt="Wisdom Church of Manila donation page" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f69c9b37b5fd5956b5.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>Wisdom Church of Manila</h3><span class="work-industry">Non-Profit</span></div>
-          <p class="work-desc">Xendit-to-GHL donation system for local payment methods, plus store and automation flows built inside GHL.</p>
-          <div class="work-tags"><span class="work-tag">Xendit payments</span><span class="work-tag">Automation</span><span class="work-tag">GHL Store</span></div>
-          <a class="work-link" href="https://wisdomchurchofmanila.org" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web" data-case="charitylift">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a59660e1097b81195a0b68a.png" alt="Charity Lift website" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Charity Lift</h3><span class="work-industry">Charity</span></div>
-          <p class="work-desc">Donation-focused site promoting top US charities, built with GHL AI Studio.</p>
-          <div class="work-tags"><span class="work-tag">AI Studio build</span><span class="work-tag">Web design &amp; dev</span></div>
-          <a class="work-link" href="https://charitylift.org" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="web apps automation" data-case="meritex">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5966162f7322e0964a9b00.png" alt="Meritex Canada website" loading="lazy" data-thumbs='{"apps":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a596606a08bf95bce31ec69.png","automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f4524a3ec4c65a4e71.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>Meritex Canada</h3><span class="work-industry">Corporate</span></div>
-          <p class="work-desc">Corporate web presence built for a Canadian client, an AutoQuote web app for instant quotes, plus an automated client-review request flow.</p>
-          <div class="work-tags"><span class="work-tag">Web design &amp; dev</span><span class="work-tag">AutoQuote app</span><span class="work-tag">Review automation</span></div>
-          <a class="work-link" href="https://meritex.ca" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="payments automation" data-case="celestenicolas">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a596603a08bf95bce31ec42.png" alt="Celeste Nicolas Ministries giving page" loading="lazy" data-thumbs='{"automation":"https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965f69c9b37b5fd5956b5.png"}'>
-        <div class="work-body">
-          <div class="work-top"><h3>Celeste Nicolas Ministries</h3><span class="work-industry">Ministry</span></div>
-          <p class="work-desc">Giving/payment page plus GHL automation flows, built on the same system as Wisdom Church of Manila.</p>
-          <div class="work-tags"><span class="work-tag">Payments</span><span class="work-tag">Automation</span></div>
-          <a class="work-link" href="https://celestenicolas.org" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="automation" data-case="spacecoastleads">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5965fdbaf5f6da40d9bcf2.png" alt="Space Coast Leads SOP diagram" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>Space Coast Leads</h3><span class="work-industry">Lead Generation</span></div>
-          <p class="work-desc">Lead-gen system with document signing, customer pipeline, Apollo.io integration, and 5 demo funnels.</p>
-          <div class="work-tags"><span class="work-tag">Apollo.io</span><span class="work-tag">Document signing</span><span class="work-tag">Pipeline</span></div>
-          <a class="work-link" href="https://spacecoastleads.com/" target="_blank" rel="noopener">Visit site ↗</a>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-      <div class="work-card reveal" data-category="n8n" data-case="n8nacademy">
-        <img class="work-thumb" src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5fdf9428b4c07e407d554c.png" alt="n8n Academy workflow — annotated report-generation build" loading="lazy">
-        <div class="work-body">
-          <div class="work-top"><h3>n8n Academy</h3><span class="work-industry">Certification Training</span></div>
-          <p class="work-desc">Completed the full n8n Academy track — Quickstart plus the Foundations program (Essentials, Integrations, In Practice) — through graded hands-on builds: API integrations, webhooks, data pipelines, error handling, and AI agents. All badges verified on badges.n8n.io.</p>
-          <div class="work-tags"><span class="work-tag">API integrations</span><span class="work-tag">Webhooks</span><span class="work-tag">Data pipelines</span><span class="work-tag">AI agents</span></div>
-          <button type="button" class="work-link work-case-btn">Learn more →</button>
-        </div>
-      </div>
-
-    </div>
+    <div class="work-grid" id="workGrid"></div>
   </div>
 </section>
 
@@ -1356,6 +1152,291 @@
 </div>
 
 <script>
+  // ---- Work section: single source of truth ----
+  // Adding a new project = append ONE object to WORK_PROJECTS below.
+  // Adding a new filter category = append ONE object to WORK_CATEGORIES, then tag a
+  // project's `categories` array with the new slug (a category with no project tagged
+  // to it will show an empty grid when clicked).
+  const CDN = 'https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/';
+  function im(hash, blur){ return { src: CDN + hash + '.png', blur: !!blur }; }
+  function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+  const WISDOM_AUTOMATION_IMAGES = [
+    im('6a5965f69c9b37b5fd5956b5'), im('6a5965f7baf5f6da40d9bc7a'), im('6a5965f62f7322e0964a98b9'),
+    im('6a5965f52f7322e0964a98af'), im('6a5965f52f7322e0964a98a9')
+  ];
+  const SPACECOAST_SOP_IMAGES = [
+    im('6a5965fdbaf5f6da40d9bcf2'), im('6a5965fe2f7322e0964a9935'), im('6a5965fdbaf5f6da40d9bcec'), im('6a5965fd498fdf281a101a43')
+  ];
+
+  const WORK_CATEGORIES = [
+    { slug:'all',         label:'All' },
+    { slug:'web',         label:'Web &amp; Funnels' },
+    { slug:'automation',  label:'Automation' },
+    { slug:'ai',          label:'AI' },
+    { slug:'apps',        label:'Web Apps' },
+    { slug:'payments',    label:'Payments' },
+    { slug:'courses',     label:'Courses &amp; Community' },
+    { slug:'compliance',  label:'A2P/10DLC Compliance' },
+    { slug:'socialmedia', label:'Social Media Automation' },
+    { slug:'n8n',         label:'N8N' },
+    { slug:'claude',      label:'Claude Projects' }
+  ];
+
+  const WORK_PROJECTS = [
+    { slug:'vanguard', name:'Vanguard Credits', industry:'Credit Repair',
+      categories:['ai','apps','automation'],
+      thumb:'6a5a7d07baf5f6da40225faf', alt:'Vanguard Credits website',
+      desc:'AI-powered dispute automation platform — parses credit reports, applies a 17-rule engine, generates FCRA dispute letters, and tracks rounds in a pipeline. Reports processed in minutes, not hours.',
+      tags:['AI analysis','PDF generation','Pipeline board','Automated follow-ups'], link:null,
+      description:'A Flask-based credit repair platform deployed on Railway that automates the dispute process end-to-end — parsing uploaded credit reports, generating bureau-specific dispute letters, and tracking rounds through a pipeline.',
+      problem:'Manually reading credit reports, deciding what to dispute, and drafting FCRA-compliant letters for each bureau ate hours per client and didn’t scale past a handful of active cases.',
+      workdone:'Built a parser for 4 credit report formats, a 17-rule dispute-classification engine, automated PDF letter generation for all 3 bureaus, a Kanban pipeline board, and scheduled 30/35-day follow-up reminders — all backed by Supabase.',
+      images:[im('6a5a7d07baf5f6da40225faf'), im('6a59660abaf5f6da40d9bda6',true), im('6a59660b9c9b37b5fd595e79',true), im('6a59660cbaf5f6da40d9bdd4',true), im('6a59660ba961afe59f73aa73',true), im('6a59660aa3791820f85490cb',true), im('6a59660aa08bf95bce31eca1',true), im('6a59660aa3791820f85490c1',true), im('6a59660a9c9b37b5fd595b62',true)]
+    },
+    { slug:'woop', name:'Woop', industry:'Creator Platform',
+      categories:['apps','courses'],
+      thumb:'6a59660c9c9b37b5fd595e93', alt:'Woop platform',
+      desc:'Creator rewards platform where video creators join campaigns, upload content, and earn per view — with earnings tracking, leaderboards, and built-in training courses.',
+      tags:['Creator dashboard','Campaign system','Earnings tracking','Training library'], link:null,
+      description:'A creator rewards and monetization platform where video creators join brand campaigns, upload content, and get paid per view, with leaderboards and built-in training.',
+      problem:'Brands needed a way to run pay-per-view creator campaigns without manually tracking submissions, views, and payouts across creators.',
+      workdone:'Built the creator dashboard, campaign system, automated earnings tracking tied to view counts, a leaderboard, and an in-app training library for onboarding new creators.',
+      images:[im('6a59660c9c9b37b5fd595e93'), im('6a59660c1097b81195a0b66a'), im('6a59660ca961afe59f73aa79',true), im('6a59660d1097b81195a0b678'), im('6a59660d2f7322e0964a9a38')]
+    },
+    { slug:'nextlevel', name:'NextLevel', industry:'Productivity SaaS',
+      categories:['apps'],
+      thumb:'6a5966081097b81195a0b62c', alt:'NextLevel dashboard',
+      desc:'All-in-one productivity dashboard for freelancers — task board, income &amp; expense tracking, client pipeline, habit tracker, time zones, and Pomodoro in a single app.',
+      tags:['Task board','Client pipeline','Habit tracking','Multi-currency'], link:null,
+      description:'An all-in-one productivity dashboard for freelancers, combining task management, income/expense tracking, client pipeline, habit tracking, and time-zone tools in a single app.',
+      problem:'Freelancers were juggling 5–6 separate tools for tasks, invoicing, client tracking, and habits — losing time and context switching between them.',
+      workdone:'Built a unified dashboard with a task board, multi-currency income/expense tracker, client pipeline, habit tracker, world clock, and a Pomodoro timer.',
+      images:[im('6a5966081097b81195a0b62c'), im('6a596608a08bf95bce31ec8b'), im('6a5966089c9b37b5fd5957ab'), im('6a5966089c9b37b5fd5957b0'), im('6a596608524a3ec4c65a4fcd',true)]
+    },
+    { slug:'sunwise', name:'Sunwise', industry:'Solar Energy',
+      categories:['apps','automation'],
+      thumb:'6a5ce6341a0f048050f44689', alt:'Sunwise solar savings calculator',
+      desc:'Self-service solar savings calculator — homeowners enter their bill and roof details and instantly see system size, savings, and payback, while every submission is lead-scored and routed to sales automatically.',
+      tags:['Instant estimates','Lead scoring','n8n automation','PDF reports'],
+      link:{ href:'https://preview-1784471587162807465.vibepreview.com/', label:'Visit site ↗' },
+      description:'A self-service solar savings calculator embedded in GHL funnel pages — in under a minute a homeowner enters their bill and roof details and gets recommended system size, estimated monthly and 25-year savings, payback period, and environmental impact (CO₂ offset, equivalent trees planted), with contact capture gating the full personalized report. Every submission lands in an admin dashboard sorted by lead score, so sales calls the hottest leads first.',
+      problem:'Homeowners assume every solar company inflates savings numbers to close the deal, so they hesitate to even take a sales call — while the sales team wastes hours running manual savings calculations for leads who turn out to be unqualified (bill too low, bad roof orientation, renting not owning).',
+      workdone:'Built the mobile-first calculator in AI Studio with progressive disclosure (one question at a time), a formula-based estimation engine using regional sun-hours by ZIP and local utility rates (no external API), and a lead-scored admin dashboard. n8n automation upserts each submission into GHL, tags it hot/warm/cold, fires a Telegram alert to the rep for hot leads, and sends a follow-up SMS/email with the prospect’s own numbers — plus an automatically emailed branded PDF savings report (ReportLab).',
+      images:[im('6a5ce6341a0f048050f44689'), im('6a5ce634baf5f6da40eaf7bc')]
+    },
+    { slug:'squirrel', name:'Squirrel Insurance', industry:'Insurance',
+      categories:['web','automation','compliance','socialmedia'],
+      thumb:'6a5966171a0f048050e06fd1', alt:'Squirrel Insurance',
+      thumbAlt:{ compliance:'6a5965ec1097b81195a0b41c' },
+      desc:'Full website with automated form registration, client onboarding, and instant team notifications.',
+      tags:['Web design &amp; dev','Onboarding','Team notification'],
+      link:{ href:'https://squirrelinsurance.com/home', label:'Visit site ↗' },
+      description:'Full marketing website backed by automated onboarding and A2P-approved SMS notifications.',
+      problem:'Leads filled out a generic contact form and waited for a manual callback, and the team had no automated way to notify staff of new signups.',
+      workdone:'Built the website, automated form-to-CRM onboarding, instant team notification triggers, and secured A2P 10DLC approval for compliant SMS.',
+      images:[im('6a5966171a0f048050e06fd1'), im('6a5965ec1097b81195a0b41c')]
+    },
+    { slug:'tbb', name:'The Bill Busters', industry:'Service Company',
+      categories:['web','automation','compliance','socialmedia'],
+      thumb:'6a59661a1097b81195a0b7b4', alt:'The Bill Busters',
+      thumbAlt:{ compliance:'6a5965ec1a0f048050e06ca8' },
+      desc:'Website with appointment booking automation, team notifications, and Google Sheets reporting.',
+      tags:['Web design &amp; dev','Booking','Google Sheets'],
+      link:{ href:'https://thebillbusters.com/', label:'Visit site ↗' },
+      description:'Marketing website with appointment booking automation, team notifications, and A2P-approved SMS messaging.',
+      problem:'Bookings were coming in but the team had no automatic way to get notified or log them for reporting.',
+      workdone:'Built the website, wired booking to trigger team notifications and Google Sheets logging, and secured A2P 10DLC approval so SMS reminders could go out compliantly.',
+      images:[im('6a59661a1097b81195a0b7b4'), im('6a596604a3791820f8549014'), im('6a5965ec1a0f048050e06ca8')]
+    },
+    { slug:'gcr', name:'Genesis Credit', industry:'Credit Repair',
+      categories:['ai','automation','web','compliance','socialmedia'],
+      thumb:'6a59660fa961afe59f73aa9b', alt:'Genesis Credit Restoration',
+      thumbAlt:{ ai:'6a5965eca08bf95bce31ead5', automation:'6a5965eea3791820f8548e61', compliance:'6a5965eca3791820f8548e3e' },
+      desc:'AI chatbot, document upload flows, customer pipeline, and Zapier/webhook integrations behind a conversion-focused site.',
+      tags:['AI chat bot','Workflow automation','Webhooks'],
+      link:{ href:'https://genesiscreditrestoration.com/', label:'Visit site ↗' },
+      description:'Conversion-focused website with an AI chatbot, a custom AI agent with its own knowledge base, document upload flows, a customer pipeline, and A2P-approved SMS.',
+      problem:'Prospective clients had questions the team couldn’t answer 24/7, and document intake/follow-up was fully manual, slowing down the credit-repair process.',
+      workdone:'Built the site, an AI chat agent trained on a dedicated knowledge base, document upload automation, a full customer pipeline, Zapier/webhook integrations, and A2P 10DLC compliance for messaging.',
+      images:[im('6a59660fa961afe59f73aa9b'), im('6a5965eca08bf95bce31ead5'), im('6a5965ec498fdf281a101925'), im('6a5965ec2f7322e0964a97c5'), im('6a5965eea3791820f8548e61'), im('6a5965f3498fdf281a10199f'), im('6a5965f2a961afe59f73a8b6'), im('6a5965f2498fdf281a101979'), im('6a5965f1498fdf281a101973'), im('6a5965f1a3791820f8548e9c'), im('6a5965f11097b81195a0b465'), im('6a5965f09c9b37b5fd595621'), im('6a5965f0a3791820f8548e78'), im('6a5965ef2f7322e0964a97ef'), im('6a5965efbaf5f6da40d9bc04'), im('6a5965efa961afe59f73a862'), im('6a5965ee1a0f048050e06cc9'), im('6a5965eca3791820f8548e3e')]
+    },
+    { slug:'aemr', name:'AEMR', industry:'Medical Education',
+      categories:['web','automation','payments','courses'],
+      thumb:'6a5a80b3aef6925d34362897', alt:'AEMR website',
+      thumbAlt:{ automation:'6a5966049c9b37b5fd59576b', payments:'6a5966012f7322e0964a994b', courses:'6a5965f9baf5f6da40d9bcb2' },
+      desc:'Complete course platform for a Spanish medical academy — 17-module course, Stripe payments up to €7,450, email marketing, and a 6,030-opportunity pipeline.',
+      tags:['Course creation','Stripe','Email marketing','Community'],
+      link:{ href:'https://cursos.eng.aemr.es/home', label:'Visit site ↗' },
+      description:'Complete course platform for a Spanish medical academy — a 17-module course, Stripe payments up to €7,450, email marketing, and a 6,030-opportunity sales pipeline.',
+      problem:'The academy needed to sell and deliver a high-ticket medical course online and track thousands of leads through a sales process without a patchwork of disconnected tools.',
+      workdone:'Built the 17-module course, Stripe payment flows for packages up to €7,450, email campaigns (31.68% open rate on 3,011 sends), and a pipeline tracking 6,030 opportunities through the funnel.',
+      images:[im('6a5a80b3aef6925d34362897'), im('6a5965f9baf5f6da40d9bcb2'), im('6a5966049c9b37b5fd59576b'), im('6a5965ffbaf5f6da40d9bd0e'), im('6a5966012f7322e0964a994b'), im('6a596601a961afe59f73a9d3'), im('6a596602a961afe59f73a9dd'), im('6a596602baf5f6da40d9bd28'), im('6a596602a961afe59f73a9e3'), im('6a5965eea961afe59f73a85c')]
+    },
+    { slug:'deanna', name:'DeAnna Crawford', industry:'Coaching',
+      categories:['web','automation'],
+      thumb:'6a59660f9c9b37b5fd595e9d', alt:'DeAnna Crawford funnel',
+      thumbAlt:{ automation:'6a5a7f10baf5f6da4024d0c0' },
+      desc:'Masterclass funnel with lead scoring, backed by GHL automation flows and an automated social content calendar.',
+      tags:['Funnel build','Lead scoring','Automation','Social planner'],
+      link:{ href:'https://link.deannacrawford.com/preview/CpNyTmp4SrOH0d8UkLvx?notrack=true', label:'View funnel ↗' },
+      description:'Masterclass funnel with lead scoring, an automated social content calendar, and GHL automation flows behind the scenes.',
+      problem:'The funnel needed to convert cold traffic into masterclass leads and separate hot prospects from browsers, and the social content side was still being posted manually with no consistent calendar.',
+      workdone:'Built the funnel and lead scoring, set up an automated social content calendar, and built the GHL automation flows connecting the two.',
+      images:[im('6a59660f9c9b37b5fd595e9d'), im('6a5966041097b81195a0b5e1'), im('6a5a7f10baf5f6da4024d0c0'), im('6a5a7f101a0f04805026c12d'), im('6a5a7f101097b81195e9c637')]
+    },
+    { slug:'lua', name:'Level Up Academy', industry:'Gamified Course',
+      categories:['courses','automation','socialmedia'],
+      thumb:'6a5965f9a961afe59f73a94c', alt:'Level Up Academy',
+      thumbAlt:{ automation:'6a5965f31a0f048050e06d31' },
+      desc:'My own gamified GHL training platform — RPG-style onboarding, quests, XP, leveling automations, and an 8.7K-member free community for Filipino VAs.',
+      tags:['Gamified automation','Course build','Community'],
+      link:{ href:'https://www.facebook.com/groups/levelupacademyph', label:'Visit community ↗' },
+      description:'Bryan’s own gamified GHL training platform — RPG-style onboarding, quests, XP, and leveling automations, plus an 8.7K-member free Facebook community.',
+      problem:'Free Filipino VA/freelancer training content existed everywhere but had poor completion rates — nothing kept learners engaged past lesson one.',
+      workdone:'Built a gamified course (character selection, quests, XP, leveling automations), a social content calendar, multi-calendar booking, 360 managed sub-accounts, and grew the free community to 8.7K members.',
+      images:[im('6a5965f9a961afe59f73a94c'), im('6a5965f81a0f048050e06da0'), im('6a5965f89c9b37b5fd5956cd'), im('6a5965f81a0f048050e06d9b'), im('6a5965ff1a0f048050e06e1f'), im('6a5965f31a0f048050e06d31'), im('6a5965f3a3791820f8548eca'), im('6a5965f4a3791820f8548ed1'), im('6a596604498fdf281a101ac8'), im('6a5965f7a961afe59f73a928'), im('6a5965f71097b81195a0b503'), im('6a60c7b45e892103d462e361'), im('6a60c7b4ff8e2bd3160f7e14'), im('6a60c7b464ab3b1036c51286'), im('6a60c7b481877afd27a658bf'), im('6a60c7b48bec5a9d0b846de8'), im('6a60c7b444497f2c4a46461c')]
+    },
+    { slug:'fundedbiz', name:'Funded Biz', industry:'Business Funding',
+      categories:['ai','web'],
+      thumb:'6a59660fa08bf95bce31ecef', alt:'Funded Biz',
+      desc:'Personality-driven funding &amp; credit repair funnel with an AI chatbot and case-study content.',
+      tags:['AI chat bot','Web design &amp; dev'],
+      link:{ href:'https://funded.bryanautomatesghl.cc/', label:'Visit site ↗' },
+      description:'Personality-driven funding and credit-repair funnel with an AI chatbot and case-study content.',
+      problem:'Business owners needed education and screening on funding options before talking to a human — cold leads without context slowed the sales team down.',
+      workdone:'Built the site, an AI chatbot to pre-qualify and answer funding questions, and case-study content to build trust before the sales call.',
+      images:[im('6a59660fa08bf95bce31ecef')]
+    },
+    { slug:'federalbarbers', name:'Federal Barbers', industry:'Barbershop',
+      categories:['web','automation'],
+      thumb:'6a59660f1a0f048050e06f4f', alt:'Federal Barbers',
+      desc:'Sharp, conversion-ready barbershop site with services menu, testimonials, and booking flow.',
+      tags:['Web design &amp; dev','Booking','Automation'],
+      link:{ href:'https://preview-1784033346866045205.vibepreview.com/', label:'View preview ↗' },
+      description:'Sharp, conversion-ready barbershop website with a services menu, testimonials, and a booking flow — backed by a full set of GHL automations covering the entire appointment lifecycle, from opt-in to a 30-day rebooking reminder.',
+      problem:'The shop had no online presence to show services or let customers book — everything ran on walk-ins and phone calls, with no-shows going untracked and no follow-up to bring customers back for their next cut.',
+      workdone:'Designed and built the site with a services menu, testimonials, and an integrated booking flow, then automated the appointment lifecycle in GHL: opt-ins are tagged and pushed into the pipeline, bookings get confirmation plus 24-hour / 1-hour / 5-minute reminder emails, showed and no-show statuses update the pipeline and create staff tasks automatically, completed services trigger a thank-you with a PDF gift email, and a 30-day reminder invites customers back for their next appointment.',
+      images:[im('6a59660f1a0f048050e06f4f'), im('6a5cea581097b81195b5a97a'), im('6a5cea581a0f048050f8b484'), im('6a5cea58baf5f6da40ee19a6'), im('6a5cea58bc0b1f5d2e3b389b'), im('6a5cea581097b81195b5a97f'), im('6a5cea59baf5f6da40ee19b1')]
+    },
+    { slug:'wisdomchurch', name:'Wisdom Church of Manila', industry:'Non-Profit',
+      categories:['payments','automation'],
+      thumb:'6a5966032f7322e0964a997f', alt:'Wisdom Church of Manila donation page',
+      thumbAlt:{ automation:'6a5965f69c9b37b5fd5956b5' },
+      desc:'Xendit-to-GHL donation system for local payment methods, plus store and automation flows built inside GHL.',
+      tags:['Xendit payments','Automation','GHL Store'],
+      link:{ href:'https://wisdomchurchofmanila.org', label:'Visit site ↗' },
+      description:'Church website, an online store, and a Xendit-to-GHL donation system for local Philippine payment methods, backed by GHL automation flows.',
+      problem:'The church needed to accept local payment methods (not just cards) for donations and store purchases, with no automated way to route or acknowledge them.',
+      workdone:'Built the website and store, integrated Xendit to GHL for local payment methods, and built automation flows to route and acknowledge payments and donations.',
+      images:[im('6a5966032f7322e0964a997f'), im('6a59661aa3791820f8549256'), im('6a59661a2f7322e0964a9b72'), im('6a59661ba3791820f854927c'), im('6a59661ca3791820f85492a6')].concat(WISDOM_AUTOMATION_IMAGES)
+    },
+    { slug:'charitylift', name:'Charity Lift', industry:'Charity',
+      categories:['web'],
+      thumb:'6a59660e1097b81195a0b68a', alt:'Charity Lift website',
+      desc:'Donation-focused site promoting top US charities, built with GHL AI Studio.',
+      tags:['AI Studio build','Web design &amp; dev'],
+      link:{ href:'https://charitylift.org', label:'Visit site ↗' },
+      description:'Donation-focused website promoting top US charities, built with GHL AI Studio.',
+      problem:'The organization needed a fast, credible donation site without a lengthy custom-dev build.',
+      workdone:'Built the site end-to-end using GHL AI Studio, with a donation-first layout and charity showcase.',
+      images:[im('6a59660e1097b81195a0b68a')]
+    },
+    { slug:'meritex', name:'Meritex Canada', industry:'Corporate',
+      categories:['web','apps','automation'],
+      thumb:'6a5966162f7322e0964a9b00', alt:'Meritex Canada website',
+      thumbAlt:{ apps:'6a596606a08bf95bce31ec69', automation:'6a5965f4524a3ec4c65a4e71' },
+      desc:'Corporate web presence built for a Canadian client, an AutoQuote web app for instant quotes, plus an automated client-review request flow.',
+      tags:['Web design &amp; dev','AutoQuote app','Review automation'],
+      link:{ href:'https://meritex.ca', label:'Visit site ↗' },
+      description:'Corporate website for a Canadian client, an AutoQuote web app for instant quotes, plus an automated client-review request flow.',
+      problem:'The company had no way for prospects to get an instant quote online, and no consistent way to request and collect client reviews after project completion.',
+      workdone:'Built the corporate site, the AutoQuote web app, and an automation that requests, tags, and routes client reviews after work is completed.',
+      images:[im('6a5966162f7322e0964a9b00'), im('6a596606a08bf95bce31ec69'), im('6a596606a3791820f8549053'), im('6a5966061a0f048050e06eab'), im('6a596606524a3ec4c65a4fb3'), im('6a5966071097b81195a0b617'), im('6a5965f4524a3ec4c65a4e71'), im('6a5965f5a3791820f8548ede'), im('6a5965f5baf5f6da40d9bc6c')]
+    },
+    { slug:'celestenicolas', name:'Celeste Nicolas Ministries', industry:'Ministry',
+      categories:['payments','automation'],
+      thumb:'6a596603a08bf95bce31ec42', alt:'Celeste Nicolas Ministries giving page',
+      thumbAlt:{ automation:'6a5965f69c9b37b5fd5956b5' },
+      desc:'Giving/payment page plus GHL automation flows, built on the same system as Wisdom Church of Manila.',
+      tags:['Payments','Automation'],
+      link:{ href:'https://celestenicolas.org', label:'Visit site ↗' },
+      description:'Ministry website with a giving/payment page, running on the same GHL automation system built for Wisdom Church of Manila.',
+      problem:'The ministry needed a clean way to present content and accept giving/donations without building a separate automation system from scratch.',
+      workdone:'Built the website and giving page, and extended the Wisdom Church of Manila automation system to cover Celeste Nicolas Ministries.',
+      images:[im('6a596603a08bf95bce31ec42')].concat(WISDOM_AUTOMATION_IMAGES)
+    },
+    { slug:'spacecoastleads', name:'Space Coast Leads', industry:'Lead Generation',
+      categories:['automation'],
+      thumb:'6a5965fdbaf5f6da40d9bcf2', alt:'Space Coast Leads SOP diagram',
+      desc:'Lead-gen system with document signing, customer pipeline, Apollo.io integration, and 5 demo funnels.',
+      tags:['Apollo.io','Document signing','Pipeline'],
+      link:{ href:'https://spacecoastleads.com/', label:'Visit site ↗' },
+      description:'Lead-generation system with document signing, a customer pipeline, Apollo.io integration, and 5 demo funnels.',
+      problem:'The team needed a repeatable way to capture, qualify, and move leads through a pipeline while sourcing new prospects at scale.',
+      workdone:'Built document signing, a customer pipeline, Apollo.io integration for lead sourcing, 5 demo funnels, and the SOP flowchart mapping the full process end-to-end.',
+      images: SPACECOAST_SOP_IMAGES
+    },
+    { slug:'n8nacademy', name:'n8n Academy', industry:'Certification Training',
+      categories:['n8n'],
+      thumb:'6a5fdf9428b4c07e407d554c', alt:'n8n Academy workflow — annotated report-generation build',
+      desc:'Completed the full n8n Academy track — Quickstart plus the Foundations program (Essentials, Integrations, In Practice) — through graded hands-on builds: API integrations, webhooks, data pipelines, error handling, and AI agents. All badges verified on badges.n8n.io.',
+      tags:['API integrations','Webhooks','Data pipelines','AI agents'], link:null,
+      description:'Verified n8n Academy certification track — QS101 Quickstart plus the full Foundations program: n8n101 Essentials, n8n102 Integrations, and n8n103 In Practice. Every badge was earned through graded hands-on workflow builds validated by the n8n Academy assessment API, and each is publicly verifiable on badges.n8n.io.',
+      problem:'Anyone can claim they know n8n — proving it is harder. Each Academy course requires building and submitting real workflows, passing knowledge checks, and scoring 70% or higher across graded assessments, so these badges certify working skill, not watched videos.',
+      workdone:'Built and passed the full set of assessment workflows: scheduled API integrations and sales-data pipelines (fetch, merge, transform, summarize, CSV reporting to Discord and email), webhook-driven order processing with validation and sub-workflows, conditional branching with fallbacks and error handling, and AI-powered systems — a feedback-classification pipeline and a customer-service AI agent with an LLM chat model, memory, and HTTP tools — plus workflow testing, debugging, and production best practices from n8n103.',
+      images:[im('6a5fdf94dd8ffd18701353c0'), im('6a5fdf9428b4c07e407d5548'), im('6a5fdf9428b4c07e407d554c'), im('6a5fdf9430b285321cc69d43'), im('6a5fdf9428b4c07e407d5551'), im('6a5fdf94de06310d09d60f3a'), im('6a5fdf96dd8ffd18701353ec')]
+    },
+    { slug:'affiliatenotif', name:'Affiliate Signup Alerts', industry:'Community / SaaS',
+      categories:['claude'],
+      thumb:'6a667331fb06386edeb6c793', alt:'Affiliate signup Discord notification architecture diagram',
+      desc:'Real-time Discord alerts for affiliate-driven free-trial signups — a FirstPromoter postback hits a Vercel serverless function, which relays the new member straight into a private Discord channel. Written end-to-end with Claude Code.',
+      tags:['Vercel serverless','Discord','Webhooks','FirstPromoter','Claude Code'], link:null,
+      description:'A lightweight serverless notifier that turns every affiliate-driven free-trial signup into an instant Discord alert — a FirstPromoter lead-signup postback triggers a Vercel function, which posts a formatted embed with the new member’s name and email straight into a private Discord channel. Built end-to-end with Claude Code.',
+      problem:'Affiliate signups from FirstPromoter had no real-time visibility — the only way to know a new free trial had come in through an affiliate link was to log into FirstPromoter or GHL and check manually, so new leads could sit unnoticed for hours.',
+      workdone:'Built a Vercel serverless function that receives FirstPromoter’s lead_signup webhook, defensively extracts the signup’s name and email across FirstPromoter’s inconsistent payload shapes, and posts a Discord embed via webhook to a dedicated #new-free-trial-signup-notif channel. Handles Discord’s 429 rate limits with an automatic retry-after backoff, and always returns a 200 response so FirstPromoter never retry-storms the endpoint on a downstream hiccup.',
+      images:[
+        im('6a667331fb06386edeb6c793'),
+        im('6a667331847bbd8a64aa1587', true),
+        im('6a667331847bbd8a64aa156d'),
+        im('6a667331fddfeb1aa9dbd2da'),
+        im('6a667331847bbd8a64aa157a')
+      ]
+    }
+  ];
+
+  const CASE_STUDIES = Object.fromEntries(WORK_PROJECTS.map(p => [p.slug, p]));
+
+  (function renderWork(){
+    const filtersEl = document.getElementById('workFilters');
+    const gridEl = document.getElementById('workGrid');
+    if (!filtersEl || !gridEl) return;
+
+    filtersEl.innerHTML = WORK_CATEGORIES.map(c =>
+      `<button class="filter-btn${c.slug === 'all' ? ' active' : ''}" data-filter="${esc(c.slug)}">${c.label}</button>`
+    ).join('');
+
+    gridEl.innerHTML = WORK_PROJECTS.map(p => {
+      const alt = p.thumbAlt && Object.keys(p.thumbAlt).length
+        ? ` data-thumbs='${JSON.stringify(Object.fromEntries(
+            Object.entries(p.thumbAlt).map(([k, h]) => [k, CDN + h + '.png'])))}'`
+        : '';
+      const link = p.link
+        ? `<a class="work-link" href="${esc(p.link.href)}" target="_blank" rel="noopener">${p.link.label}</a>`
+        : '';
+      return `<div class="work-card reveal" data-category="${esc(p.categories.join(' '))}" data-case="${esc(p.slug)}">
+        <img class="work-thumb" src="${CDN + p.thumb}.png" alt="${esc(p.alt || p.name)}" loading="lazy"${alt}>
+        <div class="work-body">
+          <div class="work-top"><h3>${esc(p.name)}</h3><span class="work-industry">${esc(p.industry)}</span></div>
+          <p class="work-desc">${p.desc}</p>
+          <div class="work-tags">${p.tags.map(t => `<span class="work-tag">${t}</span>`).join('')}</div>
+          ${link}
+          <button type="button" class="work-link work-case-btn">Learn more →</button>
+        </div>
+      </div>`;
+    }).join('');
+  })();
+
   // Mobile nav toggle
   const navToggle = document.getElementById('navToggle');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -1446,121 +1527,12 @@
     }
   });
 
-  // ---- Case study data ----
-  const CDN = 'https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/';
-  function im(hash, blur){ return { src: CDN + hash + '.png', blur: !!blur }; }
-
-  const WISDOM_AUTOMATION_IMAGES = [
-    im('6a5965f69c9b37b5fd5956b5'), im('6a5965f7baf5f6da40d9bc7a'), im('6a5965f62f7322e0964a98b9'),
-    im('6a5965f52f7322e0964a98af'), im('6a5965f52f7322e0964a98a9')
-  ];
-  const SPACECOAST_SOP_IMAGES = [
-    im('6a5965fdbaf5f6da40d9bcf2'), im('6a5965fe2f7322e0964a9935'), im('6a5965fdbaf5f6da40d9bcec'), im('6a5965fd498fdf281a101a43')
-  ];
-
-  const CASE_STUDIES = {
-    vanguard: { name:'Vanguard Credits', industry:'Credit Repair', sample:false,
-      description:'A Flask-based credit repair platform deployed on Railway that automates the dispute process end-to-end — parsing uploaded credit reports, generating bureau-specific dispute letters, and tracking rounds through a pipeline.',
-      problem:'Manually reading credit reports, deciding what to dispute, and drafting FCRA-compliant letters for each bureau ate hours per client and didn’t scale past a handful of active cases.',
-      workdone:'Built a parser for 4 credit report formats, a 17-rule dispute-classification engine, automated PDF letter generation for all 3 bureaus, a Kanban pipeline board, and scheduled 30/35-day follow-up reminders — all backed by Supabase.',
-      images:[im('6a5a7d07baf5f6da40225faf'), im('6a59660abaf5f6da40d9bda6',true), im('6a59660b9c9b37b5fd595e79',true), im('6a59660cbaf5f6da40d9bdd4',true), im('6a59660ba961afe59f73aa73',true), im('6a59660aa3791820f85490cb',true), im('6a59660aa08bf95bce31eca1',true), im('6a59660aa3791820f85490c1',true), im('6a59660a9c9b37b5fd595b62',true)]
-    },
-    woop: { name:'Woop', industry:'Creator Platform', sample:false,
-      description:'A creator rewards and monetization platform where video creators join brand campaigns, upload content, and get paid per view, with leaderboards and built-in training.',
-      problem:'Brands needed a way to run pay-per-view creator campaigns without manually tracking submissions, views, and payouts across creators.',
-      workdone:'Built the creator dashboard, campaign system, automated earnings tracking tied to view counts, a leaderboard, and an in-app training library for onboarding new creators.',
-      images:[im('6a59660c9c9b37b5fd595e93'), im('6a59660c1097b81195a0b66a'), im('6a59660ca961afe59f73aa79',true), im('6a59660d1097b81195a0b678'), im('6a59660d2f7322e0964a9a38')]
-    },
-    nextlevel: { name:'NextLevel', industry:'Productivity SaaS', sample:false,
-      description:'An all-in-one productivity dashboard for freelancers, combining task management, income/expense tracking, client pipeline, habit tracking, and time-zone tools in a single app.',
-      problem:'Freelancers were juggling 5–6 separate tools for tasks, invoicing, client tracking, and habits — losing time and context switching between them.',
-      workdone:'Built a unified dashboard with a task board, multi-currency income/expense tracker, client pipeline, habit tracker, world clock, and a Pomodoro timer.',
-      images:[im('6a5966081097b81195a0b62c'), im('6a596608a08bf95bce31ec8b'), im('6a5966089c9b37b5fd5957ab'), im('6a5966089c9b37b5fd5957b0'), im('6a596608524a3ec4c65a4fcd',true)]
-    },
-    sunwise: { name:'Sunwise', industry:'Solar Energy', sample:false,
-      description:'A self-service solar savings calculator embedded in GHL funnel pages — in under a minute a homeowner enters their bill and roof details and gets recommended system size, estimated monthly and 25-year savings, payback period, and environmental impact (CO₂ offset, equivalent trees planted), with contact capture gating the full personalized report. Every submission lands in an admin dashboard sorted by lead score, so sales calls the hottest leads first.',
-      problem:'Homeowners assume every solar company inflates savings numbers to close the deal, so they hesitate to even take a sales call — while the sales team wastes hours running manual savings calculations for leads who turn out to be unqualified (bill too low, bad roof orientation, renting not owning).',
-      workdone:'Built the mobile-first calculator in AI Studio with progressive disclosure (one question at a time), a formula-based estimation engine using regional sun-hours by ZIP and local utility rates (no external API), and a lead-scored admin dashboard. n8n automation upserts each submission into GHL, tags it hot/warm/cold, fires a Telegram alert to the rep for hot leads, and sends a follow-up SMS/email with the prospect’s own numbers — plus an automatically emailed branded PDF savings report (ReportLab).',
-      images:[im('6a5ce6341a0f048050f44689'), im('6a5ce634baf5f6da40eaf7bc')]
-    },
-    squirrel: { name:'Squirrel Insurance', industry:'Insurance', sample:false,
-      description:'Full marketing website backed by automated onboarding and A2P-approved SMS notifications.',
-      problem:'Leads filled out a generic contact form and waited for a manual callback, and the team had no automated way to notify staff of new signups.',
-      workdone:'Built the website, automated form-to-CRM onboarding, instant team notification triggers, and secured A2P 10DLC approval for compliant SMS.',
-      images:[im('6a5966171a0f048050e06fd1'), im('6a5965ec1097b81195a0b41c')]
-    },
-    tbb: { name:'The Bill Busters', industry:'Service Company', sample:false,
-      description:'Marketing website with appointment booking automation, team notifications, and A2P-approved SMS messaging.',
-      problem:'Bookings were coming in but the team had no automatic way to get notified or log them for reporting.',
-      workdone:'Built the website, wired booking to trigger team notifications and Google Sheets logging, and secured A2P 10DLC approval so SMS reminders could go out compliantly.',
-      images:[im('6a59661a1097b81195a0b7b4'), im('6a596604a3791820f8549014'), im('6a5965ec1a0f048050e06ca8')]
-    },
-    gcr: { name:'Genesis Credit', industry:'Credit Repair', sample:false,
-      description:'Conversion-focused website with an AI chatbot, a custom AI agent with its own knowledge base, document upload flows, a customer pipeline, and A2P-approved SMS.',
-      problem:'Prospective clients had questions the team couldn’t answer 24/7, and document intake/follow-up was fully manual, slowing down the credit-repair process.',
-      workdone:'Built the site, an AI chat agent trained on a dedicated knowledge base, document upload automation, a full customer pipeline, Zapier/webhook integrations, and A2P 10DLC compliance for messaging.',
-      images:[im('6a59660fa961afe59f73aa9b'), im('6a5965eca08bf95bce31ead5'), im('6a5965ec498fdf281a101925'), im('6a5965ec2f7322e0964a97c5'), im('6a5965eea3791820f8548e61'), im('6a5965f3498fdf281a10199f'), im('6a5965f2a961afe59f73a8b6'), im('6a5965f2498fdf281a101979'), im('6a5965f1498fdf281a101973'), im('6a5965f1a3791820f8548e9c'), im('6a5965f11097b81195a0b465'), im('6a5965f09c9b37b5fd595621'), im('6a5965f0a3791820f8548e78'), im('6a5965ef2f7322e0964a97ef'), im('6a5965efbaf5f6da40d9bc04'), im('6a5965efa961afe59f73a862'), im('6a5965ee1a0f048050e06cc9'), im('6a5965eca3791820f8548e3e')]
-    },
-    aemr: { name:'AEMR', industry:'Medical Education', sample:false,
-      description:'Complete course platform for a Spanish medical academy — a 17-module course, Stripe payments up to €7,450, email marketing, and a 6,030-opportunity sales pipeline.',
-      problem:'The academy needed to sell and deliver a high-ticket medical course online and track thousands of leads through a sales process without a patchwork of disconnected tools.',
-      workdone:'Built the 17-module course, Stripe payment flows for packages up to €7,450, email campaigns (31.68% open rate on 3,011 sends), and a pipeline tracking 6,030 opportunities through the funnel.',
-      images:[im('6a5a80b3aef6925d34362897'), im('6a5965f9baf5f6da40d9bcb2'), im('6a5966049c9b37b5fd59576b'), im('6a5965ffbaf5f6da40d9bd0e'), im('6a5966012f7322e0964a994b'), im('6a596601a961afe59f73a9d3'), im('6a596602a961afe59f73a9dd'), im('6a596602baf5f6da40d9bd28'), im('6a596602a961afe59f73a9e3'), im('6a5965eea961afe59f73a85c')]
-    },
-    deanna: { name:'DeAnna Crawford', industry:'Coaching', sample:false,
-      description:'Masterclass funnel with lead scoring, an automated social content calendar, and GHL automation flows behind the scenes.',
-      problem:'The funnel needed to convert cold traffic into masterclass leads and separate hot prospects from browsers, and the social content side was still being posted manually with no consistent calendar.',
-      workdone:'Built the funnel and lead scoring, set up an automated social content calendar, and built the GHL automation flows connecting the two.',
-      images:[im('6a59660f9c9b37b5fd595e9d'), im('6a5966041097b81195a0b5e1'), im('6a5a7f10baf5f6da4024d0c0'), im('6a5a7f101a0f04805026c12d'), im('6a5a7f101097b81195e9c637')]
-    },
-    lua: { name:'Level Up Academy', industry:'Gamified Course', sample:false,
-      description:'Bryan’s own gamified GHL training platform — RPG-style onboarding, quests, XP, and leveling automations, plus an 8.7K-member free Facebook community.',
-      problem:'Free Filipino VA/freelancer training content existed everywhere but had poor completion rates — nothing kept learners engaged past lesson one.',
-      workdone:'Built a gamified course (character selection, quests, XP, leveling automations), a social content calendar, multi-calendar booking, 360 managed sub-accounts, and grew the free community to 8.7K members.',
-      images:[im('6a5965f9a961afe59f73a94c'), im('6a5965f81a0f048050e06da0'), im('6a5965f89c9b37b5fd5956cd'), im('6a5965f81a0f048050e06d9b'), im('6a5965ff1a0f048050e06e1f'), im('6a5965f31a0f048050e06d31'), im('6a5965f3a3791820f8548eca'), im('6a5965f4a3791820f8548ed1'), im('6a596604498fdf281a101ac8'), im('6a5965f7a961afe59f73a928'), im('6a5965f71097b81195a0b503'), im('6a60c7b45e892103d462e361'), im('6a60c7b4ff8e2bd3160f7e14'), im('6a60c7b464ab3b1036c51286'), im('6a60c7b481877afd27a658bf'), im('6a60c7b48bec5a9d0b846de8'), im('6a60c7b444497f2c4a46461c')]
-    },
-    fundedbiz: { name:'Funded Biz', industry:'Business Funding', sample:false,
-      description:'Personality-driven funding and credit-repair funnel with an AI chatbot and case-study content.',
-      problem:'Business owners needed education and screening on funding options before talking to a human — cold leads without context slowed the sales team down.',
-      workdone:'Built the site, an AI chatbot to pre-qualify and answer funding questions, and case-study content to build trust before the sales call.',
-      images:[im('6a59660fa08bf95bce31ecef')]
-    },
-    federalbarbers: { name:'Federal Barbers', industry:'Barbershop', sample:false,
-      description:'Sharp, conversion-ready barbershop website with a services menu, testimonials, and a booking flow — backed by a full set of GHL automations covering the entire appointment lifecycle, from opt-in to a 30-day rebooking reminder.',
-      problem:'The shop had no online presence to show services or let customers book — everything ran on walk-ins and phone calls, with no-shows going untracked and no follow-up to bring customers back for their next cut.',
-      workdone:'Designed and built the site with a services menu, testimonials, and an integrated booking flow, then automated the appointment lifecycle in GHL: opt-ins are tagged and pushed into the pipeline, bookings get confirmation plus 24-hour / 1-hour / 5-minute reminder emails, showed and no-show statuses update the pipeline and create staff tasks automatically, completed services trigger a thank-you with a PDF gift email, and a 30-day reminder invites customers back for their next appointment.',
-      images:[im('6a59660f1a0f048050e06f4f'), im('6a5cea581097b81195b5a97a'), im('6a5cea581a0f048050f8b484'), im('6a5cea58baf5f6da40ee19a6'), im('6a5cea58bc0b1f5d2e3b389b'), im('6a5cea581097b81195b5a97f'), im('6a5cea59baf5f6da40ee19b1')]
-    },
-    wisdomchurch: { name:'Wisdom Church of Manila', industry:'Non-Profit', sample:false,
-      description:'Church website, an online store, and a Xendit-to-GHL donation system for local Philippine payment methods, backed by GHL automation flows.',
-      problem:'The church needed to accept local payment methods (not just cards) for donations and store purchases, with no automated way to route or acknowledge them.',
-      workdone:'Built the website and store, integrated Xendit to GHL for local payment methods, and built automation flows to route and acknowledge payments and donations.',
-      images:[im('6a5966032f7322e0964a997f'), im('6a59661aa3791820f8549256'), im('6a59661a2f7322e0964a9b72'), im('6a59661ba3791820f854927c'), im('6a59661ca3791820f85492a6')].concat(WISDOM_AUTOMATION_IMAGES)
-    },
-    charitylift: { name:'Charity Lift', industry:'Charity', sample:false,
-      description:'Donation-focused website promoting top US charities, built with GHL AI Studio.',
-      problem:'The organization needed a fast, credible donation site without a lengthy custom-dev build.',
-      workdone:'Built the site end-to-end using GHL AI Studio, with a donation-first layout and charity showcase.',
-      images:[im('6a59660e1097b81195a0b68a')]
-    },
-    meritex: { name:'Meritex Canada', industry:'Corporate', sample:false,
-      description:'Corporate website for a Canadian client, an AutoQuote web app for instant quotes, plus an automated client-review request flow.',
-      problem:'The company had no way for prospects to get an instant quote online, and no consistent way to request and collect client reviews after project completion.',
-      workdone:'Built the corporate site, the AutoQuote web app, and an automation that requests, tags, and routes client reviews after work is completed.',
-      images:[im('6a5966162f7322e0964a9b00'), im('6a596606a08bf95bce31ec69'), im('6a596606a3791820f8549053'), im('6a5966061a0f048050e06eab'), im('6a596606524a3ec4c65a4fb3'), im('6a5966071097b81195a0b617'), im('6a5965f4524a3ec4c65a4e71'), im('6a5965f5a3791820f8548ede'), im('6a5965f5baf5f6da40d9bc6c')]
-    },
-    celestenicolas: { name:'Celeste Nicolas Ministries', industry:'Ministry', sample:false,
-      description:'Ministry website with a giving/payment page, running on the same GHL automation system built for Wisdom Church of Manila.',
-      problem:'The ministry needed a clean way to present content and accept giving/donations without building a separate automation system from scratch.',
-      workdone:'Built the website and giving page, and extended the Wisdom Church of Manila automation system to cover Celeste Nicolas Ministries.',
-      images:[im('6a596603a08bf95bce31ec42')].concat(WISDOM_AUTOMATION_IMAGES)
-    },
-    spacecoastleads: { name:'Space Coast Leads', industry:'Lead Generation', sample:false,
-      description:'Lead-generation system with document signing, a customer pipeline, Apollo.io integration, and 5 demo funnels.',
-      problem:'The team needed a repeatable way to capture, qualify, and move leads through a pipeline while sourcing new prospects at scale.',
-      workdone:'Built document signing, a customer pipeline, Apollo.io integration for lead sourcing, 5 demo funnels, and the SOP flowchart mapping the full process end-to-end.',
-      images: SPACECOAST_SOP_IMAGES
-    },
+  // ---- Process Design case studies ----
+  // These have no work-card in #workGrid — they're opened directly from
+  // .flow-card[data-case] in the Process Design section. Merged into the
+  // CASE_STUDIES lookup (built above from WORK_PROJECTS) so openCase() works
+  // for both without changes.
+  Object.assign(CASE_STUDIES, {
     'pd-barbershop': { name:'Southside Cuts Barbershop', industry:'Barbershop', sample:true,
       description:'Illustrative SOP flowchart mapping a barbershop’s client journey from first contact to repeat booking.',
       problem:'Barbershops typically lose walk-in leads to no-shows and have no consistent way to turn a first-time client into a repeat booking.',
@@ -1620,14 +1592,8 @@
       problem:'The team needed a documented, repeatable process for capturing and qualifying leads before any automation could be built on top of it.',
       workdone:'Mapped the complete flow — from lead capture through document signing, pipeline stages, and Apollo.io sourcing — as the blueprint for the automation built on top.',
       images: SPACECOAST_SOP_IMAGES
-    },
-    n8nacademy: { name:'n8n Academy', industry:'Certification Training', sample:false,
-      description:'Verified n8n Academy certification track — QS101 Quickstart plus the full Foundations program: n8n101 Essentials, n8n102 Integrations, and n8n103 In Practice. Every badge was earned through graded hands-on workflow builds validated by the n8n Academy assessment API, and each is publicly verifiable on badges.n8n.io.',
-      problem:'Anyone can claim they know n8n — proving it is harder. Each Academy course requires building and submitting real workflows, passing knowledge checks, and scoring 70% or higher across graded assessments, so these badges certify working skill, not watched videos.',
-      workdone:'Built and passed the full set of assessment workflows: scheduled API integrations and sales-data pipelines (fetch, merge, transform, summarize, CSV reporting to Discord and email), webhook-driven order processing with validation and sub-workflows, conditional branching with fallbacks and error handling, and AI-powered systems — a feedback-classification pipeline and a customer-service AI agent with an LLM chat model, memory, and HTTP tools — plus workflow testing, debugging, and production best practices from n8n103.',
-      images:[im('6a5fdf94dd8ffd18701353c0'), im('6a5fdf9428b4c07e407d5548'), im('6a5fdf9428b4c07e407d554c'), im('6a5fdf9430b285321cc69d43'), im('6a5fdf9428b4c07e407d5551'), im('6a5fdf94de06310d09d60f3a'), im('6a5fdf96dd8ffd18701353ec')]
     }
-  };
+  });
 
   // ---- Case study modal ----
   const caseModal = document.getElementById('caseModal');
