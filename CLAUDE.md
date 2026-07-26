@@ -106,7 +106,7 @@ A global **lightbox** (`#lightbox`) handles click-to-expand single-image preview
 
 | Project | Industry | Categories | `data-case` slug | Notes |
 |---|---|---|---|---|
-| Vanguard Credits | Credit Repair | ai, apps, automation | `vanguard` | Default thumbnail (card + first modal image) is now a clean website capture, unblurred. **The other 8 images in its modal are real dispute-letter PII and stay CSS-blurred — see §9.** |
+| Vanguard Credits | Credit Repair | ai, apps, automation, **claude** | `vanguard` | Default thumbnail (card + first modal image) is now a clean website capture, unblurred. **The other 8 images in its modal are real dispute-letter PII and stay CSS-blurred — see §9.** `claude` tag added 2026-07-27 per Bryan. |
 | Woop | Creator Platform | apps, courses | `woop` | |
 | Sunwise | Solar Energy | apps, automation | `sunwise` | **Added 2026-07-19.** Solar savings calculator (AI Studio) + lead-scored dashboard + n8n → GHL/Telegram/SMS automation + ReportLab PDF report. 2 images, both PII-checked clean (placeholder form values only). "Visit site" links to a vibepreview.com preview URL — may expire; swap for a permanent domain when Bryan has one. |
 | NextLevel | Productivity SaaS | apps | `nextlevel` | |

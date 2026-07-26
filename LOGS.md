@@ -436,3 +436,8 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - Files touched: `index.html` (HTML: emptied `.filters`/`#workGrid` into two empty containers with an explanatory comment; JS: new data + render block, collapsed old `CASE_STUDIES` literal), `CLAUDE.md` (§4, §5, §9, §11 — documents the new data-driven architecture and "how to add a project" pattern), `LOGS.md`.
 - **Still needed from Bryan:** visually confirm the site in a real browser after deploy (this session verified data/HTML output only, not live rendering); review the drafted description/problem/workdone copy for Affiliate Signup Alerts (same unreviewed-copy caveat as all other case studies, CLAUDE.md §8.6); optionally re-upload a redacted version of the Discord-channel screenshot if the CSS-only blur (raw CDN URL still serves the unblurred original) isn't a strong enough guarantee for those two real subscribers' emails.
 - Files touched: `index.html`, `CLAUDE.md` (§5), `LOGS.md`.
+
+## 2026-07-27 — Tagged Vanguard Credits as a Claude Project
+- Bryan asked for Vanguard Credits to also show up under the new "Claude Projects" filter (added earlier today, see the entry above). Added `'claude'` to its `categories` array in `WORK_PROJECTS` (`index.html`) — one-line change, no HTML/CASE_STUDIES edit needed since the Work section is now data-driven.
+- Vanguard Credits now has 4 categories: `ai`, `apps`, `automation`, `claude`. It shows in both the AI/Web Apps/Automation filters (unchanged) and the new Claude Projects filter.
+- Files touched: `index.html`, `CLAUDE.md` (§5), `LOGS.md`.
