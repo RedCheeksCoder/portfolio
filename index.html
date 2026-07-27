@@ -1103,12 +1103,15 @@
       <a href="#book" class="btn btn-primary" style="margin-top:8px;">Book a quick call →</a>
     </div>
     <div class="form-card reveal">
-      <form>
-        <div class="field"><label for="fname">First Name</label><input id="fname" type="text" placeholder="Your first name"></div>
+      <form id="contactForm">
+        <div class="field" style="position:absolute;left:-9999px;" aria-hidden="true"><label for="cf-company">Company</label><input id="cf-company" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="field"><label for="fname">First Name</label><input id="fname" type="text" placeholder="Your first name" required></div>
         <div class="field"><label for="whatsapp">WhatsApp</label><input id="whatsapp" type="text" placeholder="+63 ..."></div>
-        <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@company.com"></div>
-        <div class="field"><label for="question">Question or Inquiry</label><textarea id="question" placeholder="Tell me a bit about what you're looking to automate"></textarea></div>
-        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Submit</button>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@company.com" required></div>
+        <div class="field"><label for="question">Question or Inquiry</label><textarea id="question" placeholder="Tell me a bit about what you're looking to automate" required></textarea></div>
+        <button type="submit" id="contactSubmitBtn" class="btn btn-primary" style="width:100%;justify-content:center;">Submit</button>
+        <p class="booking-error" id="contactError" style="display:none;"></p>
+        <p id="contactSuccess" style="display:none;color:var(--accent-2);font-size:13.5px;margin-top:12px;"></p>
       </form>
     </div>
   </div>
@@ -1828,6 +1831,52 @@
     });
 
     renderCalendar();
+  })();
+
+  // Contact form -> /api/contact -> Telegram notification. Mirrors the
+  // booking form's submit pattern above (disable+relabel button, hide/show
+  // a .booking-error line, reset on success).
+  (function () {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+    const contactError = document.getElementById('contactError');
+    const contactSuccess = document.getElementById('contactSuccess');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      contactSubmitBtn.disabled = true; contactSubmitBtn.textContent = 'Sending…';
+      contactError.style.display = 'none';
+      contactSuccess.style.display = 'none';
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: document.getElementById('fname').value,
+            whatsapp: document.getElementById('whatsapp').value,
+            email: document.getElementById('email').value,
+            question: document.getElementById('question').value,
+            company: document.getElementById('cf-company').value,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          contactError.textContent = data.message || 'Something went wrong. Please try again.';
+          contactError.style.display = 'block';
+          return;
+        }
+        contactForm.reset();
+        contactSuccess.textContent = "Got it — your message is on its way to me. I'll get back to you shortly.";
+        contactSuccess.style.display = 'block';
+      } catch (err) {
+        contactError.textContent = 'Network error — please try again.';
+        contactError.style.display = 'block';
+      } finally {
+        contactSubmitBtn.disabled = false; contactSubmitBtn.textContent = 'Submit';
+      }
+    });
   })();
 </script>
 

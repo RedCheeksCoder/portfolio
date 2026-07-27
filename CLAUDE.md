@@ -93,7 +93,7 @@ CSS variables are defined in `:root` at the top of the `<style>` block — alway
 11. **Testimonials** — 6 client quotes with avatar photos, 5-star ratings
 12. **Process** — 3-step discovery call framing (see §2)
 13. **Book a Discovery Call** — custom-built booking widget backed by Vercel serverless functions (see §7 and §12), replacing the old embedded GHL iframe
-14. **Contact** — copy + static contact form (no backend wired up — see §8 Known Gaps)
+14. **Contact** — copy + contact form, now wired to a Telegram notification backend (see §14)
 15. **Footer** — brand, credentials line, social links
 
 A global **lightbox** (`#lightbox`) handles click-to-expand single-image preview — used indirectly (dynamically wired via JS) by images inside the case-study modal. Nothing in the static page markup uses `data-full` anymore (that was the Gallery's mechanism); Work-card and flowchart thumbnails open the case-study modal instead (see §11).
@@ -176,7 +176,7 @@ All "Book a call" CTAs across the page (`nav`, hero, about, contact) still link 
 1. **Screenshot assets — resolved 2026-07-18.** All `images/...` placeholder paths (gallery + work-card thumbnails) have been replaced with Bryan's actual GHL CDN links, sourced from the `.txt` link files he dropped in the `Portfolio/` folder (one per content category — `Website captures.txt`, `Web applications.txt`, `Automations.txt`, etc.). No local `images/` folder is used — everything hotlinks to `assets.cdn.filesafe.space`, consistent with the badges/hero/about photos that already worked this way. Compression isn't needed since nothing is self-hosted.
    - Still open: the `.txt` source files remain in `Portfolio/` (not deleted) — fine to leave as reference, or Bryan may want them cleaned up once he's confirmed everything mapped correctly.
 
-2. **Contact form has no backend.** It's static HTML — submit does nothing yet. Needs a form action / GHL form embed / serverless endpoint, depending on what Bryan wants.
+2. ~~Contact form has no backend.~~ — **resolved 2026-07-27.** Wired to a new `/api/contact` serverless endpoint that pushes a Telegram notification to Bryan via his own bot. See §14.
 
 3. **Hero photo vs. About photo** — currently two different images are used (hero uses the original profile pic, About section was updated to a new photo per Bryan's request). Confirm with Bryan if he wants them unified.
 
@@ -362,6 +362,46 @@ Bryan wants a floating AI receptionist chat widget on the site, using **GHL's re
 | Load timing | "Load on interaction" enabled, to protect page-load performance |
 
 **Next step once Bryan has the embed script:** paste it into `index.html` immediately before `</body>` (alongside the existing inline script block), sanity-check it doesn't conflict with the case-modal/lightbox z-index stack (98/100) or the booking widget, then ship through the normal Deploy Rules flow below.
+
+---
+
+## 14. Contact Form Backend (Telegram) — added 2026-07-27
+
+The `#contact` section's form (§4 item 14) was previously dead HTML — no `action`/`method`, no `name` attributes, no JS wiring, so clicking Submit did a native GET to the same URL and silently discarded the message (Known Gap #2, now resolved). It's now backed by a new serverless endpoint that pushes every submission straight to Bryan's Telegram via his own bot.
+
+**Decision (Bryan's, confirmed 2026-07-27):** Telegram only — no GHL contact is created for these inquiries, unlike the booking flow. If Bryan later wants inquiries in GHL too, `api/_lib/ghl.js`'s existing `upsertContact()` can be called from `api/contact.js` — deliberately not wired in now, per his instruction.
+
+### File structure (new)
+```
+api/
+  contact.js              # POST /api/contact
+  _lib/
+    telegram.js               # sendTelegramMessage(text), escapeHtml(s) — plain fetch, no SDK
+```
+
+### Config / env vars
+Two new env vars, set in Vercel Project Settings → Environment Variables (same place as the four GHL vars in §12) — **never committed**, `.env.example` only documents blank placeholders:
+- `TELEGRAM_BOT_TOKEN` — from @BotFather.
+- `TELEGRAM_CHAT_ID` — the numeric chat Bryan wants notifications sent to (get it by messaging the bot once, then hitting `https://api.telegram.org/bot<token>/getUpdates`).
+
+Both credentials were already in Bryan's hand when this was built — no BotFather walkthrough was needed this session. Timezone for the "Sent at" timestamp in each message reuses `BOOKING_CONFIG.timezone` from `api/_lib/config.js` (`Asia/Manila`) rather than a separate constant, so there's one timezone source of truth across both backend features.
+
+### API behavior
+`POST /api/contact` (body: `name, whatsapp, email, question, company`):
+1. **Honeypot** — `company` is a hidden, off-screen, `tabindex="-1"` input in the form (invisible and unreachable for a real visitor, but a naive bot that fills every field trips it). If non-empty, responds `200 {success:true}` and sends nothing — silent accept, no signal to the bot.
+2. **Validation** — `name`, `email`, `question` required (`whatsapp` optional); email checked against the same `EMAIL_RE` regex used in `api/book.js`; each field length-capped (name 100 / whatsapp 40 / email 200 / question 2000). Returns `400 {success:false, error:'missing_fields'|'invalid_email'|'too_long'}`.
+3. **Send** — formats an HTML-parse-mode Telegram message (emoji header, bolded labels, the question body, a Manila-time timestamp) and calls `sendTelegramMessage()`. Every visitor-supplied value is passed through `escapeHtml()` first — required, not just tidy: Telegram's `parse_mode:'HTML'` rejects the whole message with a 400 if unescaped `<`/`>` appear, so an unescaped question containing a stray `<` would silently break every future notification until caught.
+4. Responses mirror `api/book.js`'s `{success, error, message}` shape: `200 {success:true}` on send; `500 {success:false, error:'server_error', message:'Could not send your message. Please try again, or email me directly.'}` on any Telegram API failure (logged server-side via `console.error('contact form error:', err)`, visible in `vercel logs`); `405 {error:'method_not_allowed'}` for non-POST.
+
+No rate limiting was added — Bryan opted for honeypot + validation only, accepting that a determined spammer could still submit repeatedly. Revisit if Telegram starts receiving junk.
+
+### Frontend
+`index.html`'s `#contactForm` — the honeypot field, `required` on name/email/question (previously nothing was required), and two new status lines (`#contactError` reusing the existing `.booking-error` CSS rule, `#contactSuccess` styled inline in `--accent-2`). A new IIFE at the end of the inline `<script>` block (after the booking widget's) submits via `fetch('/api/contact', ...)`, mirroring the booking form's submit handler pattern exactly: `e.preventDefault()`, disable+relabel the submit button ("Sending…" → "Submit"), hide/show the error or success line based on `res.ok && data.success`, `catch` → "Network error — please try again.", `finally` → re-enable the button. On success the form is `reset()` rather than swapped out for a different panel (unlike the booking widget), so a visitor can send a follow-up message without reloading.
+
+### Testing done (2026-07-27)
+- `node --check` on both new files.
+- Offline test (throwaway script, not committed): stubbed env vars and monkey-patched `globalThis.fetch` to capture the outgoing Telegram request instead of sending it. Verified: valid payload formats correctly and escapes `<script>`/`&` in both the name and question fields; honeypot-filled payload short-circuits with zero fetch calls; missing-fields, invalid-email, too-long, and wrong-method cases all return the expected status/error code. All 6 cases passed.
+- Live end-to-end verification (real Telegram message arriving, real browser submission with no page reload) done as part of this session's Deploy Rules flow — see `LOGS.md` 2026-07-27 for the actual confirmation.
 
 ---
 
