@@ -203,22 +203,45 @@ All "Book a call" CTAs across the page (`nav`, hero, about, contact) still link 
 
 ## 9. CRITICAL — Sensitive Data Handling
 
-Some screenshots in Bryan's Drive contain **real personal information**. Current state as of **2026-08-01** — read this whole section before changing any blur flag:
+Some screenshots contain **real personal information**. Current state as of **2026-08-01** — read this whole section before changing any blur flag or adding a Vanguard image.
+
+### What is actually in the 9 Vanguard Credits images
+
+All nine were opened and inspected on 2026-08-01. The earlier one-line description in this section was accurate but incomplete — it missed a second client name and the ID-document links. Definitive breakdown:
+
+| # | CDN hash | Content | Treatment |
+|---|---|---|---|
+| 1 | `6a5a7d07baf5f6da40225faf` | Marketing website capture | Clean |
+| 2 | `6a59660abaf5f6da40d9bda6` | Login screen, placeholder credentials | Clean |
+| 3 | `6a59660b9c9b37b5fd595e79` | Supabase dashboard — **live project URL** beside three CRITICAL "RLS Disabled in Public" advisories on `public.clients` / `public.jobs` / `public.dispute_rounds` | **Redacted copy** (URL only) |
+| 4 | `6a59660cbaf5f6da40d9bdd4` | VS Code — Flask codebase, file tree, architecture write-up | Clean (best image in the set) |
+| 5 | `6a59660ba961afe59f73aa73` | Upload screen; filename `R Henry (May).html` | Clean (partial surname only) |
+| 6 | `6a59660aa3791820f85490cb` | Dispute analysis — client full name, DOB, credit scores | **Redacted copy** |
+| 7 | `6a59660aa08bf95bce31eca1` | Dashboard — **two** real client names | **Redacted copy** |
+| 8 | `6a59660aa3791820f85490c1` | Same view + "Existing Client Found" modal naming her | **Redacted copy** |
+| 9 | `6a59660a9c9b37b5fd595b62` | Letter preview — full name, **complete Chicago street address**, DOB, plus form fields for SSN, client email, and Google Drive links to Government ID / Proof of Address / Social Security Card / FTC Identity Theft Report | **Redacted copy** |
+
+### The two treatments now in use
+
+1. **`index.html` (main portfolio)** — unchanged. Its `vanguard` entry still points at the raw CDN hashes with `blur:true` on images 2-9. CSS blur only.
+2. **`keyland-compliance-group.html`** — uses **hard-redacted copies** committed to `images/vanguard/`, served from the site, with **no blur at all**. Black rectangles are burned into the pixels over every identifying field; the FCRA letter body, the rule-engine output, the dashboard metrics and the UI are all fully visible. This is what let Bryan show the complete Vanguard gallery without exposing anyone.
+
+**The redacted copies are strictly safer than the blurred originals** — CSS blur leaves the unmodified file one right-click away, whereas these files simply do not contain the data. If Bryan ever wants the main portfolio hardened, swapping `index.html`'s Vanguard `im()` calls for the same `/images/vanguard/*.png` paths would do it.
+
+### Other images
 
 | Screenshot | Contains | Blurred today? |
 |---|---|---|
-| **Vanguard Credits** letters (8 of its 9 images) | A **real consumer's** full name, date of birth, home address, partial SSN | **YES — still blurred** |
-| **Woop** #3 | Bryan's own home address and phone number | No — unblurred 2026-08-01 |
-| **NextLevel** #5 | Other users' email addresses | No — unblurred 2026-08-01 |
-| **Affiliate Signup Alerts** #2 | Two real subscribers' Gmail addresses | No — unblurred 2026-08-01 |
+| **Woop** #3 | Bryan's own home address and phone number | No — unblurred 2026-08-01 at his request |
+| **NextLevel** #5 | Other users' email addresses | No — unblurred 2026-08-01 at his request |
+| **Affiliate Signup Alerts** #2 | Two real subscribers' Gmail addresses | No — unblurred 2026-08-01 at his request |
 
-**What changed on 2026-08-01:** Bryan asked to unblur everything, describing it as temporary ("I will bring it back to normal"). The last three were unblurred as requested — his own data plus email addresses. **The 8 Vanguard dispute letters were NOT unblurred**, and this was a deliberate, communicated decision, not an oversight: they carry a third party's name + DOB + address + partial SSN together, which is identity-theft-grade data belonging to someone who is not party to the request, and the same images now feed a page Bryan sends to prospective employers in the compliance industry. He was told this plainly and offered a better alternative — **hard-redacting the letters with PIL** (black boxes burned into the pixels, committed to the repo, served from the site), which would let him show real letter output *and* is strictly safer than the current state. That offer stands and is the recommended path if he wants those visible.
+### Standing rules
 
-**Standing rules:**
-- **Do not unblur the Vanguard dispute letters** without Bryan re-confirming with that context in hand. If he does, prefer the hard-redaction route over raw exposure.
-- **Do not assume newly-added screenshots are safe** — check every new image for PII before wiring it in, exactly as was done for the n8n, Wolfpack, and SSSGRP additions.
-- The blur mechanism (`blur:true` on `im()`, `.case-thumb-wrap.blurred`, `.lightbox.blurred`) is still in place and still used by Vanguard — do not delete it just because fewer images use it now.
-- **Known weakness:** blur is CSS-only. The underlying `<img src>` is always the unblurred CDN original, so anyone who opens the image URL directly sees the real thing. This is why hard-redaction is the better fix for genuinely sensitive images.
+- **Do not assume newly-added screenshots are safe** — inspect every new image for PII before wiring it in, as was done for the n8n, Wolfpack, SSSGRP and Vanguard sets. The Vanguard review found materially more than the file's own notes claimed.
+- **Regenerating a redacted image:** re-download the original, re-derive coordinates by cropping and *viewing* the candidate region (never guess), then verify the output three ways — view it whole, assert each box is solid black, and diff against the original to prove nothing outside the boxes changed. That harness is described in `LOGS.md` 2026-08-01.
+- The blur mechanism (`blur:true`, `.case-thumb-wrap.blurred`, `.lightbox.blurred`) is still live and still used by `index.html` — do not remove it.
+- **Bryan's own name/phone/email appear deliberately unblurred** in the `sssgrp` screenshot, and a third-party member name in the `wolfpackbasecamp` one — both confirmed by him on 2026-07-31. Not oversights.
 
 **Current implementation (updated 2026-07-18 three times — case-study modal shipped, real Vanguard Credits website capture added, then the Gallery section that used to hold a blurred preview was removed entirely):** No image-editing tool is available in this environment, so blurring is done at render time instead of on the source file:
 - The Gallery section (and its `.gallery-blur`/`.privacy-note` blurred preview of Vanguard Credits) no longer exists on the page at all — removed per Bryan's request (see §4). This actually reduces PII exposure surface, not just moves it.
@@ -487,7 +510,21 @@ Everything else (`renderLb`, `openLbGallery`, `stepLb`, `closeLb`, the CSS, the 
 - `lifecycle` = automation/pipeline shots drawn from AEMR, Genesis Credit, Federal Barbers, DeAnna Crawford and Squirrel.
 - `ghlscale` reuses the Level Up Academy set, since the 360-sub-account figure comes from there.
 - `autoquote` = **images 2–6 of the Meritex set**, confirmed by opening all 9 and identifying the car-insurance quote flow visually (image 1 is the corporate site, 7–9 are review automation). Do not re-derive this by slicing on a guess.
-- `vanguard` (both its cards) = **only the PII-free website capture**, per §9.
+- `vanguard` = **all 9 images, none blurred** — 4 clean CDN images plus 5 hard-redacted copies served from `images/vanguard/`. Built via the `loc(path)` helper, a sibling to `im(hash)` that takes a repo-relative path instead of a CDN hash. See §9.
+
+**`images/vanguard/` is the first self-hosted image directory on this site** — everything else hotlinks `assets.cdn.filesafe.space`. Vercel serves the repo root statically so `/images/vanguard/*.png` resolves with no config change.
+
+### Section membership (changed 2026-08-01)
+
+A card may legitimately appear in more than one category section; each occurrence is its own `.sys-card` with its own copy written from that category's angle, sharing a `data-gallery` key.
+
+| System | Sections |
+|---|---|
+| Vanguard Credits | **SaaS Platforms only** — the separate "Vanguard Credits pipeline" CRM card was removed 2026-08-01 and its Kanban/30-35-day-reminder detail folded into the SaaS card |
+| Genesis Credit | Websites **+ CRM** |
+| AEMR | Websites **+ CRM** + Customer Portals |
+
+The "Lifecycle & lead-scoring builds" CRM card was trimmed at the same time — it used to name AEMR and Genesis Credit, which now have their own cards, so it covers only Federal Barbers, DeAnna Crawford, Squirrel and Wolfpack. Its gallery was re-pointed to match. Current totals: **25 `.sys-card`s, 24 with galleries** (`bryanodina.com` has no screenshots).
 
 ---
 
