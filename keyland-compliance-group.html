@@ -199,6 +199,64 @@
   .close-box p:last-of-type{margin-bottom:22px;}
   .close-actions{display:flex;flex-wrap:wrap;gap:12px;}
 
+  /* Screenshot strip inside a system card */
+  .sys-shots{margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+  .sys-shots-label{
+    font-family:var(--font-display);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;margin-bottom:9px;
+  }
+  .sys-shots-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:7px;}
+  .shot{
+    position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);
+    cursor:zoom-in;background:var(--surface-2);padding:0;transition:border-color .2s;
+  }
+  .shot:hover{border-color:var(--accent);}
+  .shot img{aspect-ratio:4/3;object-fit:cover;object-position:top;width:100%;display:block;}
+  .shot.blurred img{filter:blur(8px);transform:scale(1.06);}
+  .shot.blurred::after{
+    content:"Private";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-size:9px;font-weight:700;color:var(--text);background:#00000066;
+  }
+  .shot.more::after{
+    content:attr(data-more);position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-size:13px;font-weight:700;color:var(--text);background:#000000a6;
+  }
+
+  /* Lightbox — ported from index.html */
+  .lightbox{
+    position:fixed;inset:0;background:#000d;z-index:100;
+    display:none;align-items:center;justify-content:center;padding:24px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:min(1100px,94vw);max-height:88vh;border-radius:10px;box-shadow:0 30px 80px #000;}
+  .lightbox-close{
+    position:absolute;top:20px;right:24px;background:var(--surface);
+    border:1px solid var(--border);color:var(--text);border-radius:8px;
+    width:40px;height:40px;font-size:18px;cursor:pointer;
+  }
+  .lightbox-cap{
+    position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+    background:var(--surface);border:1px solid var(--border);border-radius:8px;
+    padding:8px 16px;font-size:13px;color:var(--text-muted);max-width:90vw;
+  }
+  .lightbox-nav{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+    display:none;align-items:center;justify-content:center;
+    width:48px;height:48px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:var(--text);font-size:28px;line-height:1;
+    padding:0 0 4px;transition:background .2s ease;
+  }
+  .lightbox.has-nav .lightbox-nav{display:flex;}
+  .lightbox-nav:hover{background:var(--accent-hover);}
+  .lightbox-nav.prev{left:18px;}
+  .lightbox-nav.next{right:18px;}
+  @media (max-width:600px){
+    .lightbox-nav{width:40px;height:40px;font-size:24px;}
+    .lightbox-nav.prev{left:8px;}
+    .lightbox-nav.next{right:8px;}
+  }
+  .lightbox.blurred #lightboxImg{filter:blur(18px);}
+
   /* Footer */
   footer{border-top:1px solid var(--border);padding:40px 0;background:var(--bg-alt);}
   .foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;}
@@ -303,7 +361,7 @@
     </div>
     <div class="sys-grid">
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="gcr">
         <div class="sys-head"><h3>Genesis Credit</h3><span class="sys-industry">Credit Repair</span></div>
         <a class="sys-link" href="https://genesiscreditrestoration.com/" target="_blank" rel="noopener">genesiscreditrestoration.com ↗</a>
         <div class="sys-spec">
@@ -315,7 +373,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="aemr">
         <div class="sys-head"><h3>AEMR</h3><span class="sys-industry">Medical Education (Spain)</span></div>
         <a class="sys-link" href="https://cursos.eng.aemr.es/home" target="_blank" rel="noopener">cursos.eng.aemr.es ↗</a>
         <div class="sys-spec">
@@ -327,7 +385,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="squirrel">
         <div class="sys-head"><h3>Squirrel Insurance</h3><span class="sys-industry">Insurance</span></div>
         <a class="sys-link" href="https://squirrelinsurance.com/home" target="_blank" rel="noopener">squirrelinsurance.com ↗</a>
         <div class="sys-spec">
@@ -339,7 +397,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="tbb">
         <div class="sys-head"><h3>The Bill Busters</h3><span class="sys-industry">Service Company</span></div>
         <a class="sys-link" href="https://thebillbusters.com/" target="_blank" rel="noopener">thebillbusters.com ↗</a>
         <div class="sys-spec">
@@ -351,7 +409,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="meritex">
         <div class="sys-head"><h3>Meritex Canada</h3><span class="sys-industry">Corporate</span></div>
         <a class="sys-link" href="https://meritex.ca" target="_blank" rel="noopener">meritex.ca ↗</a>
         <div class="sys-spec">
@@ -363,7 +421,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="wolfpackbasecamp">
         <div class="sys-head"><h3>Wolfpack Basecamp</h3><span class="sys-industry">Business &amp; Credit Coaching</span></div>
         <a class="sys-link" href="https://wolfpackbasecamp.com/skool-offer" target="_blank" rel="noopener">wolfpackbasecamp.com ↗</a>
         <div class="sys-spec">
@@ -375,7 +433,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="wisdomchurch">
         <div class="sys-head"><h3>Wisdom Church of Manila &amp; Celeste Nicolas Ministries</h3><span class="sys-industry">Non-Profit / Ministry</span></div>
         <a class="sys-link" href="https://wisdomchurchofmanila.org" target="_blank" rel="noopener">wisdomchurchofmanila.org ↗</a>
         <div class="sys-spec">
@@ -387,7 +445,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="federalbarbers">
         <div class="sys-head"><h3>Federal Barbers</h3><span class="sys-industry">Barbershop</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">The shop had no online presence and no way for customers to book — everything ran on walk-ins and phone calls, with no-shows untracked and no follow-up to bring customers back.</div></div>
@@ -398,7 +456,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="additional">
         <div class="sys-head"><h3>Additional client sites</h3><span class="sys-industry">Various</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Each needed a credible, conversion-focused web presence without a long custom-development cycle.</div></div>
@@ -428,7 +486,7 @@
     </div>
     <div class="sys-grid">
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="ghlscale">
         <div class="sys-head"><h3>GoHighLevel at scale — 360 sub-accounts</h3><span class="sys-industry">Multi-Tenant Administration</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Running CRM instances for a large number of separate client organisations without each one becoming its own manual maintenance burden.</div></div>
@@ -439,7 +497,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="spacecoastleads">
         <div class="sys-head"><h3>Space Coast Leads</h3><span class="sys-industry">Lead Generation</span></div>
         <a class="sys-link" href="https://spacecoastleads.com/" target="_blank" rel="noopener">spacecoastleads.com ↗</a>
         <div class="sys-spec">
@@ -451,7 +509,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="vanguard">
         <div class="sys-head"><h3>Vanguard Credits pipeline</h3><span class="sys-industry">Credit Repair</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Regulated dispute cases move through fixed stages on statutory clocks — there was no system tracking which case was in which round or what was due when.</div></div>
@@ -462,7 +520,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="lifecycle">
         <div class="sys-head"><h3>Lifecycle &amp; lead-scoring builds</h3><span class="sys-industry">Multiple Clients</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Across clients, the recurring failure was the same: leads and customers moving through stages with no automated handoff, so follow-up happened only when a person remembered.</div></div>
@@ -486,7 +544,7 @@
     </div>
     <div class="sys-grid">
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="lua">
         <div class="sys-head"><h3>Level Up Academy</h3><span class="sys-industry">Member Portal / Community</span></div>
         <a class="sys-link" href="https://www.facebook.com/groups/levelupacademyph" target="_blank" rel="noopener">Community ↗</a>
         <div class="sys-spec">
@@ -498,7 +556,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="aemr">
         <div class="sys-head"><h3>AEMR course portal</h3><span class="sys-industry">Medical Education</span></div>
         <a class="sys-link" href="https://cursos.eng.aemr.es/home" target="_blank" rel="noopener">cursos.eng.aemr.es ↗</a>
         <div class="sys-spec">
@@ -510,7 +568,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="sunwise">
         <div class="sys-head"><h3>Sunwise</h3><span class="sys-industry">Solar Energy</span></div>
         <a class="sys-link" href="https://preview-1784471587162807465.vibepreview.com/" target="_blank" rel="noopener">Live preview ↗</a>
         <div class="sys-spec">
@@ -522,7 +580,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="woop">
         <div class="sys-head"><h3>Woop creator dashboard</h3><span class="sys-industry">Creator Platform</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Brands needed to run pay-per-view creator campaigns without manually tracking submissions, views, and payouts across every creator.</div></div>
@@ -546,7 +604,7 @@
     </div>
     <div class="sys-grid">
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="vanguard">
         <div class="sys-head"><h3>Vanguard Credits</h3><span class="sys-industry">Credit Repair</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Manually reading credit reports, deciding what to dispute, and drafting compliant letters for each bureau ate hours per client and didn't scale past a handful of active cases.</div></div>
@@ -557,7 +615,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="nextlevel">
         <div class="sys-head"><h3>NextLevel</h3><span class="sys-industry">Productivity SaaS</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Freelancers were juggling five or six separate tools for tasks, invoicing, client tracking, and habits — losing time and context switching between them.</div></div>
@@ -568,7 +626,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="woop">
         <div class="sys-head"><h3>Woop</h3><span class="sys-industry">Creator Platform</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Brands running pay-per-view creator campaigns had no system to track submissions, views, and payouts across many creators at once.</div></div>
@@ -592,7 +650,7 @@
     </div>
     <div class="sys-grid">
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="autoquote">
         <div class="sys-head"><h3>AutoQuote</h3><span class="sys-industry">Corporate / Quoting</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Prospects had no way to get an instant quote online — every enquiry needed a person to price it and reply, which cost the business speed at the exact moment a buyer was deciding.</div></div>
@@ -603,7 +661,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="affiliatenotif">
         <div class="sys-head"><h3>Affiliate Signup Alerts</h3><span class="sys-industry">Serverless Integration</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Affiliate signups had no real-time visibility — the only way to know a new trial had come in was to log into the platform and check manually, so new leads sat unnoticed for hours.</div></div>
@@ -626,7 +684,7 @@
         </div>
       </div>
 
-      <div class="sys-card reveal">
+      <div class="sys-card reveal" data-gallery="n8nsystems">
         <div class="sys-head"><h3>Business automation library</h3><span class="sys-industry">Demonstration Builds</span></div>
         <div class="sys-spec">
           <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Across industries, the same failure repeats: revenue-critical follow-up that only happens if someone remembers to do it.</div></div>
@@ -731,6 +789,14 @@
   </div>
 </footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Screenshot preview">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close preview">✕</button>
+  <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous image">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-nav next" id="lightboxNext" aria-label="Next image">›</button>
+  <div class="lightbox-cap" id="lightboxCap"></div>
+</div>
+
 <script>
   // Scroll reveal — same pattern as index.html
   const revealEls = document.querySelectorAll('.reveal');
@@ -742,6 +808,196 @@
   } else {
     revealEls.forEach(el => el.classList.add('in'));
   }
+
+  // ---- Screenshot galleries ----------------------------------------------
+  // Image hashes are COPIED from index.html's WORK_PROJECTS. There is no
+  // shared data source between the two pages — adding images to a project in
+  // index.html does NOT update this page. See CLAUDE.md §15.
+  const CDN = 'https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/';
+  function im(hash, blur){ return { src: CDN + hash + '.png', blur: !!blur }; }
+
+  const WISDOM_AUTOMATION_IMAGES = [
+    im('6a5965f69c9b37b5fd5956b5'), im('6a5965f7baf5f6da40d9bc7a'), im('6a5965f62f7322e0964a98b9'),
+    im('6a5965f52f7322e0964a98af'), im('6a5965f52f7322e0964a98a9')
+  ];
+
+  const GALLERIES = {
+    gcr: [
+      im('6a59660fa961afe59f73aa9b'), im('6a5965eca08bf95bce31ead5'), im('6a5965ec498fdf281a101925'),
+      im('6a5965ec2f7322e0964a97c5'), im('6a5965eea3791820f8548e61'), im('6a5965f3498fdf281a10199f'),
+      im('6a5965f2a961afe59f73a8b6'), im('6a5965f2498fdf281a101979'), im('6a5965f1498fdf281a101973'),
+      im('6a5965f1a3791820f8548e9c'), im('6a5965f11097b81195a0b465'), im('6a5965f09c9b37b5fd595621'),
+      im('6a5965f0a3791820f8548e78'), im('6a5965ef2f7322e0964a97ef'), im('6a5965efbaf5f6da40d9bc04'),
+      im('6a5965efa961afe59f73a862'), im('6a5965ee1a0f048050e06cc9'), im('6a5965eca3791820f8548e3e')
+    ],
+    aemr: [
+      im('6a5a80b3aef6925d34362897'), im('6a5965f9baf5f6da40d9bcb2'), im('6a5966049c9b37b5fd59576b'),
+      im('6a5965ffbaf5f6da40d9bd0e'), im('6a5966012f7322e0964a994b'), im('6a596601a961afe59f73a9d3'),
+      im('6a596602a961afe59f73a9dd'), im('6a596602baf5f6da40d9bd28'), im('6a596602a961afe59f73a9e3'),
+      im('6a5965eea961afe59f73a85c')
+    ],
+    squirrel: [im('6a5966171a0f048050e06fd1'), im('6a5965ec1097b81195a0b41c')],
+    tbb: [im('6a59661a1097b81195a0b7b4'), im('6a596604a3791820f8549014'), im('6a5965ec1a0f048050e06ca8')],
+    meritex: [
+      im('6a5966162f7322e0964a9b00'), im('6a596606a08bf95bce31ec69'), im('6a596606a3791820f8549053'),
+      im('6a5966061a0f048050e06eab'), im('6a596606524a3ec4c65a4fb3'), im('6a5966071097b81195a0b617'),
+      im('6a5965f4524a3ec4c65a4e71'), im('6a5965f5a3791820f8548ede'), im('6a5965f5baf5f6da40d9bc6c')
+    ],
+    // AutoQuote is images 2-6 of the Meritex set — verified visually, not sliced by guess.
+    autoquote: [
+      im('6a596606a08bf95bce31ec69'), im('6a596606a3791820f8549053'), im('6a5966061a0f048050e06eab'),
+      im('6a596606524a3ec4c65a4fb3'), im('6a5966071097b81195a0b617')
+    ],
+    wolfpackbasecamp: [
+      im('6a6bf69bf982994d153950f9'), im('6a6bf66e6e6593e30e899589'), im('6a6bf66e6e6593e30e899584')
+    ],
+    wisdomchurch: [
+      im('6a5966032f7322e0964a997f'), im('6a59661aa3791820f8549256'), im('6a59661a2f7322e0964a9b72'),
+      im('6a59661ba3791820f854927c'), im('6a59661ca3791820f85492a6'),
+      im('6a596603a08bf95bce31ec42')
+    ].concat(WISDOM_AUTOMATION_IMAGES),
+    federalbarbers: [
+      im('6a59660f1a0f048050e06f4f'), im('6a5cea581097b81195b5a97a'), im('6a5cea581a0f048050f8b484'),
+      im('6a5cea58baf5f6da40ee19a6'), im('6a5cea58bc0b1f5d2e3b389b'), im('6a5cea581097b81195b5a97f'),
+      im('6a5cea59baf5f6da40ee19b1')
+    ],
+    // "Additional client sites" card covers SSSGRP, Funded Biz, Charity Lift, DeAnna Crawford.
+    additional: [
+      im('6a6bf69bcf81b06f050e3fc0'),
+      im('6a59660fa08bf95bce31ecef'),
+      im('6a59660e1097b81195a0b68a'),
+      im('6a59660f9c9b37b5fd595e9d'), im('6a5966041097b81195a0b5e1'), im('6a5a7f10baf5f6da4024d0c0'),
+      im('6a5a7f101a0f04805026c12d'), im('6a5a7f101097b81195e9c637')
+    ],
+    // 360 sub-accounts figure comes from Level Up Academy — same image set.
+    ghlscale: [
+      im('6a5965f9a961afe59f73a94c'), im('6a5965f81a0f048050e06da0'), im('6a5965f89c9b37b5fd5956cd'),
+      im('6a5965f81a0f048050e06d9b'), im('6a5965ff1a0f048050e06e1f'), im('6a5965f31a0f048050e06d31'),
+      im('6a5965f3a3791820f8548eca'), im('6a5965f4a3791820f8548ed1'), im('6a596604498fdf281a101ac8')
+    ],
+    spacecoastleads: [
+      im('6a5965fdbaf5f6da40d9bcf2'), im('6a5965fe2f7322e0964a9935'),
+      im('6a5965fdbaf5f6da40d9bcec'), im('6a5965fd498fdf281a101a43')
+    ],
+    // Vanguard: ONLY the PII-free website capture. The 8 dispute-letter screenshots
+    // show a real consumer's name, DOB, address and partial SSN and are deliberately
+    // excluded from this page — see CLAUDE.md §9.
+    vanguard: [im('6a5a7d07baf5f6da40225faf')],
+    // Automation/pipeline shots pulled from the six clients this card names.
+    lifecycle: [
+      im('6a5966049c9b37b5fd59576b'), im('6a5966012f7322e0964a994b'),
+      im('6a5965eea3791820f8548e61'), im('6a5965f3498fdf281a10199f'),
+      im('6a5cea581097b81195b5a97a'), im('6a5cea58baf5f6da40ee19a6'), im('6a5cea58bc0b1f5d2e3b389b'),
+      im('6a5a7f10baf5f6da4024d0c0'), im('6a5a7f101a0f04805026c12d'),
+      im('6a5965ec1097b81195a0b41c')
+    ],
+    lua: [
+      im('6a5965f9a961afe59f73a94c'), im('6a5965f81a0f048050e06da0'), im('6a5965f89c9b37b5fd5956cd'),
+      im('6a5965f81a0f048050e06d9b'), im('6a5965ff1a0f048050e06e1f'), im('6a5965f31a0f048050e06d31'),
+      im('6a5965f3a3791820f8548eca'), im('6a5965f4a3791820f8548ed1'), im('6a596604498fdf281a101ac8'),
+      im('6a5965f7a961afe59f73a928'), im('6a5965f71097b81195a0b503'), im('6a60c7b45e892103d462e361'),
+      im('6a60c7b4ff8e2bd3160f7e14'), im('6a60c7b464ab3b1036c51286'), im('6a60c7b481877afd27a658bf'),
+      im('6a60c7b48bec5a9d0b846de8'), im('6a60c7b444497f2c4a46461c')
+    ],
+    sunwise: [im('6a5ce6341a0f048050f44689'), im('6a5ce634baf5f6da40eaf7bc')],
+    woop: [
+      im('6a59660c9c9b37b5fd595e93'), im('6a59660c1097b81195a0b66a'), im('6a59660ca961afe59f73aa79'),
+      im('6a59660d1097b81195a0b678'), im('6a59660d2f7322e0964a9a38')
+    ],
+    nextlevel: [
+      im('6a5966081097b81195a0b62c'), im('6a596608a08bf95bce31ec8b'), im('6a5966089c9b37b5fd5957ab'),
+      im('6a5966089c9b37b5fd5957b0'), im('6a596608524a3ec4c65a4fcd')
+    ],
+    affiliatenotif: [
+      im('6a667331fb06386edeb6c793'), im('6a667331847bbd8a64aa1587'), im('6a667331847bbd8a64aa156d'),
+      im('6a667331fddfeb1aa9dbd2da'), im('6a667331847bbd8a64aa157a')
+    ],
+    n8nsystems: [
+      im('6a67bd7219a8766aea7c82ce'), im('6a67bd72b7fe5a8e31292f9e'), im('6a67bd72b7fe5a8e31292fa2'),
+      im('6a67bd72a5647acc136b6ee0'), im('6a67bd72f3037a82d5ddf159'), im('6a67bd7219a8766aea7c82c9'),
+      im('6a67bd75a5647acc136b6f42'), im('6a67bd7588106326197b319a'), im('6a67bd75a5647acc136b6f47'),
+      im('6a67bd7588106326197b31a8')
+    ]
+  };
+
+  // ---- Lightbox (ported from index.html; closeCase() call and the [data-full]
+  // loop were dropped — neither exists on this page) --------------------------
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCap = document.getElementById('lightboxCap');
+  const lbClose = document.getElementById('lightboxClose');
+  const lbPrev = document.getElementById('lightboxPrev');
+  const lbNext = document.getElementById('lightboxNext');
+  let lbItems = [], lbIndex = -1;
+  function renderLb(){
+    const it = lbItems[lbIndex];
+    lbImg.src = it.src;
+    lbCap.textContent = (it.cap || '') + (lbItems.length > 1 ? ' · ' + (lbIndex + 1) + ' / ' + lbItems.length : '');
+    lb.classList.toggle('blurred', !!it.blur);
+  }
+  function openLbGallery(items, index){
+    lbItems = items;
+    lbIndex = index;
+    lb.classList.toggle('has-nav', items.length > 1);
+    renderLb();
+    lb.classList.add('open');
+    lbClose.focus();
+  }
+  function stepLb(dir){
+    if (!lb.classList.contains('open') || lbItems.length < 2) return;
+    lbIndex = (lbIndex + dir + lbItems.length) % lbItems.length;
+    renderLb();
+  }
+  function closeLb(){ lb.classList.remove('open'); lb.classList.remove('blurred'); lbImg.src=''; lbItems=[]; lbIndex=-1; }
+  lbClose.addEventListener('click', closeLb);
+  lbPrev.addEventListener('click', () => stepLb(-1));
+  lbNext.addEventListener('click', () => stepLb(1));
+  lb.addEventListener('click', (e) => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLb();
+    else if (lb.classList.contains('open')) {
+      if (e.key === 'ArrowLeft') stepLb(-1);
+      else if (e.key === 'ArrowRight') stepLb(1);
+    }
+  });
+
+  // ---- Render a thumbnail strip into every card carrying data-gallery -------
+  const MAX_THUMBS = 6;
+  document.querySelectorAll('.sys-card[data-gallery]').forEach(card => {
+    const imgs = GALLERIES[card.dataset.gallery];
+    if (!imgs || !imgs.length) return;
+    const title = (card.querySelector('h3')?.textContent || 'Screenshot').trim();
+    const items = imgs.map(o => ({ src: o.src, cap: title, blur: o.blur }));
+
+    const block = document.createElement('div');
+    block.className = 'sys-shots';
+    const label = document.createElement('div');
+    label.className = 'sys-shots-label';
+    label.textContent = imgs.length === 1 ? 'Screenshot' : 'Screenshots (' + imgs.length + ')';
+    const grid = document.createElement('div');
+    grid.className = 'sys-shots-grid';
+
+    const shown = Math.min(imgs.length, MAX_THUMBS);
+    for (let i = 0; i < shown; i++) {
+      const isLast = (i === shown - 1);
+      const hidden = imgs.length - shown;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'shot' + (imgs[i].blur ? ' blurred' : '') + (isLast && hidden > 0 ? ' more' : '');
+      if (isLast && hidden > 0) btn.setAttribute('data-more', '+' + hidden);
+      btn.setAttribute('aria-label', 'Open screenshot ' + (i + 1) + ' of ' + imgs.length + ' — ' + title);
+      const el = document.createElement('img');
+      el.src = imgs[i].src;
+      el.loading = 'lazy';
+      el.alt = title + ' screenshot ' + (i + 1);
+      btn.appendChild(el);
+      btn.addEventListener('click', () => openLbGallery(items, i));
+      grid.appendChild(btn);
+    }
+    block.appendChild(label);
+    block.appendChild(grid);
+    card.appendChild(block);
+  });
 </script>
 
 </body>

@@ -203,22 +203,29 @@ All "Book a call" CTAs across the page (`nav`, hero, about, contact) still link 
 
 ## 9. CRITICAL — Sensitive Data Handling
 
-Some screenshots in Bryan's Drive contain **real third-party personal information** and must never be published as-is:
+Some screenshots in Bryan's Drive contain **real personal information**. Current state as of **2026-08-01** — read this whole section before changing any blur flag:
 
-- **Vanguard Credits** screenshots (credit dispute letters) show a real consumer's full name, date of birth, home address, and partial SSN.
-- **Woop** screenshot #3 shows Bryan's own home address and phone number.
-- **NextLevel** screenshot #5 shows other users' email addresses.
-- **Affiliate Signup Alerts** screenshot #2 (the Discord channel result, added 2026-07-27) shows two real subscribers' Gmail addresses from actual free-trial signups.
+| Screenshot | Contains | Blurred today? |
+|---|---|---|
+| **Vanguard Credits** letters (8 of its 9 images) | A **real consumer's** full name, date of birth, home address, partial SSN | **YES — still blurred** |
+| **Woop** #3 | Bryan's own home address and phone number | No — unblurred 2026-08-01 |
+| **NextLevel** #5 | Other users' email addresses | No — unblurred 2026-08-01 |
+| **Affiliate Signup Alerts** #2 | Two real subscribers' Gmail addresses | No — unblurred 2026-08-01 |
 
-**Rule: these specific images must be blurred (whole image, not just the sensitive region) with a text overlay explaining "some sensitive information has been blurred for privacy."** This was an explicit instruction from Bryan — do not publish these unblurred, do not skip the overlay text, and do not assume newly-added screenshots are safe without checking for similar PII first.
+**What changed on 2026-08-01:** Bryan asked to unblur everything, describing it as temporary ("I will bring it back to normal"). The last three were unblurred as requested — his own data plus email addresses. **The 8 Vanguard dispute letters were NOT unblurred**, and this was a deliberate, communicated decision, not an oversight: they carry a third party's name + DOB + address + partial SSN together, which is identity-theft-grade data belonging to someone who is not party to the request, and the same images now feed a page Bryan sends to prospective employers in the compliance industry. He was told this plainly and offered a better alternative — **hard-redacting the letters with PIL** (black boxes burned into the pixels, committed to the repo, served from the site), which would let him show real letter output *and* is strictly safer than the current state. That offer stands and is the recommended path if he wants those visible.
+
+**Standing rules:**
+- **Do not unblur the Vanguard dispute letters** without Bryan re-confirming with that context in hand. If he does, prefer the hard-redaction route over raw exposure.
+- **Do not assume newly-added screenshots are safe** — check every new image for PII before wiring it in, exactly as was done for the n8n, Wolfpack, and SSSGRP additions.
+- The blur mechanism (`blur:true` on `im()`, `.case-thumb-wrap.blurred`, `.lightbox.blurred`) is still in place and still used by Vanguard — do not delete it just because fewer images use it now.
+- **Known weakness:** blur is CSS-only. The underlying `<img src>` is always the unblurred CDN original, so anyone who opens the image URL directly sees the real thing. This is why hard-redaction is the better fix for genuinely sensitive images.
 
 **Current implementation (updated 2026-07-18 three times — case-study modal shipped, real Vanguard Credits website capture added, then the Gallery section that used to hold a blurred preview was removed entirely):** No image-editing tool is available in this environment, so blurring is done at render time instead of on the source file:
 - The Gallery section (and its `.gallery-blur`/`.privacy-note` blurred preview of Vanguard Credits) no longer exists on the page at all — removed per Bryan's request (see §4). This actually reduces PII exposure surface, not just moves it.
 - **The Vanguard Credits work-card thumbnail is now a real website-capture screenshot (`6a5a7d07baf5f6da40225faf.png`), unblurred** — Bryan confirmed this is fine since it's just the marketing site, no PII. It's also the first image in the `vanguard` case-study modal (`blur:false`).
 - **The other 8 Vanguard Credits images in the modal are the dispute-letter screenshots and stay `blur:true`** in `CASE_STUDIES` — Bryan explicitly confirmed (2026-07-18) that only the new website-capture thumbnail should go unblurred, and the real-PII dispute letters keep the blur + "Blurred for privacy" overlay treatment, both in the modal grid and in the full-size lightbox (caption appends `(blurred for privacy)`). **Fixed 2026-07-19:** the full-size lightbox previously only appended the caption text but showed the image *unblurred* — it now applies a real CSS blur (`.lightbox.blurred #lightboxImg`, 18px) whenever the displayed image is flagged `blur:true`, including while navigating with the new prev/next arrows. **Do not remove blur from any Vanguard Credits image showing an actual dispute letter/consumer data without Bryan explicitly re-confirming** — this was checked directly with him once already given how consequential getting it wrong would be.
 - The underlying `<img src>` in all cases is still the unblurred CDN link — the blur is CSS-only, applied on the live page, not baked into a rehosted file. This satisfies "whole image blurred + overlay" but is worth knowing: anyone who opens the image URL directly (view-source, right-click → open image) sees the original unblurred screenshot. If Bryan wants a harder guarantee, the CDN images themselves need to be replaced with pre-blurred versions.
-- Woop screenshot #3 and NextLevel screenshot #5 **are** now included in their clients' case-study modals (per "everything found" scope), each individually flagged `blur:true` in `CASE_STUDIES` and rendered with the same blur+overlay treatment. The work-card default thumbnail for both still uses a different, PII-free image (Woop 1, NextLevel 1).
-- **Affiliate Signup Alerts** (`affiliatenotif`, added 2026-07-27) image 2 of 5 is flagged `blur:true` in `WORK_PROJECTS` for the same reason — a live Discord channel screenshot showing two real subscribers' Gmail addresses. Confirmed with Bryan before adding (he chose "blur it, site convention" over leaving it out or re-uploading a redacted version). The other 4 images in that project are clean.
+- ~~Woop #3, NextLevel #5, and Affiliate Signup Alerts #2 are flagged `blur:true`.~~ **Superseded 2026-08-01** — all three were unblurred at Bryan's explicit request (see the table at the top of this section). They remain in their clients' case-study modals, now rendering unblurred. The work-card default thumbnails for Woop and NextLevel still use a different image (Woop 1, NextLevel 1), unchanged.
 - Any future work that adds more Vanguard Credits / Woop / NextLevel / Affiliate Signup Alerts screenshots must check against this list before wiring them into `WORK_PROJECTS`, and set `blur:true` on the `im()` call if needed.
 - **Two exceptions, both checked and confirmed with Bryan on 2026-07-31 (not oversights):** the `wolfpackbasecamp` community-feed screenshot shows a real third-party member's name/avatar on a leaderboard, and the `sssgrp` screenshot shows Bryan's own name/phone/email typed into a lead form as test data. Both were flagged to him before adding, and he explicitly chose to leave both unblurred — see §5 for detail. Do not blur these without him asking, and do not treat their unblurred state as a missed PII check in a future session.
 
@@ -455,6 +462,32 @@ The page groups Bryan's work into the five categories Keyland asked about (websi
 - The n8n library is labeled a **demonstration build**, consistent with §5.
 
 Verified counts used on the page: **3** A2P 10DLC clients (Squirrel, The Bill Busters, Genesis Credit — the three `compliance`-tagged cards) and **4** n8n badges (the 5th `badges.n8n.io` URL in `index.html` is the wallet profile, not a badge).
+
+### Screenshot galleries — added 2026-08-01
+
+23 of the 24 system cards now carry a thumbnail strip; clicking any thumbnail opens a full-size lightbox with prev/next, a counter, Escape-to-close and arrow-key navigation. (`bryanodina.com` is the one card without a gallery — no screenshots of it exist; it links to the live site instead.)
+
+**How it works:**
+- `GALLERIES` — an object at the top of the page's gallery script block, keyed by gallery name, each value an array of `im()` results. A local `CDN` constant and `im(hash, blur)` helper mirror `index.html`'s.
+- Each `.sys-card` carries **`data-gallery="key"`**. A render loop finds every such card, builds a `.sys-shots` block (label + `.sys-shots-grid` of `.shot` buttons), and wires each thumbnail to `openLbGallery(items, index)`. Cards without the attribute are skipped.
+- Max **6** thumbnails shown per card; if the set is larger the 6th tile gets `.more` with a `data-more="+N"` overlay. All images remain reachable via the lightbox regardless.
+- **Adding a gallery to a card** = add a key to `GALLERIES` + put `data-gallery` on that card. Nothing else.
+
+**Image hashes are DUPLICATED from `index.html`, not shared.** Same tradeoff as the design tokens: there is no shared data source, so **adding images to a project in `WORK_PROJECTS` does NOT update this page.** A verification script that cross-checks every hash on this page against `index.html` was used when building it — 120 unique hashes, all valid. Re-run that check after editing hashes; a typo renders a silently broken tile.
+
+**Lightbox port — two deliberate deviations from `index.html`:**
+1. The Escape handler calls **only `closeLb()`**. `index.html:1574` also calls `closeCase()`; copying that verbatim would throw `ReferenceError` on every Escape press here, since this page has no case modal.
+2. The `document.querySelectorAll('[data-full]')` loop was dropped — no such elements on this page.
+
+Everything else (`renderLb`, `openLbGallery`, `stepLb`, `closeLb`, the CSS, the `#lightbox` shell) is a faithful copy. `openLb()` was not ported — nothing calls it.
+
+**Gallery composition notes** (the non-1:1 cards):
+- `wisdomchurch` merges Wisdom Church + Celeste Nicolas (which share an automation system) — 11 images.
+- `additional` = SSSGRP + Funded Biz + Charity Lift + DeAnna Crawford, the four projects that card names.
+- `lifecycle` = automation/pipeline shots drawn from AEMR, Genesis Credit, Federal Barbers, DeAnna Crawford and Squirrel.
+- `ghlscale` reuses the Level Up Academy set, since the 360-sub-account figure comes from there.
+- `autoquote` = **images 2–6 of the Meritex set**, confirmed by opening all 9 and identifying the car-insurance quote flow visually (image 1 is the corporate site, 7–9 are review automation). Do not re-derive this by slicing on a guess.
+- `vanguard` (both its cards) = **only the PII-free website capture**, per §9.
 
 ---
 
