@@ -8,7 +8,9 @@ This file gives any Claude (Code, chat, or otherwise) working in this repo the f
 
 ## 1. Project Overview
 
-A single-page HTML portfolio site for **Bryan Odina** — GHL-Certified Admin, Licensed Electronics Engineer, and automation consultant based in the Philippines. The frontend is still one file: `index.html` (HTML + CSS + JS inline, no build step, no framework). (The file previously lived at the repo root as `portoflio.html` — it was moved into this folder and renamed to match this doc on 2026-07-18.)
+An HTML portfolio site for **Bryan Odina** — GHL-Certified Admin, Licensed Electronics Engineer, and automation consultant based in the Philippines. The main page is one file: `index.html` (HTML + CSS + JS inline, no build step, no framework). (The file previously lived at the repo root as `portoflio.html` — it was moved into this folder and renamed to match this doc on 2026-07-18.)
+
+**As of 2026-08-01 this is no longer a single-page site** — a second standalone page, `keyland-compliance-group.html`, was added for a specific job application. See §15. Everything below that doesn't explicitly mention that page refers to `index.html`.
 
 **As of 2026-07-18, this is no longer a purely static site.** A Vercel serverless API backend (`api/`, `package.json`) was added to power the custom booking widget — see §12 "Booking Backend" for the full architecture. The frontend itself remains build-step-free; the `api/` functions have zero dependencies too (plain `fetch` to GHL's REST API, no SDKs).
 
@@ -408,6 +410,51 @@ No rate limiting was added — Bryan opted for honeypot + validation only, accep
 - `node --check` on both new files.
 - Offline test (throwaway script, not committed): stubbed env vars and monkey-patched `globalThis.fetch` to capture the outgoing Telegram request instead of sending it. Verified: valid payload formats correctly and escapes `<script>`/`&` in both the name and question fields; honeypot-filled payload short-circuits with zero fetch calls; missing-fields, invalid-email, too-long, and wrong-method cases all return the expected status/error code. All 6 cases passed.
 - Live end-to-end verification (real Telegram message arriving, real browser submission with no page reload) done as part of this session's Deploy Rules flow — see `LOGS.md` 2026-07-27 for the actual confirmation.
+
+---
+
+## 15. Second page: `/keyland-compliance-group` — added 2026-08-01
+
+The site now has **two pages**. `keyland-compliance-group.html` is a standalone technical-portfolio summary Bryan sends as a link when applying for a **CTO / Technology Director** role at **Keyland Compliance Group** (a US trucking/FMCSA compliance company — USDOT authority setup, BOC-3 filings, drug & alcohol consortium, safety audits, trip permits, insurance). Their job posting asked applicants to send "examples of websites, CRMs, applications, or systems you have built," which is exactly what this page is.
+
+### Routing — read before touching `vercel.json`
+`vercel.json` gained a **`rewrites`** entry mapping `/keyland-compliance-group` → `/keyland-compliance-group.html`. The existing `functions` key is unchanged and must stay.
+
+```json
+{
+  "rewrites": [{ "source": "/keyland-compliance-group", "destination": "/keyland-compliance-group.html" }],
+  "functions": { "api/*.js": { "maxDuration": 10 } }
+}
+```
+
+**`cleanUrls: true` was deliberately NOT used.** It defaults to `false` (verified empirically pre-change: `/index` 404'd while `/index.html` 200'd), and turning it on generates site-wide 308 redirects that would make the currently-working `/index.html` start redirecting to `/`. The targeted rewrite has zero blast radius. **If a third page is ever added, add another rewrite rather than flipping `cleanUrls`** — or if flipping it, re-verify `/index.html` and the `/api/*` routes afterward.
+
+Because the rewrite leaves `/keyland-compliance-group.html` independently reachable, the page carries `<link rel="canonical" href="https://bryanodina.com/keyland-compliance-group">`. It is the **only** page on the site with a canonical tag or OG/Twitter meta tags — `index.html` still has neither.
+
+### Design tokens are DUPLICATED, not shared
+The page has its own inline `<style>` block containing a **copy** of `index.html`'s `:root` tokens, base typography, `.wrap`/`.eyebrow`/`.btn*`/`.section*`/footer/`.reveal` rules. There is no shared stylesheet (the site has no build step and no CSS file). **If a design token or shared component style changes in `index.html`, mirror it here or the two pages will visually drift.** A verification snippet that diffs the two `:root` blocks was used when the page was built; all 15 tokens matched.
+
+Other structural notes:
+- **Simplified header** — logo → `/`, a "← Back to portfolio" link, and a "Book a call" CTA → `/#book`. `index.html`'s nav was deliberately NOT copied: every link in it is a bare `#hash` anchor that would silently no-op on a standalone page.
+- **Footer is copied verbatim** from `index.html` (fully portable — all absolute external links).
+- **Favicon hrefs use leading slashes** here (`/favicon.svg`), unlike `index.html`'s relative ones, so they resolve correctly at a non-root path.
+- Only JS is the `.reveal` IntersectionObserver.
+
+### Nav link on the main site
+`index.html`'s desktop `.nav-links` and `.mobile-menu` both gained an entry labeled **"Tech Summary"** → `/keyland-compliance-group`. Bryan explicitly chose public + linked over unlisted. The label is intentionally neutral rather than naming Keyland, since every visitor and prospective client sees it. **Removing it is a two-line revert** if he changes his mind.
+
+### Content and the factual-accuracy constraint
+The page groups Bryan's work into the five categories Keyland asked about (websites, CRM systems, customer portals, SaaS platforms, web applications), each system answering five fixed questions: business problem, his role, solo-or-team, technologies, users. It closes with a "how this maps to Keyland" section tying existing work to FMCSA-adjacent problems (deadline-driven compliance tracking, document intake, A2P 10DLC, GHL).
+
+**This page makes factual claims in a hiring context — every claim must trace to a source. When editing it:**
+- All project facts come from `WORK_PROJECTS` in `index.html`. Do not add detail that isn't there.
+- **Stacks confirmed directly by Bryan 2026-08-01** (NOT inferable from the portfolio): NextLevel = Flask + Supabase · Woop = Flask + Supabase · AutoQuote = **GHL** AI Studio · Sunwise calculator and Charity Lift = **GoHighLevel** AI Studio (not Google AI Studio). Vanguard's Flask/Railway/Supabase is documented in the portfolio itself.
+- **User counts supplied by Bryan** (nowhere in the portfolio): NextLevel 52 · AutoQuote 26 and counting · Vanguard Credits 2 (single-company deployment) · Sunwise 1 (client-customized). Other systems show operational metrics instead (AEMR 6,030 opportunities / 3,011 sends / 31.68% open rate / €7,450; LUA 8.7K members / 360 sub-accounts) — keep "app users" and "operational scale" visually distinct rather than blending them.
+- **Solo on everything** — confirmed by Bryan. The CTO title at The 414 Project is technical/strategic, not people management. Don't soften this into implied team leadership.
+- **Do not source stack claims from the decorative marquee** in `index.html` (the ~50-term keyword ticker, `aria-hidden="true"`). React, Next.js, Node, Twilio, OpenAI, Postgres, and Firebase appear ONLY there and are not attributable to any project.
+- The n8n library is labeled a **demonstration build**, consistent with §5.
+
+Verified counts used on the page: **3** A2P 10DLC clients (Squirrel, The Bill Busters, Genesis Credit — the three `compliance`-tagged cards) and **4** n8n badges (the 5th `badges.n8n.io` URL in `index.html` is the wallet profile, not a badge).
 
 ---
 

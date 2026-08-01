@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Technical Portfolio for Keyland Compliance Group — Bryan Odina</title>
+<meta name="description" content="Websites, CRM systems, customer portals, SaaS platforms, and web applications built by Bryan Odina — prepared for the CTO / Technology Director role at Keyland Compliance Group.">
+<link rel="canonical" href="https://bryanodina.com/keyland-compliance-group">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bryanodina.com/keyland-compliance-group">
+<meta property="og:title" content="Technical Portfolio for Keyland Compliance Group — Bryan Odina">
+<meta property="og:description" content="Systems I've designed and built end-to-end: websites, CRM platforms, customer portals, SaaS products, and web applications — with the problem each one solved, the stack, and real usage numbers.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Technical Portfolio for Keyland Compliance Group — Bryan Odina">
+<meta name="twitter:description" content="Systems I've designed and built end-to-end, with the problem each one solved, the stack, and real usage numbers.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sansation:wght@300;400;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Design tokens mirrored from index.html — see CLAUDE.md: this page duplicates
+     rather than shares them, so a token change on the main page must be copied here. */
+  :root{
+    --bg:#151513;
+    --bg-alt:#0B0B0B;
+    --surface:#1D1D1A;
+    --surface-2:#242421;
+    --border:#33332d;
+    --text:#F4F1E8;
+    --text-muted:#a8a598;
+    --accent:#A54F16;          /* primary orange */
+    --accent-2:#CC7E31;        /* secondary orange */
+    --accent-soft:#CC7E3122;
+    --accent-hover:#CC7E31;
+    --radius:10px;
+    --font-display:'Sansation',sans-serif;
+    --font-body:'Quicksand',sans-serif;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    overflow-x:hidden;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-weight:500;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  section{position:relative;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    font-family:var(--font-display);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+    font-weight:700;
+  }
+  .eyebrow::before{content:"";width:22px;height:2px;background:var(--accent);}
+  h1,h2,h3{font-family:var(--font-display);margin:0;font-weight:700;letter-spacing:.01em;}
+  .muted{color:var(--text-muted);}
+
+  /* Nav */
+  header{
+    position:sticky;top:0;z-index:60;
+    background:#151513d9;
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav{
+    max-width:var(--maxw);margin:0 auto;padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .logo{font-family:var(--font-display);font-weight:700;font-size:18px;}
+  .logo span{color:var(--accent);}
+  .nav-right{display:flex;align-items:center;gap:20px;}
+  .nav-back{color:var(--text-muted);font-size:14.5px;font-weight:600;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 22px;border-radius:8px;
+    font-family:var(--font-body);font-size:14.5px;font-weight:700;
+    border:1px solid transparent;
+    cursor:pointer;transition:transform .15s, background .2s, border-color .2s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-primary{background:var(--accent);color:#F4F1E8;}
+  .btn-primary:hover{background:var(--accent-hover);}
+  .btn-ghost{border-color:var(--border);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--accent);}
+  .nav-cta{display:none;}
+  @media(min-width:720px){.nav-cta{display:inline-flex;}}
+
+  /* Sections */
+  .section{padding:72px 0;border-top:1px solid var(--border);}
+  .section.alt{background:var(--bg-alt);}
+  .section-head{max-width:760px;margin-bottom:40px;}
+  .section-head h2{font-size:clamp(24px,3.2vw,32px);}
+  .section-head p{color:var(--text-muted);margin-top:14px;font-size:15.5px;}
+
+  /* Page intro */
+  .intro{padding:64px 0 56px;}
+  .intro h1{font-size:clamp(28px,4.4vw,44px);line-height:1.2;max-width:19ch;}
+  .intro h1 span{color:var(--accent-2);}
+  .intro .lede{color:var(--text-muted);font-size:16.5px;margin-top:20px;max-width:66ch;}
+  .intro .lede strong{color:var(--text);font-weight:700;}
+  .cred-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .cred-tag{
+    font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:999px;
+    border:1px solid var(--border);background:var(--surface);color:var(--text-muted);
+  }
+  .intro-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
+
+  /* Scope note */
+  .scope-note{
+    margin-top:34px;padding:18px 20px;border-radius:var(--radius);
+    background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);
+    font-size:14.5px;color:var(--text-muted);max-width:74ch;
+  }
+  .scope-note strong{color:var(--text);}
+
+  /* At-a-glance table */
+  .table-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);}
+  table.glance{border-collapse:collapse;width:100%;min-width:720px;font-size:14px;}
+  table.glance th,table.glance td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--border);vertical-align:top;}
+  table.glance thead th{
+    font-family:var(--font-display);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--accent-2);background:var(--bg-alt);white-space:nowrap;
+  }
+  table.glance tbody tr:last-child td{border-bottom:none;}
+  table.glance tbody tr:hover{background:var(--surface-2);}
+  table.glance td:first-child{font-weight:700;color:var(--text);white-space:nowrap;}
+  table.glance td{color:var(--text-muted);}
+
+  /* System cards */
+  .sys-grid{display:grid;gap:20px;}
+  @media(min-width:900px){.sys-grid{grid-template-columns:repeat(2,1fr);}}
+  .sys-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:14px;
+    padding:24px;display:flex;flex-direction:column;
+  }
+  .sys-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:4px;}
+  .sys-head h3{font-size:19px;}
+  .sys-industry{font-size:12px;color:var(--accent-2);font-weight:700;letter-spacing:.04em;text-transform:uppercase;}
+  .sys-link{
+    font-size:13px;font-weight:700;color:var(--accent-2);margin-bottom:14px;
+    display:inline-block;border-bottom:1px solid transparent;transition:border-color .2s;
+  }
+  .sys-link:hover{border-color:var(--accent-2);}
+  .sys-spec{margin-top:14px;display:grid;gap:11px;}
+  .spec-row{display:grid;grid-template-columns:1fr;gap:2px;}
+  @media(min-width:520px){.spec-row{grid-template-columns:132px 1fr;gap:14px;}}
+  .spec-k{
+    font-family:var(--font-display);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;padding-top:3px;
+  }
+  .spec-v{font-size:14.2px;color:var(--text-muted);}
+  .spec-v strong{color:var(--text);font-weight:700;}
+  .stack-pills{display:flex;flex-wrap:wrap;gap:6px;}
+  .pill{
+    font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;
+    background:var(--accent-soft);border:1px solid var(--border);color:var(--text);
+  }
+
+  /* Mapping table */
+  .map-grid{display:grid;gap:14px;}
+  @media(min-width:860px){.map-grid{grid-template-columns:repeat(2,1fr);}}
+  .map-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;
+    border-top:2px solid var(--accent);
+  }
+  .map-card h4{
+    font-family:var(--font-display);font-size:14.5px;margin:0 0 8px;color:var(--text);font-weight:700;
+  }
+  .map-card p{margin:0;font-size:14px;color:var(--text-muted);}
+
+  /* Closing */
+  .close-box{
+    background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:30px;
+    max-width:820px;
+  }
+  .close-box h2{font-size:22px;margin-bottom:14px;}
+  .close-box p{color:var(--text-muted);font-size:15px;margin:0 0 14px;}
+  .close-box p:last-of-type{margin-bottom:22px;}
+  .close-actions{display:flex;flex-wrap:wrap;gap:12px;}
+
+  /* Footer */
+  footer{border-top:1px solid var(--border);padding:40px 0;background:var(--bg-alt);}
+  .foot-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;}
+  .foot-brand{font-family:var(--font-display);font-weight:700;}
+  .foot-cred{font-size:12.5px;color:var(--text-muted);margin-top:4px;}
+  .foot-socials{display:flex;gap:18px;}
+  .foot-socials a{color:var(--text-muted);font-size:13.5px;font-weight:600;transition:color .2s;}
+  .foot-socials a:hover{color:var(--accent);}
+
+  /* Reveal */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a class="logo" href="/" aria-label="Bryan Odina — home">BRYAN <span>ODINA</span></a>
+    <div class="nav-right">
+      <a class="nav-back" href="/">← Back to portfolio</a>
+      <a href="/#book" class="btn btn-primary nav-cta">Book a call</a>
+    </div>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <span class="eyebrow">Prepared for Keyland Compliance Group</span>
+    <h1>Systems I've <span>Designed and Built</span></h1>
+    <p class="lede">
+      Prepared for the <strong>CTO / Technology Director</strong> role at Keyland Compliance Group. Below is every
+      website, CRM system, customer portal, SaaS platform, and web application I've built — each with the business
+      problem it solved, my role, the technologies used, and real usage numbers. I've grouped them into the five
+      categories you asked about.
+    </p>
+    <div class="cred-row">
+      <span class="cred-tag">Licensed Electronics Engineer</span>
+      <span class="cred-tag">GoHighLevel Certified Admin</span>
+      <span class="cred-tag">n8n Certified (4 badges)</span>
+      <span class="cred-tag">Six Sigma Yellow Belt</span>
+      <span class="cred-tag">CTO, The 414 Project</span>
+    </div>
+    <div class="intro-actions">
+      <a href="#glance" class="btn btn-primary">See everything at a glance</a>
+      <a href="#keyland" class="btn btn-ghost">How this maps to Keyland →</a>
+    </div>
+    <div class="scope-note">
+      <strong>On scope and honesty:</strong> I built every system on this page myself, end-to-end — design, development,
+      automation, and deployment. Where I know exact user numbers, I've given them; where a system's meaningful scale is
+      operational rather than seat-based, I've said that instead of dressing it up. Two entries are clearly labelled as
+      demonstration builds rather than client deployments.
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="glance">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">At a Glance</span>
+      <h2>Every system in one table</h2>
+      <p>Fifteen production systems across five categories. Detail on each one follows below.</p>
+    </div>
+    <div class="table-scroll reveal">
+      <table class="glance">
+        <thead>
+          <tr><th>System</th><th>Category</th><th>Technologies</th><th>Scale</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vanguard Credits</td><td>Web app / SaaS</td><td>Flask, Supabase, Railway</td><td>2 users (single-company deployment)</td></tr>
+          <tr><td>NextLevel</td><td>SaaS platform</td><td>Flask, Supabase</td><td>52 users with access</td></tr>
+          <tr><td>Woop</td><td>SaaS platform</td><td>Flask, Supabase</td><td>Creator-facing, pre-scale</td></tr>
+          <tr><td>AutoQuote (Meritex)</td><td>Web app</td><td>GoHighLevel AI Studio</td><td>26 users and counting</td></tr>
+          <tr><td>Sunwise</td><td>Web app / portal</td><td>GHL AI Studio, n8n, ReportLab, GHL</td><td>1 client deployment</td></tr>
+          <tr><td>Level Up Academy</td><td>Portal / community</td><td>GoHighLevel</td><td>8.7K community members · 360 sub-accounts</td></tr>
+          <tr><td>AEMR</td><td>Portal / e-commerce</td><td>GoHighLevel, Stripe</td><td>6,030 pipeline opportunities · 3,011 sends</td></tr>
+          <tr><td>Genesis Credit</td><td>Website + CRM + AI</td><td>GHL, Zapier, webhooks, A2P 10DLC</td><td>Client production system</td></tr>
+          <tr><td>Wolfpack Basecamp</td><td>Website + CRM</td><td>GoHighLevel CRM, Skool</td><td>Client production system</td></tr>
+          <tr><td>Space Coast Leads</td><td>CRM / lead ops</td><td>GHL, Apollo.io, e-signing</td><td>Client production system</td></tr>
+          <tr><td>Squirrel Insurance</td><td>Website + CRM</td><td>GHL, A2P 10DLC</td><td>Client production system</td></tr>
+          <tr><td>The Bill Busters</td><td>Website + CRM</td><td>GHL, Google Sheets, A2P 10DLC</td><td>Client production system</td></tr>
+          <tr><td>Federal Barbers</td><td>Website + CRM</td><td>GoHighLevel</td><td>Client production system</td></tr>
+          <tr><td>Wisdom Church / Celeste Nicolas</td><td>Website + payments</td><td>Xendit → GHL</td><td>Two orgs, one shared system</td></tr>
+          <tr><td>Affiliate Signup Alerts</td><td>Serverless service</td><td>Vercel Functions, Discord, FirstPromoter</td><td>Always-on internal service</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="websites">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Category 1</span>
+      <h2>Websites I developed</h2>
+      <p>Twelve-plus client sites in production. Most are not brochure sites — they're the front end of a CRM and automation system I also built.</p>
+    </div>
+    <div class="sys-grid">
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Genesis Credit</h3><span class="sys-industry">Credit Repair</span></div>
+        <a class="sys-link" href="https://genesiscreditrestoration.com/" target="_blank" rel="noopener">genesiscreditrestoration.com ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Prospective clients had questions the team couldn't answer 24/7, and document intake and follow-up were fully manual, slowing the whole credit-repair process down.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Designed and built the site, an AI chat agent trained on a dedicated knowledge base, document-upload automation, the full customer pipeline, and Zapier/webhook integrations. Also secured A2P 10DLC approval so SMS could go out compliantly.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">AI chat agent</span><span class="pill">Zapier</span><span class="pill">Webhooks</span><span class="pill">A2P 10DLC</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system — the largest build in my portfolio at 18 documented screens and workflows.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>AEMR</h3><span class="sys-industry">Medical Education (Spain)</span></div>
+        <a class="sys-link" href="https://cursos.eng.aemr.es/home" target="_blank" rel="noopener">cursos.eng.aemr.es ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">A Spanish medical academy needed to sell and deliver a high-ticket course online and track thousands of leads through a sales process, without a patchwork of disconnected tools.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the 17-module course platform, Stripe payment flows for packages up to €7,450, the email campaigns, and the sales pipeline.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Stripe</span><span class="pill">Email automation</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>6,030 opportunities</strong> tracked through the pipeline; <strong>3,011 emails</strong> sent at a 31.68% open rate; transactions up to <strong>€7,450</strong>.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Squirrel Insurance</h3><span class="sys-industry">Insurance</span></div>
+        <a class="sys-link" href="https://squirrelinsurance.com/home" target="_blank" rel="noopener">squirrelinsurance.com ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Leads filled out a generic contact form and waited for a manual callback, and the team had no automated way to be notified of new signups.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the website, automated form-to-CRM onboarding, and instant team-notification triggers — then secured A2P 10DLC approval for compliant SMS.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">A2P 10DLC</span><span class="pill">Workflow automation</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system, live at the link above.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>The Bill Busters</h3><span class="sys-industry">Service Company</span></div>
+        <a class="sys-link" href="https://thebillbusters.com/" target="_blank" rel="noopener">thebillbusters.com ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Bookings were coming in, but the team had no automatic way to be notified or to log them for reporting.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the website and wired booking to trigger team notifications and Google Sheets logging, plus A2P 10DLC approval so SMS reminders could go out compliantly.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Google Sheets</span><span class="pill">A2P 10DLC</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system, live at the link above.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Meritex Canada</h3><span class="sys-industry">Corporate</span></div>
+        <a class="sys-link" href="https://meritex.ca" target="_blank" rel="noopener">meritex.ca ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">The company had no way for prospects to get an instant quote online, and no consistent way to request and collect client reviews after a project finished.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the corporate site, the AutoQuote web app (detailed under Web Applications below), and an automation that requests, tags, and routes client reviews on job completion.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">GHL AI Studio</span><span class="pill">Review automation</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system; AutoQuote at <strong>26 users and counting</strong>.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Wolfpack Basecamp</h3><span class="sys-industry">Business &amp; Credit Coaching</span></div>
+        <a class="sys-link" href="https://wolfpackbasecamp.com/skool-offer" target="_blank" rel="noopener">wolfpackbasecamp.com ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">A community page alone couldn't carry an offer bundling credit repair, funding strategy, a website, a CRM, and coaching into one membership. Converting cold traffic and organising eleven service "departments" per member would have depended on manual follow-up that couldn't scale.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Designed and built the public funnel and website, set up the GoHighLevel CRM account, and built the marketing automation that moves new leads through onboarding.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel CRM</span><span class="pill">Marketing automation</span><span class="pill">Skool</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system, live at the link above.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Wisdom Church of Manila &amp; Celeste Nicolas Ministries</h3><span class="sys-industry">Non-Profit / Ministry</span></div>
+        <a class="sys-link" href="https://wisdomchurchofmanila.org" target="_blank" rel="noopener">wisdomchurchofmanila.org ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">The church needed to accept local Philippine payment methods — not just cards — for donations and store purchases, with no automated way to route or acknowledge them.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the website and online store, integrated Xendit into GoHighLevel for local payment methods, and built the automation flows that route and acknowledge payments. I then extended the same system to cover Celeste Nicolas Ministries rather than rebuilding it.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Xendit</span><span class="pill">GoHighLevel</span><span class="pill">GHL Store</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Two organisations running on one shared payment and automation system.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Federal Barbers</h3><span class="sys-industry">Barbershop</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">The shop had no online presence and no way for customers to book — everything ran on walk-ins and phone calls, with no-shows untracked and no follow-up to bring customers back.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the site with services menu and booking flow, then automated the whole appointment lifecycle: opt-ins tagged into the pipeline, confirmation plus 24-hour/1-hour/5-minute reminders, showed and no-show statuses updating the pipeline and creating staff tasks automatically, a thank-you with PDF gift on completion, and a 30-day rebooking reminder.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Booking automation</span><span class="pill">Pipeline triggers</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system covering the full appointment lifecycle.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Additional client sites</h3><span class="sys-industry">Various</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Each needed a credible, conversion-focused web presence without a long custom-development cycle.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">
+            Built each end-to-end:<br>
+            · <strong>SSSGRP Litigation Support</strong> — landing page for a use-of-force and law-enforcement expert-witness practice, built to establish credibility with attorneys and insurance carriers and convert them into a case-consultation request.<br>
+            · <strong>Funded Biz</strong> — funding and credit-repair funnel with an AI chatbot to pre-qualify leads before the sales call.<br>
+            · <strong>Charity Lift</strong> — donation-focused site promoting US charities.<br>
+            · <strong>DeAnna Crawford</strong> — masterclass funnel with lead scoring and an automated social content calendar.
+          </div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">GHL AI Studio</span><span class="pill">AI chatbot</span><span class="pill">Lead scoring</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Four additional client production systems.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="crm">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Category 2</span>
+      <h2>CRM systems I built or customised</h2>
+      <p>This is the deepest part of my experience. I'm a certified GoHighLevel admin and have managed 360 sub-accounts — but the transferable skill is pipeline design, lifecycle automation, and integrating a CRM with everything around it.</p>
+    </div>
+    <div class="sys-grid">
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>GoHighLevel at scale — 360 sub-accounts</h3><span class="sys-industry">Multi-Tenant Administration</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Running CRM instances for a large number of separate client organisations without each one becoming its own manual maintenance burden.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Administered <strong>360 GoHighLevel sub-accounts</strong> — provisioning, workflow templates, permissions, and shared automation patterns reused across accounts instead of rebuilt per client.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Multi-tenant admin</span><span class="pill">Workflow templating</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>360 sub-accounts</strong> under management.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Space Coast Leads</h3><span class="sys-industry">Lead Generation</span></div>
+        <a class="sys-link" href="https://spacecoastleads.com/" target="_blank" rel="noopener">spacecoastleads.com ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">The team needed a repeatable way to capture, qualify, and move leads through a pipeline while sourcing new prospects at scale.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the customer pipeline, document signing, Apollo.io integration for lead sourcing, five demo funnels, and the SOP flowchart mapping the whole process end-to-end before any of it was automated.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Apollo.io</span><span class="pill">E-signature</span><span class="pill">Pipeline automation</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Client production system.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Vanguard Credits pipeline</h3><span class="sys-industry">Credit Repair</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Regulated dispute cases move through fixed stages on statutory clocks — there was no system tracking which case was in which round or what was due when.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built a custom Kanban pipeline board inside the platform, with scheduled 30- and 35-day follow-up reminders tied to each dispute round. This is CRM logic I wrote myself rather than configured in a vendor product.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Flask</span><span class="pill">Supabase</span><span class="pill">Scheduled jobs</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">2 users — a single-company deployment.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Lifecycle &amp; lead-scoring builds</h3><span class="sys-industry">Multiple Clients</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Across clients, the recurring failure was the same: leads and customers moving through stages with no automated handoff, so follow-up happened only when a person remembered.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the CRM layer for each — AEMR's 6,030-opportunity sales pipeline, Genesis Credit's customer pipeline and document intake, Federal Barbers' full appointment lifecycle with automatic status-driven staff tasks, DeAnna Crawford's lead scoring, Squirrel's form-to-CRM onboarding, and Wolfpack Basecamp's CRM account and onboarding automation.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">n8n</span><span class="pill">Webhooks</span><span class="pill">Zapier</span><span class="pill">Lead scoring</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Six client CRM systems in production; largest tracks <strong>6,030 opportunities</strong>.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="portals">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Category 3</span>
+      <h2>Customer portals</h2>
+      <p>Logged-in or self-service environments where a customer does something for themselves instead of emailing a person.</p>
+    </div>
+    <div class="sys-grid">
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Level Up Academy</h3><span class="sys-industry">Member Portal / Community</span></div>
+        <a class="sys-link" href="https://www.facebook.com/groups/levelupacademyph" target="_blank" rel="noopener">Community ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Free training content existed everywhere but had poor completion rates — nothing kept learners engaged past the first lesson.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built a gamified member portal — character selection, quests, XP, and leveling automations — plus a social content calendar, multi-calendar booking, and 360 managed sub-accounts. This is my own platform, built and operated by me.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Gamification automation</span><span class="pill">Multi-calendar booking</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>8.7K community members</strong> · <strong>360 sub-accounts</strong> managed.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>AEMR course portal</h3><span class="sys-industry">Medical Education</span></div>
+        <a class="sys-link" href="https://cursos.eng.aemr.es/home" target="_blank" rel="noopener">cursos.eng.aemr.es ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Students who paid for a high-ticket medical course needed a place to actually access and work through it, and the academy needed delivery to happen without manual admin per student.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the 17-module student portal and connected it to Stripe payment flows so purchase and access provisioning were one automated path.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GoHighLevel</span><span class="pill">Stripe</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>6,030 opportunities</strong> in the pipeline feeding the portal; packages up to <strong>€7,450</strong>.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Sunwise</h3><span class="sys-industry">Solar Energy</span></div>
+        <a class="sys-link" href="https://preview-1784471587162807465.vibepreview.com/" target="_blank" rel="noopener">Live preview ↗</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Homeowners assume every solar company inflates its savings numbers, so they hesitate to even take a sales call — while the sales team wastes hours running manual calculations for leads who turn out to be unqualified.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built a mobile-first self-service calculator with progressive disclosure, a formula-based estimation engine using regional sun-hours by ZIP and local utility rates, and a separate lead-scored admin dashboard for the sales side. Automation upserts each submission into the CRM, tags it hot/warm/cold, alerts the rep on hot leads, and emails a branded PDF report generated with ReportLab.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GHL AI Studio</span><span class="pill">n8n</span><span class="pill">ReportLab</span><span class="pill">GoHighLevel</span><span class="pill">Telegram API</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">1 client deployment, customised for that client.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Woop creator dashboard</h3><span class="sys-industry">Creator Platform</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Brands needed to run pay-per-view creator campaigns without manually tracking submissions, views, and payouts across every creator.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the creator-facing dashboard where creators join campaigns, upload content, and see their own earnings — plus the leaderboard and an in-app training library for onboarding.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Flask</span><span class="pill">Supabase</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Creator-facing platform, pre-scale.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="saas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Category 4</span>
+      <h2>SaaS platforms</h2>
+      <p>Multi-user products with their own data model, auth, and dashboards — written in Python, not assembled from a page builder.</p>
+    </div>
+    <div class="sys-grid">
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Vanguard Credits</h3><span class="sys-industry">Credit Repair</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Manually reading credit reports, deciding what to dispute, and drafting compliant letters for each bureau ate hours per client and didn't scale past a handful of active cases.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the whole platform: a parser handling <strong>4 different credit-report formats</strong>, a <strong>17-rule dispute-classification engine</strong>, automated PDF letter generation for all three bureaus, a Kanban pipeline board, and scheduled 30/35-day follow-up reminders.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Flask</span><span class="pill">Python</span><span class="pill">Supabase</span><span class="pill">Railway</span><span class="pill">PDF generation</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>2 users</strong> — customised as a single-company deployment.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>NextLevel</h3><span class="sys-industry">Productivity SaaS</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Freelancers were juggling five or six separate tools for tasks, invoicing, client tracking, and habits — losing time and context switching between them.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built a unified dashboard: task board, multi-currency income and expense tracker, client pipeline, habit tracker, world clock, and Pomodoro timer.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Flask</span><span class="pill">Python</span><span class="pill">Supabase</span><span class="pill">Multi-currency</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>52 users</strong> with access.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Woop</h3><span class="sys-industry">Creator Platform</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Brands running pay-per-view creator campaigns had no system to track submissions, views, and payouts across many creators at once.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the campaign system, automated earnings tracking tied to view counts, the leaderboard, and the built-in training library — the payout logic being the part that had to be right every time.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Flask</span><span class="pill">Python</span><span class="pill">Supabase</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Creator-facing platform, pre-scale.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="apps">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Category 5</span>
+      <h2>Web applications &amp; services</h2>
+      <p>Everything I build is mobile-first and browser-based rather than a native app — including the site you're reading this on, which runs its own booking and notification backend.</p>
+    </div>
+    <div class="sys-grid">
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>AutoQuote</h3><span class="sys-industry">Corporate / Quoting</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Prospects had no way to get an instant quote online — every enquiry needed a person to price it and reply, which cost the business speed at the exact moment a buyer was deciding.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built the AutoQuote web app for Meritex Canada, giving prospects an instant quote without waiting for a callback.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">GHL AI Studio</span><span class="pill">GoHighLevel</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>26 users and counting.</strong></div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Affiliate Signup Alerts</h3><span class="sys-industry">Serverless Integration</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Affiliate signups had no real-time visibility — the only way to know a new trial had come in was to log into the platform and check manually, so new leads sat unnoticed for hours.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built a serverless function that receives the provider's webhook, defensively extracts the signup's details across inconsistent payload shapes, and posts a formatted alert to a private channel. Handles rate limits with automatic retry-after backoff, and always returns 200 so the provider never retry-storms the endpoint on a downstream hiccup.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end</strong> — written with Claude Code.</div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Vercel Functions</span><span class="pill">Webhooks</span><span class="pill">Discord API</span><span class="pill">FirstPromoter</span><span class="pill">Claude Code</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Always-on internal service.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>bryanodina.com</h3><span class="sys-industry">This Site</span></div>
+        <a class="sys-link" href="/" >View the portfolio →</a>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">A third-party calendar embed couldn't be styled to match the site, and the contact form had no backend at all — submissions were silently discarded.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Replaced the embed with a custom booking widget backed by my own serverless API that reads real calendar availability and writes confirmed bookings back to the CRM, with a race-condition guard that re-checks the slot immediately before writing. Also built a contact endpoint that validates and escapes input, silently drops bot submissions via a honeypot, and delivers each enquiry to me over Telegram.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">Vercel Functions</span><span class="pill">GHL REST API</span><span class="pill">Telegram API</span><span class="pill">Vanilla JS</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v">Live in production — zero npm dependencies, front end or back.</div></div>
+        </div>
+      </div>
+
+      <div class="sys-card reveal">
+        <div class="sys-head"><h3>Business automation library</h3><span class="sys-industry">Demonstration Builds</span></div>
+        <div class="sys-spec">
+          <div class="spec-row"><div class="spec-k">Problem</div><div class="spec-v">Across industries, the same failure repeats: revenue-critical follow-up that only happens if someone remembers to do it.</div></div>
+          <div class="spec-row"><div class="spec-k">My role</div><div class="spec-v">Built ten complete n8n systems — missed-call text-back, speed-to-lead qualification, dispute-status notification, visitor follow-up, zero-touch onboarding, cart recovery, AI resume screening, invoice and overdue reminders, multi-channel appointment reminders, and AI ticket triage with knowledge-base search.</div></div>
+          <div class="spec-row"><div class="spec-k">Solo or team</div><div class="spec-v"><strong>Solo, end-to-end.</strong></div></div>
+          <div class="spec-row"><div class="spec-k">Technologies</div><div class="spec-v"><div class="stack-pills"><span class="pill">n8n</span><span class="pill">AI agents</span><span class="pill">Webhooks</span><span class="pill">Scheduled triggers</span><span class="pill">Slack API</span></div></div></div>
+          <div class="spec-row"><div class="spec-k">Scale</div><div class="spec-v"><strong>Demonstration builds, not client deployments</strong> — designed to be configured into a business, and stated as such.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="keyland">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Relevance</span>
+      <h2>How this maps to Keyland Compliance Group</h2>
+      <p>I haven't worked in transportation compliance before, and I won't pretend otherwise. What I have built repeatedly is the machinery a compliance-services business actually runs on: deadline-driven regulatory workflows, document intake, filing generation, and a CRM holding it all together.</p>
+    </div>
+    <div class="map-grid">
+
+      <div class="map-card reveal">
+        <h4>Compliance tracking automation</h4>
+        <p>Vanguard Credits tracks regulated dispute cases against statutory clocks — a 17-rule classification engine deciding what action each item needs, with scheduled 30- and 35-day follow-up rounds. Recurring filing deadlines like UCR, IFTA, MCS-150, and Clearinghouse queries are the same problem shape: a rule set, a calendar, and an escalation when something is about to lapse.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>Document processing systems</h4>
+        <p>That same platform parses four different credit-report formats and generates bureau-specific filing documents automatically. Genesis Credit added client-facing document-upload flows. Carrier document intake — CDLs, insurance certificates, MCS-150s — is the same pipeline: ingest a messy document, extract structured fields, generate the filing, attach it to the right record.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>GoHighLevel — the CRM you named</h4>
+        <p>Your posting lists GoHighLevel alongside HubSpot, Zoho, and Salesforce. I'm a GHL Certified Admin who has administered 360 sub-accounts and built production pipelines on it for six clients. If Keyland is already on GHL or considering it, that's zero ramp-up time.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>A2P 10DLC — regulated messaging</h4>
+        <p>I've secured A2P 10DLC approval for three separate clients. Any SMS programme reaching drivers or carrier contacts has to clear this, and it's a process that quietly blocks projects for months when nobody on the team has done it before.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>Customer self-service</h4>
+        <p>Sunwise's calculator and Meritex's AutoQuote both replace "fill in a form and wait for a callback" with an instant answer. Carriers checking authority status, requesting a permit, or getting a filing quote are the same interaction — and every one handled by software is one your team doesn't answer by phone.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>Customer service automation</h4>
+        <p>I built an AI chat agent for Genesis Credit on a dedicated knowledge base, plus an AI ticket-triage system that answers from the knowledge base when confident and routes to a human with a written summary when it isn't. Compliance questions are exactly the high-repetition, high-accuracy category this suits.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>Payments &amp; billing</h4>
+        <p>Stripe flows handling transactions up to €7,450 for AEMR, and a Xendit-to-CRM integration for local payment methods that cards alone couldn't cover. Filing fees, consortium enrolment, and permit charges all need the same reliability.</p>
+      </div>
+
+      <div class="map-card reveal">
+        <h4>Internal tools &amp; reporting</h4>
+        <p>Sunwise's lead-scored admin dashboard, Vanguard's Kanban board, and NextLevel's multi-view dashboard were all built so the operator sees priority order at a glance instead of reading a list. That's the same requirement as leadership reporting on carrier status and filing deadlines.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="close-box reveal">
+      <h2>A note on how I work</h2>
+      <p>
+        I'm an Electronics Engineer by training and spent five-plus years as an engineering professor before moving
+        into automation full-time. I still think in systems rather than tasks — which in practice means I map a
+        process before I automate it, because automating a broken process just makes it break faster.
+      </p>
+      <p>
+        Everything above I built myself. That's the honest answer to "solo or team," and for a company at Keyland's
+        stage I'd treat it as the relevant one: I can take something from problem statement to deployed and running
+        without needing a team assembled first.
+      </p>
+      <div class="close-actions">
+        <a href="/#work" class="btn btn-primary">See the full portfolio with screenshots</a>
+        <a href="/#book" class="btn btn-ghost">Book a call</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-row">
+    <div>
+      <div class="foot-brand">Bryan <span style="color:var(--accent);">Odina</span></div>
+      <div class="foot-cred">GHL Certified Admin · N8N Certified · Electronics Engineer · Six Sigma Yellow Belter</div>
+    </div>
+    <div class="foot-socials">
+      <a href="https://www.linkedin.com/in/johnbryanodina/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.facebook.com/bryanodina" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.tiktok.com/@bryan.odina.ghlca" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://wa.me/639276476889" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal — same pattern as index.html
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
