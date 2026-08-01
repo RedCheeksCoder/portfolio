@@ -147,9 +147,14 @@
   table.glance td:first-child{font-weight:700;color:var(--text);white-space:nowrap;}
   table.glance td{color:var(--text-muted);}
 
-  /* System cards */
-  .sys-grid{display:grid;gap:20px;}
-  @media(min-width:900px){.sys-grid{grid-template-columns:repeat(2,1fr);}}
+  /* System cards.
+     minmax(0,1fr) so no long label can widen its column (a bare 1fr is
+     minmax(auto,1fr) and won't shrink below its content). Deliberately NO
+     grid-auto-rows:1fr here — unlike index.html's work cards, these hold long
+     unclamped prose, so forcing all 25 to the tallest would leave large dead
+     space. Grid already equalises cards within a row via align-items:stretch. */
+  .sys-grid{display:grid;gap:20px;grid-template-columns:minmax(0,1fr);}
+  @media(min-width:900px){.sys-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
   .sys-card{
     background:var(--surface);border:1px solid var(--border);border-radius:14px;
     padding:24px;display:flex;flex-direction:column;
@@ -162,7 +167,9 @@
     display:inline-block;border-bottom:1px solid transparent;transition:border-color .2s;
   }
   .sys-link:hover{border-color:var(--accent-2);}
-  .sys-spec{margin-top:14px;display:grid;gap:11px;}
+  /* margin-bottom guarantees a minimum gap before .sys-shots' top border, which
+     margin-top:auto alone cannot do (auto collapses to 0 on the tallest card). */
+  .sys-spec{margin-top:14px;margin-bottom:18px;display:grid;gap:11px;}
   .spec-row{display:grid;grid-template-columns:1fr;gap:2px;}
   @media(min-width:520px){.spec-row{grid-template-columns:132px 1fr;gap:14px;}}
   .spec-k{
@@ -199,8 +206,10 @@
   .close-box p:last-of-type{margin-bottom:22px;}
   .close-actions{display:flex;flex-wrap:wrap;gap:12px;}
 
-  /* Screenshot strip inside a system card */
-  .sys-shots{margin-top:18px;padding-top:16px;border-top:1px solid var(--border);}
+  /* Screenshot strip inside a system card.
+     margin-top:auto pins it to the bottom so the strips line up across a row
+     instead of starting wherever each card's prose happens to end. */
+  .sys-shots{margin-top:auto;padding-top:16px;border-top:1px solid var(--border);}
   .sys-shots-label{
     font-family:var(--font-display);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;
     color:var(--accent);font-weight:700;margin-bottom:9px;
