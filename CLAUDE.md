@@ -10,7 +10,7 @@ This file gives any Claude (Code, chat, or otherwise) working in this repo the f
 
 An HTML portfolio site for **Bryan Odina** — GHL-Certified Admin, Licensed Electronics Engineer, and automation consultant based in the Philippines. The main page is one file: `index.html` (HTML + CSS + JS inline, no build step, no framework). (The file previously lived at the repo root as `portoflio.html` — it was moved into this folder and renamed to match this doc on 2026-07-18.)
 
-**As of 2026-08-01 this is no longer a single-page site** — a second standalone page, `keyland-compliance-group.html`, was added for a specific job application. See §15. Everything below that doesn't explicitly mention that page refers to `index.html`.
+**As of 2026-08-01 this is no longer a single-page site.** There are now **three pages**: `index.html` (the portfolio), `keyland-compliance-group.html` (a technical summary for a specific job application, added 2026-08-01 — see §15), and `connect.html` (a mobile link-in-bio page reached by QR code at networking events, added 2026-08-06 — see §16). Everything below that doesn't explicitly mention one of the other two refers to `index.html`.
 
 **As of 2026-07-18, this is no longer a purely static site.** A Vercel serverless API backend (`api/`, `package.json`) was added to power the custom booking widget — see §12 "Booking Backend" for the full architecture. The frontend itself remains build-step-free; the `api/` functions have zero dependencies too (plain `fetch` to GHL's REST API, no SDKs).
 
@@ -539,6 +539,48 @@ A card may legitimately appear in more than one category section; each occurrenc
 | AEMR | Websites **+ CRM** + Customer Portals |
 
 The "Lifecycle & lead-scoring builds" CRM card was trimmed at the same time — it used to name AEMR and Genesis Credit, which now have their own cards, so it covers only Federal Barbers, DeAnna Crawford, Squirrel and Wolfpack. Its gallery was re-pointed to match. Current totals: **25 `.sys-card`s, 24 with galleries** (`bryanodina.com` has no screenshots).
+
+---
+
+## 16. Third page: `/connect` (networking / QR landing) — added 2026-08-06
+
+`connect.html` is a mobile link-in-bio page. Bryan hands out a **printed QR code** at networking events (first use: the GoHighLevel anniversary in Manila, 8-9 August 2026) and this is where it lands: his photo, a two-line intro, and five social buttons. Nothing else.
+
+**The URL is `/connect` and it is effectively permanent** — it is printed on physical material Bryan hands to people. Do not rename the route or the file. If the page ever needs replacing, keep `/connect` working and change what it serves.
+
+### Deliberately evergreen
+No event name, date, or greeting appears anywhere in the copy — Bryan's explicit choice, so the same printed QR stays valid at future events and on business cards. **Do not add an event-specific line.**
+
+### Routing
+`vercel.json` gained a second rewrite: `/connect` → `/connect.html`, alongside the keyland one. Same reasoning as §15 — **`cleanUrls` is still deliberately off** (it would make `/index.html` start 308-redirecting); add another targeted rewrite for any fourth page.
+
+### The five buttons — a contract, not a style choice
+Bryan asked three separate times for all buttons to be the same size. The real threat is the **Level Up Academy logo: a 372×220 landscape raster wordmark**, not a square glyph. Three rules hold the guarantee, and all three matter:
+
+1. `.link-btn` has a **fixed `height:var(--btn-h)`** — never `min-height`. With an intrinsic-height row, the logo would stretch its own button taller than the other four.
+2. `.l-icon` is a **fixed 44×30 box** and `.l-icon img` uses `object-fit:contain`, so the raster is capped and cannot push its row. 44px wide (rather than a square slot) is sized to the logo's real 1.69 aspect ratio; the four SVG glyphs render 26×26 centred in the same slot, so the icon column is identical on every row.
+3. `.l-label` is `white-space:nowrap` + ellipsis — a wrapping label would also change row height.
+
+A verification script asserting all of this lives in the 2026-08-06 `LOGS.md` entry. **Re-run its logic after any CSS edit here.** Note the wordmark's text is not legible at icon scale — that's accepted, the row's text label carries the meaning and the winged-shield silhouette carries the recognition.
+
+The four brand glyphs (Facebook, TikTok, LinkedIn, YouTube) are **inline SVG written for this page — the first icons in the repo.** There is no icon font or library anywhere; before this page the only `<svg>` in the codebase was the hero flow diagram. They carry brand colors so they read at a glance, while the button chrome stays uniform.
+
+### Fitting the phone fold
+`body` is `min-height:100svh` + centred flex — `svh` not `vh`, because iOS Safari's `vh` excludes the address bar and would push the bottom of the card under it. A `@supports` fallback covers older browsers. Because it's `min-height`, overflow scrolls normally; **nothing is ever cut off**, the budget just aims to avoid scrolling at all.
+
+Spacing runs off four tokens (`--avatar`, `--btn-h`, `--btn-gap`, `--stack-gap`) so the `@media (max-height:700px)` compaction branch overrides four values instead of every rule — same technique as `index.html`'s `@media(max-height:760px)` hero rule. Measured budget: **~678px default, ~536px compact**, against ~730px usable on an iPhone 12/13/14 and ~553px on an iPhone SE. **`--btn-h` must not go below 44px** (Apple HIG minimum tap target); tighten elsewhere.
+
+**If you lengthen the bio or roles copy, re-run the budget check** — the original draft ran three lines on a narrow phone and pushed both branches past the fold. That's what forced the current shorter wording.
+
+### Design tokens — one intentional divergence from index.html
+The `:root` block is copied from `index.html` and currently matches on all 14 shared tokens (verified). **`html{font-size:120%}` is deliberately NOT copied.** That rule is the main portfolio's global type knob (§3); applying it here scales everything ~20% and pushes the buttons below the fold — the one thing this page must not do. A future session syncing tokens between pages must not "fix" this. There is a comment saying so at the top of the page's `<style>` block.
+
+### Structure notes
+- **No sticky header and no footer** (unlike keyland) — both cost fold space, and a footer of social links would duplicate the buttons.
+- Zero JavaScript. Assets are the two existing CDN images; nothing new was added to disk.
+- Favicon hrefs use **leading slashes** (`/favicon.svg`), same as keyland, so they resolve at the extensionless URL.
+- First page on the site with an `og:image` (the CDN photo) — this link gets shared person-to-person.
+- **Not linked from `index.html`'s nav**, deliberately: it's reached by QR scan, and a nav entry would duplicate the footer socials. Adding one later is the same two-line change (desktop `.nav-links` + `.mobile-menu`) used for keyland's "Tech Summary".
 
 ---
 

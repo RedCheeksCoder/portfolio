@@ -1,6 +1,7 @@
 {
   "rewrites": [
-    { "source": "/keyland-compliance-group", "destination": "/keyland-compliance-group.html" }
+    { "source": "/keyland-compliance-group", "destination": "/keyland-compliance-group.html" },
+    { "source": "/connect", "destination": "/connect.html" }
   ],
   "functions": {
     "api/*.js": { "maxDuration": 10 }
