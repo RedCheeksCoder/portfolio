@@ -1213,16 +1213,17 @@
     { slug:'compliance',  label:'A2P/10DLC Compliance' },
     { slug:'socialmedia', label:'Social Media Automation' },
     { slug:'n8n',         label:'N8N' },
-    { slug:'claude',      label:'Claude Projects' }
+    { slug:'claude',      label:'Claude Projects' },
+    { slug:'vercel',      label:'Vercel' }
   ];
 
   const WORK_PROJECTS = [
     { slug:'vanguard', name:'Vanguard Credits', industry:'Credit Repair',
-      categories:['ai','apps','automation','claude'],
+      categories:['ai','apps','automation','claude','vercel'],
       thumb:'6a5a7d07baf5f6da40225faf', alt:'Vanguard Credits website',
       desc:'AI-powered dispute automation platform — parses credit reports, applies a 17-rule engine, generates FCRA dispute letters, and tracks rounds in a pipeline. Reports processed in minutes, not hours.',
       tags:['AI analysis','PDF generation','Pipeline board','Automated follow-ups'], link:null,
-      description:'A Flask-based credit repair platform deployed on Railway that automates the dispute process end-to-end — parsing uploaded credit reports, generating bureau-specific dispute letters, and tracking rounds through a pipeline.',
+      description:'A Flask-based credit repair platform deployed on Vercel that automates the dispute process end-to-end — parsing uploaded credit reports, generating bureau-specific dispute letters, and tracking rounds through a pipeline.',
       problem:'Manually reading credit reports, deciding what to dispute, and drafting FCRA-compliant letters for each bureau ate hours per client and didn’t scale past a handful of active cases.',
       workdone:'Built a parser for 4 credit report formats, a 17-rule dispute-classification engine, automated PDF letter generation for all 3 bureaus, a Kanban pipeline board, and scheduled 30/35-day follow-up reminders — all backed by Supabase.',
       images:[im('6a5a7d07baf5f6da40225faf'), im('6a59660abaf5f6da40d9bda6',true), im('6a59660b9c9b37b5fd595e79',true), im('6a59660cbaf5f6da40d9bdd4',true), im('6a59660ba961afe59f73aa73',true), im('6a59660aa3791820f85490cb',true), im('6a59660aa08bf95bce31eca1',true), im('6a59660aa3791820f85490c1',true), im('6a59660a9c9b37b5fd595b62',true)]
@@ -1353,7 +1354,7 @@
       images:[im('6a59660f1a0f048050e06f4f'), im('6a5cea581097b81195b5a97a'), im('6a5cea581a0f048050f8b484'), im('6a5cea58baf5f6da40ee19a6'), im('6a5cea58bc0b1f5d2e3b389b'), im('6a5cea581097b81195b5a97f'), im('6a5cea59baf5f6da40ee19b1')]
     },
     { slug:'wisdomchurch', name:'Wisdom Church of Manila', industry:'Non-Profit',
-      categories:['payments','automation'],
+      categories:['payments','automation','vercel'],
       thumb:'6a5966032f7322e0964a997f', alt:'Wisdom Church of Manila donation page',
       thumbAlt:{ automation:'6a5965f69c9b37b5fd5956b5' },
       desc:'Xendit-to-GHL donation system for local payment methods, plus store and automation flows built inside GHL.',
@@ -1388,7 +1389,7 @@
       images:[im('6a5966162f7322e0964a9b00'), im('6a596606a08bf95bce31ec69'), im('6a596606a3791820f8549053'), im('6a5966061a0f048050e06eab'), im('6a596606524a3ec4c65a4fb3'), im('6a5966071097b81195a0b617'), im('6a5965f4524a3ec4c65a4e71'), im('6a5965f5a3791820f8548ede'), im('6a5965f5baf5f6da40d9bc6c')]
     },
     { slug:'celestenicolas', name:'Celeste Nicolas Ministries', industry:'Ministry',
-      categories:['payments','automation'],
+      categories:['payments','automation','vercel'],
       thumb:'6a596603a08bf95bce31ec42', alt:'Celeste Nicolas Ministries giving page',
       thumbAlt:{ automation:'6a5965f69c9b37b5fd5956b5' },
       desc:'Giving/payment page plus GHL automation flows, built on the same system as Wisdom Church of Manila.',
@@ -1421,7 +1422,7 @@
       images:[im('6a5fdf94dd8ffd18701353c0'), im('6a5fdf9428b4c07e407d5548'), im('6a5fdf9428b4c07e407d554c'), im('6a5fdf9430b285321cc69d43'), im('6a5fdf9428b4c07e407d5551'), im('6a5fdf94de06310d09d60f3a'), im('6a5fdf96dd8ffd18701353ec')]
     },
     { slug:'affiliatenotif', name:'Affiliate Signup Alerts', industry:'Community / SaaS',
-      categories:['claude'],
+      categories:['claude','vercel'],
       thumb:'6a667331fb06386edeb6c793', alt:'Affiliate signup Discord notification architecture diagram',
       desc:'Real-time Discord alerts for affiliate-driven free-trial signups — a FirstPromoter postback hits a Vercel serverless function, which relays the new member straight into a private Discord channel. Written end-to-end with Claude Code.',
       tags:['Vercel serverless','Discord','Webhooks','FirstPromoter','Claude Code'], link:null,
