@@ -58,6 +58,14 @@ These were chosen deliberately after presenting multiple headline/subheadline op
 - **Secondary (body):** Quicksand
 - Loaded via Google Fonts `<link>` in `<head>`.
 
+### Type scale (2026-08-06) — `index.html` only
+Bryan reported text too small to read comfortably on a 13" MacBook Air. Fixed with a root scale rather than one-off bumps:
+- `html{font-size:120%}` — **not** a px override; `%` scales relative to the visitor's own browser font-size setting, so it's additive to any accessibility preference rather than fighting it.
+- **All 67 `font-size` declarations in the file are now `rem`** (base 16px), converted mechanically from the previous all-px scale via a script that recorded every `(line, before, after)` triple and asserted `rem × 16 == original px` for each one before trusting the result.
+- **Two deliberate exceptions stay `px`:** `.hf-node-label` (17px) and `.hf-edge-label` (16px) — the hero flow-diagram's SVG `<text>` labels. These are user-space units tied to the SVG's own `viewBox="0 0 1160 560"` coordinate system, not the document's root font size; converting them to `rem` would have desynced the labels from the diagram they sit inside. They still scale in absolute terms because the SVG itself grows with the wider container (see below).
+- **To change the whole site's type size again:** edit the `120%` on `html`. Do not hand-edit individual `rem` values unless changing that one element specifically — the point of the conversion was a single knob.
+- `.work-desc`'s `min-height:calc(1.55em * 4)` (backing its 4-line clamp, see §4) needed no change — `em` resolves against the element's own (now-rem) font-size, so the reserved box tracks automatically.
+
 ### Colors — sourced from wolfpackbasecamp.com/skool-offer
 | Token | Hex | Usage |
 |---|---|---|
@@ -83,7 +91,7 @@ CSS variables are defined in `:root` at the top of the `<style>` block — alway
 ## 4. Site Structure (current section order)
 
 1. **Header/Nav** — sticky, blurred backdrop, links to all sections + "Book a call" CTA
-2. **Hero** — headline, subheadline, CTA buttons, credential tags, animated node-flow diagram (replaced the profile photo, see §3), stat counters. **Responsive fix 2026-07-19:** on medium-width (≤1180px) and short (≤760px height) viewports — the 13" laptop band — the headline's `clamp()` max and vertical spacing are reduced so the CTA buttons stay above the fold; previously the headline could grow to 4 lines while the 2-col grid narrowed the text column, pushing the CTA off-screen on short viewports. Desktop (≥1280px wide) and mobile (`clamp()` min) are unchanged.
+2. **Hero** — headline, subheadline, CTA buttons, credential tags, animated node-flow diagram (replaced the profile photo, see §3), stat counters. **Responsive fix 2026-07-19:** on medium-width (≤1180px at the time, now ≤1560px — see below) and short (≤760px height) viewports — the 13" laptop band — the headline's `clamp()` max and vertical spacing are reduced so the CTA buttons stay above the fold; previously the headline could grow to 4 lines while the 2-col grid narrowed the text column, pushing the CTA off-screen on short viewports. Desktop (≥1280px wide) and mobile (`clamp()` min) are unchanged.
 3. **Marquee banner** — 50-keyword scrolling strip (see §3)
 4. **About** — photo + bio, ties back to automation-first positioning
 5. **Certifications** — badge grid (GHL + 4 n8n badges), see §6
@@ -99,6 +107,10 @@ CSS variables are defined in `:root` at the top of the `<style>` block — alway
 15. **Footer** — brand, credentials line, social links
 
 A global **lightbox** (`#lightbox`) handles click-to-expand single-image preview — used indirectly (dynamically wired via JS) by images inside the case-study modal. Nothing in the static page markup uses `data-full` anymore (that was the Gallery's mechanism); Work-card and flowchart thumbnails open the case-study modal instead (see §11).
+
+**Content width (2026-08-06):** `--maxw` is `1560px` (was `1180px`) — widened after Bryan reported large dead margins on a 13" MacBook Air's scaled resolution. `.wrap` and `.nav` both read this token, so header and content stay aligned automatically. Their side padding is `clamp(24px,2.5vw,40px)` rather than a flat `24px` — 40px of breathing room on wide screens, still 24px on any viewport where `.wrap` is edge-bound rather than centered. **`--maxw` and the hero's compact-mode breakpoint (`index.html` — search `Compact hero on medium widths`) must be changed together.** That media query's px value is a hardcoded duplicate of `--maxw` — it's meant to fire exactly when the viewport stops being wider than the container, so the hero switches to reduced spacing/headline size right as the 2-column grid would otherwise get squeezed. Leaving one at a different value than the other reopens the "narrow column pushes the CTA below the fold" bug the 2026-07-19 fix exists to prevent, for every width between the two numbers. `.hero p.lede` and `.section-head` also had their `max-width` caps raised (540→600px, 660→720px) to keep line length in a comfortable range at the wider column. **This change applies to `index.html` only** — `keyland-compliance-group.html` was left at its existing sizing (Bryan's choice); see §15's note that the two pages already don't share design tokens, so this is one more known point of drift, not a new problem.
+
+**`zoom:0.7` removed (2026-08-06)** from `.booking-widget` and `.form-card` — it was silently shrinking every nested element (text, inputs, buttons) by 30%, on top of being a non-standard CSS property with patchy cross-browser support. The booking widget and contact form now render at their true declared size.
 
 ---
 
