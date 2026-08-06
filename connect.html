@@ -4,16 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Connect with Bryan Odina — Automation Systems &amp; GoHighLevel</title>
-<meta name="description" content="Bryan Odina — GHL Certified Admin and Electronics Engineer building CRM, funnel and AI-powered automation systems. Find me on Facebook, Level Up Academy, TikTok, LinkedIn and YouTube.">
+<meta name="description" content="Bryan Odina — GHL Certified Admin and Electronics Engineer building CRM, funnel and AI-powered automation systems. Save my contact, message me on WhatsApp, book a call, or find me on Facebook, Level Up Academy, TikTok, LinkedIn and YouTube.">
 <link rel="canonical" href="https://bryanodina.com/connect">
 <meta property="og:type" content="profile">
 <meta property="og:url" content="https://bryanodina.com/connect">
 <meta property="og:title" content="Connect with Bryan Odina">
-<meta property="og:description" content="GHL Certified Admin and Electronics Engineer building CRM, funnel and AI-powered automation systems. All my links in one place.">
+<meta property="og:description" content="GHL Certified Admin and Electronics Engineer building CRM, funnel and AI-powered automation systems. Save my contact, message me on WhatsApp, or book a call.">
 <meta property="og:image" content="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5948aae5e255d974b8e541.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Connect with Bryan Odina">
-<meta name="twitter:description" content="GHL Certified Admin and Electronics Engineer building CRM, funnel and AI-powered automation systems. All my links in one place.">
+<meta name="twitter:description" content="GHL Certified Admin and Electronics Engineer building CRM, funnel and AI-powered automation systems. Save my contact, message me on WhatsApp, or book a call.">
 <meta name="twitter:image" content="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5948aae5e255d974b8e541.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png">
@@ -49,11 +49,16 @@
     --font-body:'Quicksand',sans-serif;
 
     /* Vertical rhythm, tuned to the phone fold. The short-viewport media
-       query below overrides these rather than re-declaring every rule. */
-    --avatar:104px;
-    --btn-h:52px;
-    --btn-gap:10px;
-    --stack-gap:22px;
+       query below overrides these rather than re-declaring every rule.
+       2026-08-06: restructured from "5 identical link rows" to "3 action
+       rows + 1 social icon row" to make room for the vCard/WhatsApp/Book-a-
+       call buttons Bryan asked for — 8 stacked full-width rows no longer fit
+       any phone. See CLAUDE.md §16 for the full history. */
+    --avatar:100px;
+    --action-h:54px;
+    --action-gap:10px;
+    --social-size:48px;
+    --stack-gap:20px;
   }
 
   *{box-sizing:border-box;}
@@ -128,60 +133,84 @@
   }
   .roles strong{color:var(--text);font-weight:700;}
 
-  /* ---- The five link buttons ----
-     Every button is the same element with the same class and a FIXED height.
-     Not min-height: the Level Up Academy icon is a 372x220 raster logo, and
-     with an intrinsic-height row it would stretch its own button taller than
-     the other four. The fixed .l-icon box plus object-fit:contain caps it. */
-  .links{
+  /* ---- The three primary actions ----
+     Same fixed-height contract as the old 5-link-row design (see git history
+     / CLAUDE.md §16 for why): every .action-btn gets a FIXED height, never
+     min-height, and a fixed icon slot. --primary differs only in fill color,
+     never in size — the size guarantee must hold across all three. */
+  .actions{
     display:flex;
     flex-direction:column;
-    gap:var(--btn-gap);
+    gap:var(--action-gap);
     margin-top:var(--stack-gap);
   }
-  .link-btn{
-    display:grid;
-    grid-template-columns:44px 1fr 10px;
+  .action-btn{
+    display:flex;
     align-items:center;
-    gap:12px;
-    height:var(--btn-h);
+    justify-content:center;
+    gap:10px;
+    height:var(--action-h);
     width:100%;
     padding:0 14px;
     background:var(--surface);
     border:1px solid var(--border);
     border-radius:var(--radius);
-    text-align:left;
+    font-weight:700;
+    font-size:0.98rem;
+    color:var(--text);
     transition:border-color .2s, background .2s, transform .15s;
   }
-  .link-btn:hover,
-  .link-btn:focus-visible{
+  .action-btn:hover,
+  .action-btn:focus-visible{
     border-color:var(--accent-2);
     background:var(--surface-2);
     transform:translateY(-1px);
   }
-  .link-btn:active{transform:translateY(0);}
+  .action-btn:active{transform:translateY(0);}
+  .action-btn--primary{
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .action-btn--primary:hover,
+  .action-btn--primary:focus-visible{
+    background:var(--accent-hover);
+    border-color:var(--accent-hover);
+  }
+  .action-btn svg{width:22px;height:22px;flex:none;display:block;}
 
-  /* Fixed icon slot. 44px wide accommodates the landscape LUA wordmark;
-     the four square SVG glyphs simply centre within the same slot, so the
-     icon column is identical on all five rows. */
-  .l-icon{
-    width:44px;height:30px;
+  .action-hint{
+    color:var(--text-muted);
+    font-size:0.72rem;
+    margin:2px 0 0;
+    line-height:1.4;
+  }
+
+  /* ---- The five social icons: one row, fixed circular buttons ----
+     Same size-guarantee reasoning as before — the Level Up Academy logo is a
+     372x220 landscape raster and would distort a square slot without
+     object-fit:contain inside a fixed box. */
+  .social-row{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:18px;
+  }
+  .social-btn{
+    width:var(--social-size);height:var(--social-size);
+    border-radius:50%;
     display:flex;align-items:center;justify-content:center;
+    background:var(--surface);
+    border:1px solid var(--border);
+    transition:border-color .2s, background .2s, transform .15s;
   }
-  .l-icon svg{width:26px;height:26px;display:block;}
-  .l-icon img{max-width:44px;max-height:30px;width:auto;height:auto;object-fit:contain;}
-
-  .l-label{
-    font-weight:700;
-    font-size:0.95rem;
-    color:var(--text);
-    line-height:1.25;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+  .social-btn:hover,
+  .social-btn:focus-visible{
+    border-color:var(--accent-2);
+    background:var(--surface-2);
+    transform:translateY(-1px);
   }
-  .l-chevron{color:var(--text-muted);font-size:1.1rem;line-height:1;}
-  .link-btn:hover .l-chevron{color:var(--accent-2);}
+  .social-btn svg{width:20px;height:20px;display:block;}
+  .social-btn img{max-width:28px;max-height:18px;width:auto;height:auto;object-fit:contain;display:block;}
 
   .portfolio-link{
     display:inline-block;
@@ -196,32 +225,28 @@
 
   /* Short viewports (iPhone SE and similar, and any phone in landscape).
      Same technique as index.html's `@media(max-height:760px)` hero rule —
-     compact the rhythm rather than let the buttons fall below the fold. */
+     compact the rhythm rather than let content fall below the fold. */
   @media (max-height: 700px){
-    /* 44px is the floor for --btn-h: Apple's HIG minimum tap target. The
-       budget is tightened elsewhere rather than below that. */
-    :root{--avatar:68px;--btn-h:44px;--btn-gap:6px;--stack-gap:13px;}
+    /* 44px is the floor for tap targets (Apple HIG). --action-h and
+       --social-size both stop there; the budget is tightened elsewhere. */
+    :root{--avatar:72px;--action-h:46px;--action-gap:7px;--social-size:44px;--stack-gap:12px;}
     body{padding:14px 20px;}
     .name{font-size:1.4rem;}
     .creds{font-size:0.6rem;margin-top:6px;}
     .bio{font-size:0.82rem;margin-top:9px;}
     .roles{font-size:0.76rem;margin-top:6px;}
-    .l-label{font-size:0.88rem;}
+    .action-btn{font-size:0.9rem;}
+    .action-hint{font-size:0.68rem;}
+    .social-row{margin-top:12px;}
     .portfolio-link{margin-top:13px;font-size:0.8rem;}
     .avatar{margin-bottom:10px;}
-  }
-  /* Very narrow phones — keep the label from crowding the icon. */
-  @media (max-width: 340px){
-    .link-btn{grid-template-columns:38px 1fr 8px;gap:10px;padding:0 11px;}
-    .l-icon{width:38px;}
-    .l-icon img{max-width:38px;}
-    .l-label{font-size:0.85rem;}
   }
 
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
-    .link-btn{transition:none;}
-    .link-btn:hover,.link-btn:focus-visible{transform:none;}
+    .action-btn,.social-btn{transition:none;}
+    .action-btn:hover,.action-btn:focus-visible,
+    .social-btn:hover,.social-btn:focus-visible{transform:none;}
   }
   :focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;}
 </style>
@@ -233,7 +258,7 @@
   <img class="avatar"
        src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5948aae5e255d974b8e541.jpg"
        alt="Bryan Odina"
-       width="104" height="104">
+       width="100" height="100">
 
   <h1 class="name">Bryan <span>Odina</span></h1>
   <div class="creds">GHL Certified Admin · Electronics Engineer · N8N Certified</div>
@@ -241,46 +266,50 @@
   <p class="bio">I build CRM, funnel and AI <strong>automation systems</strong> — so businesses grow without adding to payroll.</p>
   <p class="roles"><strong>CTO at The 414 Project</strong> · <strong>Level Up Academy</strong></p>
 
-  <nav class="links" aria-label="Social links">
+  <div class="actions">
 
-    <a class="link-btn" href="https://www.facebook.com/bryanodinalevelupacademy" target="_blank" rel="noopener">
-      <span class="l-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-      </span>
-      <span class="l-label">Facebook Page</span>
-      <span class="l-chevron" aria-hidden="true">›</span>
+    <!-- No `download` attribute: it would force a silent save on every
+         browser, including iOS Safari, which suppresses Safari's native
+         "Add Contact" preview sheet. The Content-Type/Content-Disposition
+         headers in vercel.json do that job instead. -->
+    <a class="action-btn action-btn--primary" href="/bryan-odina.vcf">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/></svg>
+      Save my contact
+    </a>
+    <p class="action-hint">Adds me to your phone and WhatsApp</p>
+
+    <a class="action-btn" href="https://wa.me/639276476889" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="#25D366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.004c5.46 0 9.91-4.45 9.91-9.91C21.97 6.45 17.5 2 12.04 2zm0 18.14h-.003a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.83 2.42 8.18 8.18 0 0 1 2.41 5.82c0 4.55-3.7 8.24-8.25 8.24zm4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.75.59.26 1.06.41 1.42.52.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+      Message on WhatsApp
     </a>
 
-    <a class="link-btn" href="https://www.facebook.com/groups/levelupacademyph" target="_blank" rel="noopener">
-      <span class="l-icon">
-        <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a73bfbdffc85279f42fbad7.png" alt="" width="44" height="26">
-      </span>
-      <span class="l-label">Level Up Academy Group</span>
-      <span class="l-chevron" aria-hidden="true">›</span>
+    <a class="action-btn" href="/#book">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18"/><path d="M8 2.5v4"/><path d="M16 2.5v4"/><path d="M9 14l2 2 4-4"/></svg>
+      Book a call
     </a>
 
-    <a class="link-btn" href="https://www.tiktok.com/@bryan.odina.ghlca" target="_blank" rel="noopener">
-      <span class="l-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25F4EE" d="M11.025.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/><path fill="#FE2C55" d="M13.025.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/><path fill="#F4F1E8" d="M12.025.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-      </span>
-      <span class="l-label">TikTok</span>
-      <span class="l-chevron" aria-hidden="true">›</span>
+  </div>
+
+  <nav class="social-row" aria-label="Social links">
+
+    <a class="social-btn" href="https://www.facebook.com/bryanodinalevelupacademy" target="_blank" rel="noopener" aria-label="Facebook Page">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
     </a>
 
-    <a class="link-btn" href="https://www.linkedin.com/in/johnbryanodina" target="_blank" rel="noopener">
-      <span class="l-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-      </span>
-      <span class="l-label">LinkedIn</span>
-      <span class="l-chevron" aria-hidden="true">›</span>
+    <a class="social-btn" href="https://www.facebook.com/groups/levelupacademyph" target="_blank" rel="noopener" aria-label="Level Up Academy Group">
+      <img src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a73bfbdffc85279f42fbad7.png" alt="">
     </a>
 
-    <a class="link-btn" href="https://www.youtube.com/@LevelUpAcademyPH" target="_blank" rel="noopener">
-      <span class="l-icon">
-        <svg viewBox="0 0 24 24" aria-hidden="true" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-      </span>
-      <span class="l-label">YouTube</span>
-      <span class="l-chevron" aria-hidden="true">›</span>
+    <a class="social-btn" href="https://www.tiktok.com/@bryan.odina.ghlca" target="_blank" rel="noopener" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#25F4EE" d="M11.025.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/><path fill="#FE2C55" d="M13.025.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/><path fill="#F4F1E8" d="M12.025.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+    </a>
+
+    <a class="social-btn" href="https://www.linkedin.com/in/johnbryanodina" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="#0A66C2"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 1 1 0-4.125 2.062 2.062 0 0 1 0 4.125zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+
+    <a class="social-btn" href="https://www.youtube.com/@LevelUpAcademyPH" target="_blank" rel="noopener" aria-label="YouTube">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="#FF0000"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
     </a>
 
   </nav>

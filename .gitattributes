@@ -1,0 +1,6 @@
+# bryan-odina.vcf must keep its exact bytes, including RFC 6350's required
+# CRLF line endings — the base64 PHOTO field is order-sensitive and any
+# line-ending normalization (git's core.autocrlf, or a Linux CI checkout
+# re-applying different rules than this local Windows checkout) would ship
+# a silently different file than the one verified in LOGS.md 2026-08-06.
+*.vcf binary

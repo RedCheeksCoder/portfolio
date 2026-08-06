@@ -5,5 +5,14 @@
   ],
   "functions": {
     "api/*.js": { "maxDuration": 10 }
-  }
+  },
+  "headers": [
+    {
+      "source": "/bryan-odina.vcf",
+      "headers": [
+        { "key": "Content-Type", "value": "text/vcard; charset=utf-8" },
+        { "key": "Content-Disposition", "value": "inline; filename=\"bryan-odina.vcf\"" }
+      ]
+    }
+  ]
 }
