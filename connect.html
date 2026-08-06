@@ -59,6 +59,9 @@
     --action-gap:10px;
     --social-size:48px;
     --stack-gap:20px;
+
+    /* TEMPORARY — see the .banner rule and CLAUDE.md §16 for why this exists. */
+    --banner-h:54px;
   }
 
   *{box-sizing:border-box;}
@@ -87,6 +90,23 @@
   img{max-width:100%;display:block;}
 
   .card{width:100%;max-width:420px;text-align:center;}
+
+  /* TEMPORARY — "LIVE Manila" event banner (added 2026-08-06). Overrides this
+     page's evergreen policy for one event; see CLAUDE.md §16 and remove the
+     <img class="banner"> block (in the body) plus this rule and the
+     --banner-h token above once the event has passed.
+     Sized by HEIGHT, not width:100% — the source image is 830x272 (3.05:1),
+     and at true full card-width it renders ~110px tall on a narrow phone,
+     which alone exceeds this page's ~80px default fold-budget headroom (see
+     CLAUDE.md §16). height:var(--banner-h) + width:auto keeps it reading as
+     a wide banner without dictating the page's vertical budget. */
+  .banner{
+    display:block;
+    height:var(--banner-h);
+    width:auto;
+    max-width:100%;
+    margin:0 auto 12px;
+  }
 
   /* Avatar. object-position is biased upward because the source photo is a
      1014x1280 portrait whose face sits around 38% down — a default centre
@@ -229,7 +249,7 @@
   @media (max-height: 700px){
     /* 44px is the floor for tap targets (Apple HIG). --action-h and
        --social-size both stop there; the budget is tightened elsewhere. */
-    :root{--avatar:72px;--action-h:46px;--action-gap:7px;--social-size:44px;--stack-gap:12px;}
+    :root{--avatar:64px;--action-h:46px;--action-gap:7px;--social-size:44px;--stack-gap:12px;--banner-h:20px;}
     body{padding:14px 20px;}
     .name{font-size:1.4rem;}
     .creds{font-size:0.6rem;margin-top:6px;}
@@ -240,6 +260,7 @@
     .social-row{margin-top:12px;}
     .portfolio-link{margin-top:13px;font-size:0.8rem;}
     .avatar{margin-bottom:10px;}
+    .banner{margin-bottom:8px;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -254,6 +275,15 @@
 <body>
 
 <main class="card">
+
+  <!-- TEMPORARY — "LIVE Manila" event banner, added 2026-08-06.
+       Overrides this page's evergreen policy (CLAUDE.md §16) for this one
+       event. Bryan owns removing this block after the event — see
+       LOGS.md 2026-08-06 for why it's here despite that policy. -->
+  <img class="banner"
+       src="https://assets.cdn.filesafe.space/bqd3A7Wt0iWPLpxnwLdJ/media/69e266f0c56ad279086e7223.png"
+       alt="Live in Manila"
+       width="830" height="272">
 
   <img class="avatar"
        src="https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/6a5948aae5e255d974b8e541.jpg"
