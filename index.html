@@ -1192,6 +1192,10 @@
   // to it will show an empty grid when clicked).
   const CDN = 'https://assets.cdn.filesafe.space/7qfXIFSTdrRVqc8n8dWk/media/';
   function im(hash, blur){ return { src: CDN + hash + '.png', blur: !!blur }; }
+  // Local sibling of im(), for images served from this repo instead of the CDN.
+  function loc(path, blur){ return { src: path, blur: !!blur }; }
+  // A `thumb` is normally a bare CDN hash; a leading slash means a repo-served file.
+  function thumbUrl(t){ return t.charAt(0) === '/' ? t : CDN + t + '.png'; }
   function esc(s){ return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
   const WISDOM_AUTOMATION_IMAGES = [
@@ -1482,6 +1486,36 @@
       problem:'Attorneys and insurance carriers vetting an expert witness need to verify real credibility — credentials, courtroom experience, and subject-matter authority — before committing to an engagement. The page had to carry all of that convincingly while still converting a skeptical, high-stakes visitor into a case-consultation request.',
       workdone:'Built a single-page site covering the practice’s certifications and partnerships, four core practice areas (use-of-force & tactics, body-worn camera & evidence review, SOP/EOP compliance, tactical & security training compliance), a full expert bio and credential stats for the practice’s featured expert, a four-step engagement process, and a lead-capture case-consultation form.',
       images:[ im('6a6bf69bcf81b06f050e3fc0') ]
+    },
+    { slug:'clawd', name:'Clawd', industry:'Developer Tools',
+      categories:['claude'],
+      thumb:'/images/clawd/clawd-widget.png', alt:'Clawd desktop widget floating over a code editor, showing Claude rate limits and session token usage',
+      desc:'An always-on-top Windows desktop widget that shows live Claude usage while you work — account rate limits, session token burn, context fill and cost — with a pixel-art mascot that doubles as an ambient status light. Electron, zero runtime dependencies.',
+      tags:['Electron','Desktop app','Data-bus architecture','Zero dependencies','Claude Code'], link:null,
+      description:'A small frameless card that floats above every other window and reports live Claude usage while you work. The top group tracks account-wide rate limits — the 5-hour and 7-day windows as percentages, with a countdown to reset — and the bottom tracks the current coding session’s token burn, rate per minute, context-window fill, model and dollar cost. It persists its position across monitor changes and lives in the system tray so it can run all day. The mascot is the ambient status light: it sleeps when no session is running, blinks while idle, pulses while Claude is actively working, and tints amber then red as a limit gets close. The two number groups are deliberately never summed or reconciled, because account limits are account-wide while session tokens are counted from this machine’s transcripts.',
+      problem:'Claude usage is invisible while you are actually working — checking how much of a rate-limit window is left, or how fast the current session is burning tokens, means stopping to go look somewhere else. The data needed to answer that is scattered across several files that no single source reports completely, and several of those sources are individually unreliable.',
+      workdone:'Built on Electron with zero runtime dependencies — everything is Electron plus Node’s standard library. Five independent sources push raw readings onto a data bus and a single merge step decides precedence and derives every displayed value, so the tray icon and the card can never disagree: the usage cache in ~/.claude.json, a status-line “tee” capturing Claude Code’s per-render payload, an incremental transcript tailer feeding a token ledger, live session discovery via PID-liveness probes, and the Claude desktop app’s own usage history file. The main process owns all filesystem access, parsing and timers while the renderer is a pure view fed by one coalesced IPC channel, which avoids the visual tearing you get when metrics arrive on separate channels; animation and reset countdowns tick locally in the renderer so the main process never pushes state just because a second elapsed. Most of the engineering is defensive, because both the machine and the upstream data are hostile. The machine has no compiler toolchain and an Application Control policy blocking unsigned executables, so the PNG and multi-resolution ICO encoders are hand-rolled on top of zlib and the app runs unpackaged through the signed stock Electron binary — which also means startup can never load a stale snapshot. The data sources fail in different ways: the obvious one silently froze for five days, another can never fire at all under the VS Code extension, and a third is another application’s undocumented internal file. So source selection is explicit, freshness-ranked and time-bounded, and any reading that goes stale is dimmed and labelled rather than quietly shown as current. The highest-risk paths carry executable probes instead of assumptions: a byte-level JSONL tailer verified against a real transcript under adversarial chunk boundaries, a token ledger that must dedupe streaming snapshots by field-wise max or undercount output by roughly 1000×, and 21 assertions pinning the source-precedence rules. The result is a widget that degrades honestly — when a source dies it falls back and says so, rather than displaying a confident wrong number.',
+      images:[
+        loc('/images/clawd/clawd-widget.png'),
+        im('6a73dc336c6452402b52e852')
+      ]
+    },
+    { slug:'luadashboard', name:'LevelUp Academy Dashboard', industry:'Internal Business Tool',
+      categories:['claude','vercel','apps'],
+      thumb:'6a73dd03329b76ca7b1465e7', alt:'LevelUp Academy admin dashboard showing revenue, expenses and accounts needing attention',
+      thumbAlt:{ apps:'6a73dd03f325d74f8fd7b8f7', vercel:'6a73dd03f325d74f8fd7b8f2' },
+      desc:'A private single-admin web app tracking two revenue lines — reselling GoHighLevel subaccounts to Filipino VAs, and a ₱8,500 course — through drag-and-drop Kanban boards into one combined P&amp;L. Built on Next.js 15, Supabase and Vercel.',
+      tags:['Next.js 15','Supabase','TypeScript','Tailwind v4','Vercel'], link:null,
+      description:'A private admin tool for a Philippines-based business with two revenue lines: reselling GoHighLevel subaccounts to Filipino VAs and freelancers, and a ₱8,500 paid course. The admin enters intake submissions, works each record through drag-and-drop Kanban boards, logs expenses, and reads one combined profit-and-loss view. The point of the app is financial visibility — the Kanban is just the data-entry mechanism and the Analytics page is the actual payoff, which drives every design decision: anything that makes entry marginally nicer but the money numbers less trustworthy is the wrong trade.',
+      problem:'Two separate revenue lines, recurring subaccount renewals and staged course payments left no single trustworthy view of what the business actually earned. Renewals are the hard part — a client who renews four times has earned four payments, but any figure read off the card’s current plan price would count that once and quietly understate revenue.',
+      workdone:'Made the payment tables append-only ledgers and required every revenue figure to be computed from them, never from the price column on a card, which describes the current plan rather than what was actually earned. That rule reshapes the interactions: dragging a card to Renewed opens a dialog that logs the payment, bumps the expiry date, increments the renewal counter and drops the card back into Active, while Churned prompts for a reason and stamps the churn date. A scheduled function moves cards to “Needs Renewal” seven days out, running both on a daily pg_cron schedule and on dashboard load, and is kept idempotent so a missed cron never leaves stale cards. All dates are handled in Asia/Manila via date-fns-tz, since the servers run UTC and would otherwise shift expiry calculations by a day. Built on Next.js 15 App Router with Server Components, TypeScript, Tailwind v4, and Supabase for Postgres, Auth and row-level security, deployed to Vercel. The layout is mobile-first and non-negotiable — laid out at 375px and widened, with Kanban columns becoming horizontal snap-scroll and every card carrying a “Move to…” menu, because touch-dragging is fiddly. In place of a unit-test runner the safety net is three scripts that sign in and go through row-level security exactly as the app does.',
+      images:[
+        im('6a73dd03329b76ca7b1465e7'),
+        im('6a73dd03f325d74f8fd7b8f7'),
+        im('6a73dd03329b76ca7b1465ec'),
+        im('6a73dd03f93c3d016bab4623'),
+        im('6a73dd03f325d74f8fd7b8f2')
+      ]
     }
   ];
 
@@ -1499,13 +1533,13 @@
     gridEl.innerHTML = WORK_PROJECTS.map(p => {
       const alt = p.thumbAlt && Object.keys(p.thumbAlt).length
         ? ` data-thumbs='${JSON.stringify(Object.fromEntries(
-            Object.entries(p.thumbAlt).map(([k, h]) => [k, CDN + h + '.png'])))}'`
+            Object.entries(p.thumbAlt).map(([k, h]) => [k, thumbUrl(h)])))}'`
         : '';
       const link = p.link
         ? `<a class="work-link" href="${esc(p.link.href)}" target="_blank" rel="noopener">${p.link.label}</a>`
         : '';
       return `<div class="work-card reveal" data-category="${esc(p.categories.join(' '))}" data-case="${esc(p.slug)}">
-        <img class="work-thumb" src="${CDN + p.thumb}.png" alt="${esc(p.alt || p.name)}" loading="lazy"${alt}>
+        <img class="work-thumb" src="${thumbUrl(p.thumb)}" alt="${esc(p.alt || p.name)}" loading="lazy"${alt}>
         <div class="work-body">
           <div class="work-top"><h3>${esc(p.name)}</h3><span class="work-industry">${esc(p.industry)}</span></div>
           <p class="work-desc">${p.desc}</p>
