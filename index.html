@@ -1263,7 +1263,8 @@
     { slug:'socialmedia', label:'Social Media Automation' },
     { slug:'n8n',         label:'N8N' },
     { slug:'claude',      label:'Claude Projects' },
-    { slug:'vercel',      label:'Vercel' }
+    { slug:'vercel',      label:'Vercel' },
+    { slug:'desktop',     label:'Desktop Apps' }
   ];
 
   const WORK_PROJECTS = [
@@ -1533,7 +1534,7 @@
       images:[ im('6a6bf69bcf81b06f050e3fc0') ]
     },
     { slug:'clawd', name:'Clawd', industry:'Developer Tools',
-      categories:['claude'],
+      categories:['claude','desktop'],
       thumb:'/images/clawd/clawd-widget.png', alt:'Clawd desktop widget floating over a code editor, showing Claude rate limits and session token usage',
       desc:'An always-on-top Windows desktop widget that shows live Claude usage while you work — account rate limits, session token burn, context fill and cost — with a pixel-art mascot that doubles as an ambient status light. Electron, zero runtime dependencies.',
       tags:['Electron','Desktop app','Data-bus architecture','Zero dependencies','Claude Code'], link:null,
@@ -1561,6 +1562,16 @@
         im('6a73dd03f93c3d016bab4623'),
         im('6a73dd03f325d74f8fd7b8f2')
       ]
+    },
+    { slug:'ghlwebhook', name:'GHL Inbound Webhook Tester', industry:'Developer Tools',
+      categories:['desktop'],
+      thumb:'6a7c3df0b1a56ba929106ddd', alt:'GHL Inbound Webhook Tester desktop app, showing a test contact form and the live webhook response',
+      desc:'A desktop app that fires a synthetic test contact at a GoHighLevel inbound webhook trigger and shows the raw response — built because no easy way existed to verify a webhook before wiring a real landing-page form to it.',
+      tags:['Electron','GHL webhooks','Developer tool'], link:null,
+      description:'A small desktop utility for testing GoHighLevel inbound webhook triggers. It posts a synthetic contact — name, phone, email, message — at a given webhook URL and shows the response inline, along with the equivalent curl command.',
+      problem:'Landing pages with custom-coded forms need to POST their submissions to a GHL inbound webhook to fire the right automation, but there was no easy way to test that trigger in isolation before wiring a real form to it — any mistake would only surface once a real lead\'s data hit a live automation.',
+      workdone:'Built a desktop app that takes a GHL webhook URL and a set of test contact fields, sends the POST request, and displays the response status and body immediately, so a custom-form-to-automation integration can be verified end-to-end before it ever touches a real submission.',
+      images:[im('6a7c3df0b1a56ba929106ddd')]
     }
   ];
 
