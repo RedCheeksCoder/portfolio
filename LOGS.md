@@ -630,3 +630,8 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - New card for a separate landing-page project for an existing client (Bill Busters) — a Michigan solar-ad funnel ($25 gift card for a free evaluation) posting leads to a GHL inbound webhook. Distinct slug `tbbsolar` (existing `tbb` card is a different project for the same client). Tagged `web` (already labeled "Web & Funnels", covers the request as-is — no new category needed) and `claude`.
 - PII-checked all 4 supplied images before wiring in: clean — form fields shown are placeholders (Jane Smith / jane@example.com), no real lead data.
 - Files touched: `index.html`, `CLAUDE.md`, `LOGS.md`.
+
+## 2026-08-19 — Tagged Wolfpack Basecamp + SSSGRP as Claude Projects, added SSSGRP site link
+- Both built with Claude Code per Bryan — added `claude` to their `categories`. `claude` now matches 7 cards total (verified from data, not assumed).
+- SSSGRP also got a "Visit site" link (`https://sssgrp.net`, confirmed 200), replacing the earlier `link:null` that existed because the original GHL preview URL couldn't be confirmed publicly reachable.
+- Files touched: `index.html`, `CLAUDE.md`, `LOGS.md`.
