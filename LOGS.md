@@ -625,3 +625,8 @@ Append-only. Never edit or delete past entries — see "Logging Rules" in `CLAUD
 - **Counts derived from the live data, not assumed, before writing any doc update:** `WORK_PROJECTS` 24→**25**, `WORK_CATEGORIES` 12→**13**, `link:null` count 9→**10**, and the `desktop` filter confirmed to match exactly 2 cards (Clawd, GHL Inbound Webhook Tester) — used these real numbers to correct every hardcoded count in `CLAUDE.md` §4/§5/§9 rather than incrementing by hand.
 - **Verification:** ran the inline `<script>` through `new Function()` (the previously-last entry needed a new trailing comma — the classic silent-failure point for this kind of append); re-evaluated the data and asserted slug uniqueness, the desktop-filter match count, no `blur:true` on the new image, and `link:null` on the new card; re-confirmed the CDN image resolves (200, `image/png`).
 - Files touched: `index.html` (`WORK_CATEGORIES`, Clawd's `categories`, new `ghlwebhook` entry), `CLAUDE.md` (§4, §5), `LOGS.md`.
+
+## 2026-08-19 — Added "The Bill Busters — Solar Offer" funnel to Work
+- New card for a separate landing-page project for an existing client (Bill Busters) — a Michigan solar-ad funnel ($25 gift card for a free evaluation) posting leads to a GHL inbound webhook. Distinct slug `tbbsolar` (existing `tbb` card is a different project for the same client). Tagged `web` (already labeled "Web & Funnels", covers the request as-is — no new category needed) and `claude`.
+- PII-checked all 4 supplied images before wiring in: clean — form fields shown are placeholders (Jane Smith / jane@example.com), no real lead data.
+- Files touched: `index.html`, `CLAUDE.md`, `LOGS.md`.

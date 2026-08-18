@@ -1572,6 +1572,16 @@
       problem:'Landing pages with custom-coded forms need to POST their submissions to a GHL inbound webhook to fire the right automation, but there was no easy way to test that trigger in isolation before wiring a real form to it — any mistake would only surface once a real lead\'s data hit a live automation.',
       workdone:'Built a desktop app that takes a GHL webhook URL and a set of test contact fields, sends the POST request, and displays the response status and body immediately, so a custom-form-to-automation integration can be verified end-to-end before it ever touches a real submission.',
       images:[im('6a7c3df0b1a56ba929106ddd')]
+    },
+    { slug:'tbbsolar', name:'The Bill Busters — Solar Offer', industry:'Solar / Home Services',
+      categories:['web','claude'],
+      thumb:'6a84e4c9e8effa27adb4f570', alt:'The Bill Busters solar $25 gift card offer landing page',
+      desc:'A lead-capture landing page for a Michigan solar video ad — $25 gift card for a free evaluation, no obligation — built to push leads into GoHighLevel via an inbound webhook.',
+      tags:['Landing page','GHL webhook','Lead capture'], link:{ href:'https://thebillbusters.com/solar/home', label:'Visit site ↗' },
+      description:'A lead-capture funnel for a Bill Busters video ad running in Michigan: complete a free solar evaluation and get a $25 Amazon gift card, no obligation, limited to the first 50 qualified homeowners.',
+      problem:'The ad needed a page that captures name, email and phone and reliably pushes each lead into GoHighLevel for follow-up — with a light email-verification step so obviously fake entries don\'t clog the pipeline, without adding friction that costs real leads.',
+      workdone:'Built the offer page plus a thank-you page, both posting straight to a GHL inbound webhook on submit. A two-step modal collects the lead first, then asks for a 6-digit code emailed by the GHL workflow — with a 60-second skip so nobody gets stuck waiting on an email. Also built an earlier full mini-site version of the page, kept as an unused reference design.',
+      images:[im('6a84e4c94aaffc55cd2e293c'), im('6a84e4c9e8effa27adb4f570'), im('6a84e4c909bd01dff650e70a'), im('6a84e4c9b39b2fad7f447e50')]
     }
   ];
 
